@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulasi CAT KDKMP/KNMP 2026</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:system-ui,sans-serif;background:#f5f5f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
+  .card{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);width:100%;max-width:520px;overflow:hidden;}
+  /* WELCOME */
+  .welcome{padding:32px 24px;text-align:center;}
+  .welcome h1{font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
+  .welcome p{font-size:14px;color:#666;margin-bottom:24px;line-height:1.6;}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+  .info-cell{background:#f8f8f5;border-radius:10px;padding:12px;text-align:center;}
+  .info-cell .num{font-size:22px;font-weight:700;color:#1a1a1a;}
+  .info-cell .lbl{font-size:12px;color:#888;margin-top:2px;}
+  .btn-start{background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;width:100%;}
+  .btn-start:hover{background:#333;}
+  /* TEST SCREEN */
+  .test-screen{display:none;}
+  .top-bar{background:#1a1a1a;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .subtes-label{font-size:12px;color:#aaa;text-transform:uppercase;letter-spacing:.05em;}
+  .subtes-name{font-size:14px;font-weight:600;color:#fff;margin-top:2px;}
+  .timer-wrap{text-align:right;}
+  .timer-label{font-size:11px;color:#aaa;text-transform:uppercase;}
+  .timer-val{font-size:22px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;}
+  .timer-val.warn{color:#f59e0b;}
+  .timer-val.danger{color:#ef4444;}
+  .progress-bar-wrap{height:4px;background:#333;}
+  .progress-bar{height:4px;background:#22c55e;transition:width .3s;}
+  .question-area{padding:20px 16px 12px;}
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .q-num{font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.04em;}
+  .q-prog{font-size:12px;color:#bbb;}
+  .q-text{font-size:16px;font-weight:500;color:#1a1a1a;line-height:1.6;min-height:56px;margin-bottom:20px;}
+  .choices{display:flex;flex-direction:column;gap:10px;padding:0 16px 24px;}
+  .choice-btn{background:#f8f8f5;border:1.5px solid #e8e8e0;border-radius:10px;padding:13px 16px;font-size:15px;color:#1a1a1a;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .15s;}
+  .choice-btn:hover{background:#f0f0e8;border-color:#ccc;}
+  .choice-btn:active{transform:scale(.98);}
+  .choice-btn.selected-correct{background:#dcfce7;border-color:#22c55e;color:#15803d;}
+  .choice-btn.selected-wrong{background:#fee2e2;border-color:#ef4444;color:#b91c1c;}
+  .choice-btn.reveal-correct{background:#dcfce7;border-color:#22c55e;color:#15803d;}
+  .choice-key{background:#e8e8e0;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#555;flex-shrink:0;}
+  .choice-btn.selected-correct .choice-key{background:#86efac;color:#14532d;}
+  .choice-btn.selected-wrong .choice-key{background:#fca5a5;color:#7f1d1d;}
+  .choice-btn.reveal-correct .choice-key{background:#86efac;color:#14532d;}
+  /* SCORE SCREEN */
+  .score-screen{display:none;padding:28px 20px;text-align:center;}
+  .score-screen h2{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:6px;}
+  .score-screen .sub{font-size:14px;color:#888;margin-bottom:24px;}
+  .score-big{font-size:52px;font-weight:800;color:#1a1a1a;margin:8px 0;}
+  .score-sub{font-size:14px;color:#888;margin-bottom:24px;}
+  .score-table{width:100%;border-collapse:collapse;margin-bottom:24px;text-align:left;}
+  .score-table th{font-size:12px;color:#888;font-weight:600;text-transform:uppercase;padding:6px 8px;border-bottom:1.5px solid #eee;}
+  .score-table td{font-size:14px;color:#1a1a1a;padding:8px 8px;border-bottom:1px solid #f0f0f0;}
+  .score-table td.right{color:#15803d;font-weight:600;}
+  .score-table td.pct{color:#888;}
+  .btn-restart{background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;width:100%;}
+  .btn-restart:hover{background:#333;}
+  /* SUBTES TRANSITION */
+  .transition-screen{display:none;padding:40px 24px;text-align:center;}
+  .transition-screen h2{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
+  .transition-screen p{font-size:14px;color:#666;margin-bottom:28px;line-height:1.6;}
+  .next-info{background:#f8f8f5;border-radius:12px;padding:16px;margin-bottom:24px;}
+  .next-info .ni-name{font-size:17px;font-weight:700;color:#1a1a1a;}
+  .next-info .ni-detail{font-size:13px;color:#888;margin-top:4px;}
+  .btn-next-sub{background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;width:100%;}
+  .prev-score{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px;margin-bottom:16px;}
+  .prev-score span{font-size:14px;color:#15803d;font-weight:600;}
+  .prev-score small{font-size:13px;color:#666;}
+</style>
+</head>
+<body>
+<div class="card">
+
+<!-- WELCOME -->
+<div class="welcome" id="welcomeScreen">
+  <h1>Simulasi CAT KDKMP / KNMP 2026</h1>
+  <p>Simulasi lengkap 6 subtes kognitif + tes manajemen koperasi. Timer otomatis per subtes.</p>
+  <div class="info-grid">
+    <div class="info-cell"><div class="num">248</div><div class="lbl">Total Soal</div></div>
+    <div class="info-cell"><div class="num">62'</div><div class="lbl">Total Waktu</div></div>
+    <div class="info-cell"><div class="num">7</div><div class="lbl">Subtes</div></div>
+    <div class="info-cell"><div class="num">CAT</div><div class="lbl">Mode Tes</div></div>
+  </div>
+  <button class="btn-start" onclick="startTest()">Mulai Tes</button>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition-screen" id="transitionScreen">
+  <h2 id="tr-title">Subtes Selesai!</h2>
+  <div class="prev-score" id="tr-prev-score">
+    <small>Skor subtes ini: </small><span id="tr-score-val">—</span>
+  </div>
+  <p id="tr-desc">Bersiaplah untuk subtes berikutnya.</p>
+  <div class="next-info" id="tr-next-info">
+    <div class="ni-name" id="tr-next-name">—</div>
+    <div class="ni-detail" id="tr-next-detail">—</div>
+  </div>
+  <button class="btn-next-sub" onclick="startSubtes()">Mulai Sekarang</button>
+</div>
+
+<!-- TEST -->
+<div class="test-screen" id="testScreen">
+  <div class="top-bar">
+    <div>
+      <div class="subtes-label" id="subtesLabel">Subtes 1</div>
+      <div class="subtes-name" id="subtesName">Bahasa</div>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer-label">Waktu</div>
+      <div class="timer-val" id="timerVal">07:00</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="question-area">
+    <div class="q-meta">
+      <span class="q-num" id="qNum">Soal 1</span>
+      <span class="q-prog" id="qProg">1 / 50</span>
+    </div>
+    <div class="q-text" id="qText"></div>
+  </div>
+  <div class="choices" id="choicesDiv"></div>
+</div>
+
+<!-- SCORE -->
+<div class="score-screen" id="scoreScreen">
+  <h2>Tes Selesai!</h2>
+  <div class="sub">Berikut hasil simulasi kamu</div>
+  <div class="score-big" id="scoreBig">0</div>
+  <div class="score-sub" id="scoreSub">dari 248 soal</div>
+  <table class="score-table">
+    <thead><tr><th>Subtes</th><th>Benar</th><th>Total</th><th>%</th></tr></thead>
+    <tbody id="scoreTableBody"></tbody>
+  </table>
+  <button class="btn-restart" onclick="restartTest()">Ulangi Tes</button>
+</div>
+
+</div>
+<script>
+const pass = prompt("Masukkan kode akses:");
+if(pass !== "KOPDES20K"){
+  document.body.innerHTML = "<h2>Akses ditolak</h2>";
+}
+</script>
+<script>
+const SUBTESTS = [
+  {
+    id:1, name:"Bahasa", total:50, time:420,
+    soal:[
+      {q:"Sinonim dari kata MANDIRI adalah...",c:["Bergantung","Berdikari","Lemah","Patuh"],j:1},
+      {q:"Antonim dari kata DERMAWAN adalah...",c:["Pemurah","Kikir","Baik hati","Suka memberi"],j:1},
+      {q:"Sinonim dari kata APATIS adalah...",c:["Peduli","Semangat","Acuh tak acuh","Aktif"],j:2},
+      {q:"Antonim dari kata EFISIEN adalah...",c:["Hemat","Boros","Cepat","Tepat"],j:1},
+      {q:"Sinonim dari kata KREDIBEL adalah...",c:["Diragukan","Dapat dipercaya","Terkenal","Kaya"],j:1},
+      {q:"Antonim dari kata DINAMIS adalah...",c:["Aktif","Bergerak","Statis","Progresif"],j:2},
+      {q:"Sinonim dari kata TRANSPARAN adalah...",c:["Gelap","Terbuka","Tersembunyi","Rahasia"],j:1},
+      {q:"Antonim dari kata ABSOLUT adalah...",c:["Mutlak","Relatif","Pasti","Tetap"],j:1},
+      {q:"Sinonim dari kata DEDIKASI adalah...",c:["Malas","Pengabdian","Santai","Acuh"],j:1},
+      {q:"Antonim dari kata INOVATIF adalah...",c:["Kreatif","Baru","Konvensional","Maju"],j:2},
+      {q:"Sinonim dari kata MEDIASI adalah...",c:["Konflik","Penengahan","Pertikaian","Perang"],j:1},
+      {q:"Antonim dari kata KONKRET adalah...",c:["Nyata","Abstrak","Jelas","Terlihat"],j:1},
+      {q:"Sinonim dari kata LEGITIMASI adalah...",c:["Ilegal","Pengakuan sah","Palsu","Tersembunyi"],j:1},
+      {q:"Antonim dari kata PROGRESIF adalah...",c:["Maju","Berkembang","Regresif","Modern"],j:2},
+      {q:"Sinonim dari kata EMPATIK adalah...",c:["Egois","Acuh","Memahami perasaan orang","Marah"],j:2},
+      {q:"Kata yang BERLAWANAN makna dengan JUJUR adalah...",c:["Ikhlas","Tulus","Bohong","Polos"],j:2},
+      {q:"Sinonim dari kata INTEGRITAS adalah...",c:["Curang","Kejujuran dan prinsip","Korupsi","Pura-pura"],j:1},
+      {q:"Antonim dari kata SOLVABEL adalah...",c:["Mampu bayar","Kaya","Insolven","Untung"],j:2},
+      {q:"Sinonim dari kata KOORDINASI adalah...",c:["Kekacauan","Kerja sama teratur","Persaingan","Konflik"],j:1},
+      {q:"Antonim dari kata KONSERVATIF adalah...",c:["Kuno","Tradisional","Progresif","Pasif"],j:2},
+      {q:"Sinonim dari kata NEGOSIASI adalah...",c:["Pertengkaran","Tawar-menawar","Peperangan","Pemaksaan"],j:1},
+      {q:"Antonim dari kata REPRESIF adalah...",c:["Keras","Menekan","Memaksa","Toleran"],j:3},
+      {q:"Sinonim dari kata AKUNTABEL adalah...",c:["Tidak jelas","Dapat dipertanggungjawabkan","Rahasia","Bebas"],j:1},
+      {q:"Sinonim dari kata PROMULGASI adalah...",c:["Pencabutan","Pengumuman resmi","Penolakan","Pembatalan"],j:1},
+      {q:"Antonim dari kata AMBIVALEN adalah...",c:["Ragu-ragu","Bimbang","Tegas","Bingung"],j:2},
+      {q:"Sinonim dari kata JUSTIFIKASI adalah...",c:["Hukuman","Pembenaran","Kesalahan","Tuduhan"],j:1},
+      {q:"Antonim dari kata GLORIFIKASI adalah...",c:["Pemujaan","Pengagungan","Penghinaan","Pujian"],j:2},
+      {q:"Sinonim dari kata INOVATIF adalah...",c:["Usang","Kreatif","Lambat","Biasa"],j:1},
+      {q:"Kata yang SAMA makna dengan PROFESIONAL adalah...",c:["Amatir","Kompeten","Baru","Acak"],j:1},
+      {q:"Antonim dari kata ANTUSIAS adalah...",c:["Bersemangat","Giat","Apatis","Rajin"],j:2},
+      {q:"Sinonim dari kata PERSUASI adalah...",c:["Paksaan","Bujukan","Ancaman","Tekanan"],j:1},
+      {q:"Antonim dari HARMONIS adalah...",c:["Serasi","Selaras","Konflik","Damai"],j:2},
+      {q:"Sinonim dari INISIATIF adalah...",c:["Pasif","Prakarsa","Malas","Menunggu"],j:1},
+      {q:"Antonim dari PRODUKTIF adalah...",c:["Aktif","Kreatif","Mandul","Giat"],j:2},
+      {q:"Sinonim dari KOMPETEN adalah...",c:["Lemah","Ragu","Mampu","Bingung"],j:2},
+      {q:"Antonim dari TRANSPARAN adalah...",c:["Terbuka","Jelas","Tertutup","Terang"],j:2},
+      {q:"Sinonim dari EFEKTIF adalah...",c:["Sia-sia","Berhasil guna","Gagal","Lambat"],j:1},
+      {q:"Antonim dari AKTIF adalah...",c:["Giat","Pasif","Rajin","Dinamis"],j:1},
+      {q:"Sinonim dari KAPABEL adalah...",c:["Tidak mampu","Mampu","Ragu","Gagal"],j:1},
+      {q:"Antonim dari MANDIRI adalah...",c:["Berdikari","Bebas","Bergantung","Kuat"],j:2},
+      {q:"Sinonim dari DEDIKASI adalah...",c:["Pengkhianatan","Kemalasan","Pengabdian","Kemarahan"],j:2},
+      {q:"Antonim dari JUJUR adalah...",c:["Amanah","Tulus","Curang","Ikhlas"],j:2},
+      {q:"Sinonim dari HARMONI adalah...",c:["Kekacauan","Keserasian","Pertikaian","Kebencian"],j:1},
+      {q:"Antonim dari BERSATU adalah...",c:["Solid","Kompak","Berpecah","Rukun"],j:2},
+      {q:"Sinonim dari KONSISTEN adalah...",c:["Berubah-ubah","Tetap/ajeg","Labil","Goyang"],j:1},
+      {q:"Antonim dari CERMAT adalah...",c:["Teliti","Hati-hati","Ceroboh","Tepat"],j:2},
+      {q:"Sinonim dari ASPIRASI adalah...",c:["Keputusasaan","Harapan/cita-cita","Ketakutan","Kebencian"],j:1},
+      {q:"Antonim dari OPTIMIS adalah...",c:["Percaya diri","Pesimis","Yakin","Semangat"],j:1},
+      {q:"Sinonim dari EVALUASI adalah...",c:["Pengabaian","Penilaian","Pembiaran","Penghapusan"],j:1},
+      {q:"Antonim dari STABIL adalah...",c:["Kokoh","Tetap","Goyah","Kuat"],j:2},
+    ]
+  },
+  {
+    id:2, name:"Hitungan", total:31, time:420,
+    soal:[
+      {q:"25 + 37 = ?",c:["52","62","72","82"],j:1},
+      {q:"15% dari 200 = ?",c:["20","25","30","35"],j:2},
+      {q:"144 ÷ 12 = ?",c:["10","11","12","13"],j:2},
+      {q:"Jika x = 5, maka 3x + 7 = ?",c:["20","22","23","25"],j:1},
+      {q:"Koperasi untung Rp100 juta, 40% untuk anggota. Berapa yang dibagi?",c:["Rp30 juta","Rp40 juta","Rp50 juta","Rp60 juta"],j:1},
+      {q:"2, 4, 8, 16, ... ?",c:["24","28","32","30"],j:2},
+      {q:"75% dari 80 = ?",c:["55","60","65","70"],j:1},
+      {q:"Koperasi punya 500 anggota, kuorum minimal?",c:["200","250","251","300"],j:2},
+      {q:"3 + 7 × 2 = ?",c:["20","17","14","13"],j:1},
+      {q:"√169 = ?",c:["11","12","13","14"],j:2},
+      {q:"Harga Rp80.000, diskon 25%. Harga akhir?",c:["Rp55.000","Rp60.000","Rp65.000","Rp70.000"],j:1},
+      {q:"1, 3, 6, 10, 15, ... ?",c:["18","19","20","21"],j:3},
+      {q:"48 × 5 = ?",c:["220","230","240","250"],j:2},
+      {q:"Jika SHU Rp10 juta dan transaksi Budi 20% dari total, SHU Budi?",c:["Rp1 juta","Rp1,5 juta","Rp2 juta","Rp2,5 juta"],j:2},
+      {q:"63 ÷ 7 + 5 = ?",c:["12","14","16","18"],j:1},
+      {q:"20% dari 350 = ?",c:["60","65","70","75"],j:2},
+      {q:"Pola: 2, 5, 10, 17, 26, ... ?",c:["35","36","37","38"],j:2},
+      {q:"Simpanan pokok 50 orang masing-masing Rp100.000. Total?",c:["Rp3 juta","Rp4 juta","Rp5 juta","Rp6 juta"],j:2},
+      {q:"(12 + 8) × 3 = ?",c:["54","60","66","72"],j:1},
+      {q:"Kecepatan 60km/jam, jarak 90km. Waktu tempuh?",c:["1 jam","1,5 jam","2 jam","2,5 jam"],j:1},
+      {q:"4² + 3² = ?",c:["20","22","24","25"],j:3},
+      {q:"Pola: 100, 50, 25, ... ?",c:["10","12,5","15","20"],j:1},
+      {q:"Rp500.000 dibagi 4 orang sama rata = ?",c:["Rp100.000","Rp115.000","Rp125.000","Rp150.000"],j:2},
+      {q:"35% dari 60 = ?",c:["19","21","23","25"],j:1},
+      {q:"Pola: 1, 1, 2, 3, 5, 8, ... ?",c:["11","12","13","14"],j:2},
+      {q:"Modal koperasi Rp200 juta, rugi 10%. Modal sisa?",c:["Rp160 juta","Rp170 juta","Rp180 juta","Rp190 juta"],j:2},
+      {q:"99 × 11 = ?",c:["1.069","1.089","1.099","1.109"],j:1},
+      {q:"Jika 3 orang kerja 4 hari, 6 orang selesai dalam?",c:["1 hari","2 hari","3 hari","4 hari"],j:1},
+      {q:"15² = ?",c:["200","215","225","235"],j:2},
+      {q:"Pola: 3, 6, 12, 24, ... ?",c:["36","42","48","56"],j:2},
+      {q:"Jika harga naik 20% dari Rp50.000, harga baru?",c:["Rp55.000","Rp58.000","Rp60.000","Rp65.000"],j:2},
+    ]
+  },
+  {
+    id:3, name:"Pengetahuan Umum", total:40, time:420,
+    soal:[
+      {q:"Kekuasaan tertinggi dalam koperasi dipegang oleh...",c:["Ketua","Manajer","Rapat Anggota","Pengawas"],j:2},
+      {q:"Ibu kota Indonesia saat ini (2026)?",c:["Jakarta","Surabaya","Nusantara","Bandung"],j:2},
+      {q:"Sila ke-3 Pancasila berbunyi...",c:["Ketuhanan","Kemanusiaan","Persatuan Indonesia","Kerakyatan"],j:2},
+      {q:"UU Koperasi Indonesia adalah UU nomor...",c:["UU No. 20/1992","UU No. 25/1992","UU No. 17/2012","UU No. 30/1999"],j:1},
+      {q:"Presiden RI pertama adalah...",c:["Soeharto","Soekarno","Habibie","Megawati"],j:1},
+      {q:"Kopdes Merah Putih diluncurkan tahun...",c:["2023","2024","2025","2026"],j:2},
+      {q:"Mata uang resmi Indonesia adalah...",c:["Dolar","Rupiah","Ringgit","Baht"],j:1},
+      {q:"Jumlah provinsi di Indonesia saat ini?",c:["34","36","37","38"],j:3},
+      {q:"Hari Koperasi diperingati setiap tanggal...",c:["12 Juli","17 Agustus","1 Juni","28 Oktober"],j:0},
+      {q:"Lambang negara Indonesia adalah...",c:["Banteng","Garuda Pancasila","Pohon Beringin","Padi & Kapas"],j:1},
+      {q:"Bahasa resmi Indonesia adalah...",c:["Jawa","Sunda","Bahasa Indonesia","Melayu"],j:2},
+      {q:"Prinsip koperasi '1 anggota 1 suara' mencerminkan nilai...",c:["Kemandirian","Demokrasi","Gotong royong","Modal"],j:1},
+      {q:"Proklamasi kemerdekaan RI dibacakan tanggal...",c:["17 Agustus 1945","17 Agustus 1946","18 Agustus 1945","16 Agustus 1945"],j:0},
+      {q:"WHO adalah singkatan dari...",c:["World Housing Org","World Health Organization","World Hero Org","World Help Org"],j:1},
+      {q:"Planet terbesar di tata surya adalah...",c:["Saturnus","Uranus","Jupiter","Neptunus"],j:2},
+      {q:"Bapak Koperasi Indonesia adalah...",c:["Soekarno","Mohammad Hatta","Sri Sultan","Sjahrir"],j:1},
+      {q:"SHU singkatan dari...",c:["Simpanan Harian Umum","Sisa Hasil Usaha","Simpan Hutang Utang","Sistem Harga Umum"],j:1},
+      {q:"Bendera Indonesia terdiri dari warna...",c:["Merah-Putih-Biru","Merah-Putih","Merah-Kuning-Hijau","Putih-Biru"],j:1},
+      {q:"Negara dengan penduduk terbanyak di dunia adalah...",c:["Amerika","India","China","Indonesia"],j:1},
+      {q:"Anggota ASEAN berjumlah...",c:["8","9","10","11"],j:2},
+      {q:"Gunung tertinggi di Indonesia adalah...",c:["Rinjani","Semeru","Jaya Wijaya","Kerinci"],j:2},
+      {q:"Simpanan yang TIDAK bisa ditarik selama jadi anggota koperasi?",c:["Simpanan sukarela","Simpanan wajib","Simpanan pokok","Deposito"],j:2},
+      {q:"Lagu kebangsaan Indonesia adalah...",c:["Bagimu Negeri","Indonesia Raya","Garuda Pancasila","Maju Tak Gentar"],j:1},
+      {q:"BUMN singkatan dari...",c:["Badan Usaha Milik Negara","Badan Umum Modal Negara","Biro Usaha Modal Nasional","Badan Usaha Modal Negara"],j:0},
+      {q:"Manajer koperasi bertanggung jawab kepada...",c:["Rapat Anggota","Pengawas","Pengurus","Pemerintah"],j:2},
+      {q:"Ibukota Provinsi Jawa Barat adalah...",c:["Bandung","Bogor","Bekasi","Cirebon"],j:0},
+      {q:"Laut terluas di dunia adalah...",c:["Samudra Atlantik","Samudra Hindia","Samudra Pasifik","Laut Cina Selatan"],j:2},
+      {q:"Program 80.000 koperasi desa disebut...",c:["Kopdes Nusantara","Koperasi Merah Putih","Kopdes Maju","Koperasi UMKM"],j:1},
+      {q:"UUD 1945 terdiri dari berapa pasal?",c:["35","36","37","38"],j:2},
+      {q:"Sungai terpanjang di Indonesia adalah...",c:["Sungai Musi","Sungai Mahakam","Sungai Kapuas","Sungai Barito"],j:2},
+      {q:"Nilai ambang batas Tes Potensi Kognitif KDKMP adalah...",c:["100","105","110","115"],j:2},
+      {q:"Tujuan utama koperasi adalah...",c:["Cari laba maksimal","Mensejahterakan anggota","Kalahkan pesaing","Perbesar aset"],j:1},
+      {q:"Hari Pahlawan diperingati setiap tanggal...",c:["10 November","17 Agustus","28 Oktober","20 Mei"],j:0},
+      {q:"ASEAN didirikan tahun...",c:["1965","1967","1969","1971"],j:1},
+      {q:"Pulau terbesar di Indonesia adalah...",c:["Jawa","Sumatera","Kalimantan","Papua"],j:2},
+      {q:"Komodo dragon merupakan hewan khas dari pulau...",c:["Bali","Lombok","Komodo","Flores"],j:2},
+      {q:"PBB berdiri pada tahun...",c:["1944","1945","1946","1947"],j:1},
+      {q:"Koperasi yang paling cocok untuk desa adalah tipe...",c:["Koperasi konsumen","Koperasi serba usaha","Koperasi simpan pinjam","Koperasi produksi"],j:1},
+      {q:"Mata uang Euro digunakan di kawasan...",c:["Asia","Amerika","Eropa","Afrika"],j:2},
+      {q:"Struktur di atas Pengurus dalam koperasi adalah...",c:["Manajer","Karyawan","Rapat Anggota","Direktur"],j:2},
+    ]
+  },
+  {
+    id:4, name:"Pola Gambar", total:55, time:420,
+    soal:[
+      {q:"Pola: △ ○ □ △ ○ □ △ ○ ... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola: ● ● ○ ● ● ○ ● ● ... ?",c:["●","○","△","□"],j:1},
+      {q:"Baris 1: △△△  Baris 2: ○○○  Baris 3: □□... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola: 1△ 2○ 3□ 4△ 5○ ... ?",c:["6△","6□","6○","6◇"],j:1},
+      {q:"Besar→Sedang→Kecil. Baris 2: ○○○. Baris 3: □□... ?",c:["□ besar","□ sedang","□ kecil","□□"],j:2},
+      {q:"Pola baris: △○ / ○□ / □... ?",c:["□△","△○","○□","□○"],j:0},
+      {q:"Pola: ▲ △ ▲ △ ▲ ... ?",c:["▲","△","○","□"],j:1},
+      {q:"Grid 3x3: Baris tiap baris beda bentuk. Baris3: △ ○ ... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola: ○□△ / □△○ / △○... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola warna: ● ○ ● ○ ● ... ?",c:["●","○","△","□"],j:1},
+      {q:"Urutan: □ □□ □□□ □□□□ ... ?",c:["□□□□□","□□□□□□","□□□","□□"],j:0},
+      {q:"Pola: △ △△ △△△ ... ?",c:["△△△△","△△△","△△","△"],j:0},
+      {q:"Baris 1: ●○● Baris 2: ○●○ Baris 3: ... ?",c:["●○●","○●○","●●●","○○○"],j:0},
+      {q:"Pola: ◇ □ ◇ □ ◇ ... ?",c:["◇","□","△","○"],j:1},
+      {q:"Grid: Kolom 1 semua △. Kolom 2 semua ○. Kolom 3 ... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola besar-kecil: ●○●●○○●●●... ?",c:["○○○","●●○","○●○","●○○"],j:0},
+      {q:"Pola: 1○ 2□ 3△ 4○ 5□ 6△ ... ?",c:["7△","7○","7□","7◇"],j:1},
+      {q:"Pola rotasi: △→▷→▽→◁→... ?",c:["△","▷","▽","◁"],j:0},
+      {q:"Baris 1: △△○ Baris 2: △○○ Baris 3: ... ?",c:["○○○","△○△","△△△","○△○"],j:0},
+      {q:"Pola cermin: △○□ / □○△ / △○... ?",c:["□","△","○","◇"],j:0},
+      {q:"Pola: ■ □ ■ □ □ ■ □ □ □ ... ?",c:["■","□","△","○"],j:0},
+      {q:"Urutan bentuk: ○△□○△□... Setelah □ adalah?",c:["□","△","○","◇"],j:2},
+      {q:"Pola: △ ▽ △ ▽ ... ?",c:["△","▽","○","□"],j:0},
+      {q:"Grid baris: 1=△○□ 2=○□△ 3=□△... ?",c:["○","△","□","◇"],j:0},
+      {q:"Pola penambahan: ○ ○○ ○○○ ... ?",c:["○○○○","○○○","○○","○"],j:0},
+      {q:"Pola selang: △□△□△... Elemen ke-8?",c:["△","□","○","◇"],j:1},
+      {q:"Pola: ●●○ ●○○ ○○○ ... ?",c:["●●●","●○●","○●○","○○●"],j:0},
+      {q:"Baris: ◇△ / △□ / □... ?",c:["□◇","◇△","△□","○□"],j:0},
+      {q:"Pola: □ □□ □ □□□ □ □□□□ ... ?",c:["□","□□","□□□□□","□□□□□□"],j:2},
+      {q:"Pola warna: ◆ ◆◇ ◆◆◇ ◆◆◆◇ ... ?",c:["◆◆◆◆◇","◆◆◆◇","◆◇","◆◆◇◇"],j:0},
+      {q:"Grid: Diagonal dari kiri ke kanan semua ●. Pojok kanan bawah ... ?",c:["●","○","□","△"],j:0},
+      {q:"Urutan: ▲ ▶ ▼ ◀ ▲ ▶ ▼ ... ?",c:["▲","▶","◀","▼"],j:2},
+      {q:"Pola: 3△ 2○ 1□ 3△ 2○ ... ?",c:["1○","1□","2□","3□"],j:1},
+      {q:"Baris 1: ○○○ Baris 2: ●○● Baris 3: ... ?",c:["●●●","○●○","●○●","○○○"],j:2},
+      {q:"Pola: □ △ ○ □□ △△ ○○ □□□ ... ?",c:["△△△","○○○","□□□□","△△"],j:0},
+      {q:"Pola: ▽ △ ▽▽ △△ ▽▽▽ ... ?",c:["△△△","△△","▽▽▽▽","▽▽"],j:0},
+      {q:"Grid 3x3: Baris 1 = ○□△. Baris 2 = □△○. Baris 3 = △○... ?",c:["△","○","□","◇"],j:2},
+      {q:"Pola bentuk ganda: ○□ □△ △○ ○□ □△ ... ?",c:["△○","○□","□△","○△"],j:0},
+      {q:"Pola naik: 1□ 2□ 4□ 8□ ... ?",c:["12□","14□","16□","18□"],j:2},
+      {q:"Pola: ◇◇○ ◇○○ ○○○ ◇◇◇ ... ?",c:["◇◇○","◇○○","○◇○","◇○◇"],j:0},
+      {q:"Pola: △ ○ △△ ○○ △△△ ... ?",c:["○○○","△△","△△△△","○○△"],j:0},
+      {q:"Grid diagonal: pojok kiri atas △. Tengah ○. Pojok kanan bawah ... ?",c:["△","○","□","◇"],j:0},
+      {q:"Pola bolak: ▲▽▲▽... Elemen ke-10?",c:["▲","▽","○","□"],j:1},
+      {q:"Pola: ■■□ ■□□ □□□ ■■■ ... ?",c:["■■□","■□□","□■□","■■■"],j:0},
+      {q:"Urutan: ○△□◇ ○△□◇ ... Elemen ke-9?",c:["○","△","□","◇"],j:0},
+      {q:"Pola: 1● 2○ 1● 3○ 1● 4○ ... ?",c:["1● 5○","2● 5○","1○ 5●","5● 1○"],j:0},
+      {q:"Baris: △○□ / ○□△ / □△○. Kolom 1 elemen ke-4?",c:["△","○","□","◇"],j:0},
+      {q:"Pola: ◆□◆□□◆□□□... ?",c:["◆","◆□","□□□□","□◆"],j:2},
+      {q:"Pola ganda: △△ ○○ □□ △△△ ○○○ ... ?",c:["□□□","△△△","○□○","△○△"],j:0},
+      {q:"Pola: ○ ○□ ○□△ ○□△◇ ... ?",c:["○□△◇○","○□△","○□","◇○□△◇"],j:3},
+      {q:"Pola: □△□ / △□△ / □△... ?",c:["△","□","○","◇"],j:0},
+      {q:"Pola: ▲▲▲ / ▽▽ / ▲ / ▽▽▽▽ ... ?",c:["▲▲▲▲▲","▽▽","▲▲","▲▲▲▲▲"],j:0},
+      {q:"Pola: △○□ △○□△○ △○□△○□... Elemen ke-10?",c:["△","○","□","◇"],j:0},
+      {q:"Baris simetri: ○□△□○ / △○□○△ / □△○△... ?",c:["□","○","△","◇"],j:0},
+      {q:"Pola: 1△2○3□ 2△3○4□ 3△4○5□ ... ?",c:["4△5○6□","3△4○5□","4△3○2□","5△4○3□"],j:0},
+    ]
+  },
+  {
+    id:5, name:"Abstraksi Ruang", total:27, time:420,
+    soal:[
+      {q:"Kubus dilihat dari depan berbentuk... ?",c:["Lingkaran","Persegi","Segitiga","Trapesium"],j:1},
+      {q:"Bayangan benda berbentuk segitiga jika sumber cahaya dari atas adalah...",c:["Lingkaran","Persegi","Segitiga","Garis"],j:2},
+      {q:"Persegi panjang diputar 90° searah jarum jam, sisi yang tadinya panjang kini menjadi...",c:["Tetap panjang","Sisi atas","Sisi kiri","Sisi pendek"],j:1},
+      {q:"Jika kotak berada di KIRI lingkaran, dan lingkaran di KIRI segitiga, maka segitiga berada di ... kotak?",c:["Kiri","Kanan","Atas","Bawah"],j:1},
+      {q:"Segitiga sama sisi diputar 120°, bentuknya...",c:["Berubah","Sama persis","Terbalik","Lebih kecil"],j:1},
+      {q:"Kubus memiliki berapa rusuk?",c:["8","10","12","14"],j:2},
+      {q:"Bola dilihat dari sudut manapun berbentuk...",c:["Elips","Lingkaran","Oval","Sama"],j:1},
+      {q:"Huruf 'b' jika dicerminkan secara horizontal menjadi...",c:["d","p","q","b"],j:0},
+      {q:"Jika △ ada di atas ○ dan ○ ada di atas □, maka □ ada di posisi...",c:["Paling atas","Tengah","Paling bawah","Tidak tentu"],j:2},
+      {q:"Kubus dipotong tepat di tengah secara horizontal, penampangnya...",c:["Lingkaran","Segitiga","Persegi","Trapesium"],j:2},
+      {q:"Panah → diputar 180°, menjadi...",c:["↑","↓","←","→"],j:2},
+      {q:"Bayangan segitiga siku-siku jika cahaya dari samping kanan adalah...",c:["Segitiga","Persegi","Garis","Lingkaran"],j:0},
+      {q:"Huruf 'p' dicerminkan secara vertikal menjadi...",c:["d","b","q","p"],j:2},
+      {q:"Kerucut dilihat dari atas berbentuk...",c:["Segitiga","Persegi","Lingkaran","Oval"],j:2},
+      {q:"Jika A ada di utara B dan B ada di utara C, maka A ada di ... C?",c:["Selatan","Utara","Barat","Timur"],j:1},
+      {q:"Silinder dilihat dari samping berbentuk...",c:["Lingkaran","Segitiga","Persegi panjang","Oval"],j:2},
+      {q:"Huruf 'Z' diputar 90° searah jarum jam menjadi...",c:["N","S","Z","?"],j:1},
+      {q:"Benda yang diletakkan di depan cermin datar, bayangannya...",c:["Sama besar","Lebih besar","Lebih kecil","Terbalik atas-bawah"],j:0},
+      {q:"Kubus memiliki berapa sisi?",c:["4","5","6","8"],j:2},
+      {q:"Jika benda bergerak ke KANAN 3 langkah lalu ke ATAS 2 langkah, posisinya dari awal?",c:["Kiri atas","Kanan atas","Kiri bawah","Kanan bawah"],j:1},
+      {q:"Segitiga sama kaki dicerminkan secara vertikal, bentuknya...",c:["Berubah total","Sama persis","Lebih lebar","Lebih kecil"],j:1},
+      {q:"Tabung dipotong miring, penampangnya berbentuk...",c:["Lingkaran","Elips","Persegi","Segitiga"],j:1},
+      {q:"Panah ↑ diputar 90° berlawanan jarum jam menjadi...",c:["→","←","↓","↑"],j:0},
+      {q:"Jika bayangan ada di sebelah kiri benda, cahaya datang dari...",c:["Kiri","Kanan","Atas","Bawah"],j:1},
+      {q:"Kerucut dilihat dari samping berbentuk...",c:["Lingkaran","Segitiga","Persegi","Trapesium"],j:1},
+      {q:"Huruf 'q' dicerminkan horizontal menjadi...",c:["p","b","d","q"],j:0},
+      {q:"Bola digantung di langit-langit, bayangannya di lantai berbentuk...",c:["Elips","Lingkaran","Oval","Tidak beraturan"],j:1},
+    ]
+  },
+  {
+    id:6, name:"Bentuk", total:25, time:420,
+    soal:[
+      {q:"Manakah yang BISA dilipat menjadi kubus? (A) jaring 6 kotak + / (B) 4 kotak lurus / (C) 3 kotak L / (D) 2 kotak saja",c:["A — jaring +","B — 4 lurus","C — 3 kotak L","D — 2 kotak"],j:0},
+      {q:"Potongan mana yang MELENGKAPI segitiga menjadi persegi? (A) segitiga / (B) lingkaran / (C) persegi panjang / (D) trapesium",c:["Segitiga","Lingkaran","Persegi panjang","Trapesium"],j:0},
+      {q:"3 bagian: □ + □ + △ bisa membentuk...",c:["Persegi panjang+segitiga","Hanya persegi","Hanya segitiga","Lingkaran"],j:0},
+      {q:"Bentuk L + bentuk L terbalik = ...",c:["Persegi panjang","Segitiga","Lingkaran","Trapesium"],j:0},
+      {q:"Dua segitiga siku-siku yang identik bisa membentuk...",c:["Persegi panjang","Lingkaran","Bintang","Pentagon"],j:0},
+      {q:"Potongan mana yang TIDAK bisa membentuk persegi? (A) 4 segitiga sama kaki / (B) 2 persegi panjang / (C) 1 lingkaran / (D) 4 persegi kecil",c:["4 segitiga","2 persegi panjang","1 lingkaran","4 persegi kecil"],j:2},
+      {q:"□□ + □□ (4 kotak 2x2) bisa membentuk...",c:["Persegi besar","Garis lurus","Segitiga","Lingkaran"],j:0},
+      {q:"Trapesium + segitiga terbalik = ...",c:["Persegi panjang","Lingkaran","Pentagon","Jajaran genjang"],j:0},
+      {q:"Bentuk yang memiliki 4 sisi sama panjang dan 4 sudut siku-siku adalah...",c:["Persegi panjang","Jajar genjang","Persegi","Belah ketupat"],j:2},
+      {q:"Dua segitiga sama sisi yang identik digabung sisi terpanjang = ...",c:["Belah ketupat","Persegi","Trapesium","Lingkaran"],j:0},
+      {q:"Bangun mana yang simetri terhadap SEMUA garisnya?",c:["Segitiga sama kaki","Persegi panjang","Lingkaran","Jajar genjang"],j:2},
+      {q:"3 persegi identik disusun lurus = ...",c:["Persegi panjang 3:1","Persegi","Segitiga","L-shape"],j:0},
+      {q:"Potongan ¼ lingkaran × 4 = ...",c:["Lingkaran","Persegi","Bintang","Setengah lingkaran"],j:0},
+      {q:"Gabungan 2 persegi panjang membentuk huruf T, totalnya berbentuk...",c:["T / plus","Segitiga","Lingkaran","Kubus"],j:0},
+      {q:"Berapa sisi yang dimiliki segi-6 (hexagon)?",c:["5","6","7","8"],j:1},
+      {q:"Potongan A = setengah lingkaran atas. Potongan B = setengah lingkaran bawah. A+B = ...",c:["Lingkaran","Elips","Oval","Persegi"],j:0},
+      {q:"Bentuk yang memiliki semua sisi sama panjang tapi sudutnya bukan 90° adalah...",c:["Persegi","Belah ketupat","Persegi panjang","Trapesium"],j:1},
+      {q:"Potongan mana yang MELENGKAPI persegi panjang menjadi bujur sangkar?",c:["Persegi kecil","Segitiga","Lingkaran","Trapesium"],j:0},
+      {q:"4 segitiga sama sisi bisa membentuk...",c:["Persegi besar","Jajar genjang","Segitiga lebih besar","Lingkaran"],j:2},
+      {q:"Bentuk dengan 0 sudut adalah...",c:["Segitiga","Persegi","Lingkaran","Pentagon"],j:2},
+      {q:"Dua trapesium identik digabung = ...",c:["Jajar genjang","Segitiga","Lingkaran","Bintang"],j:0},
+      {q:"L-shape terdiri dari berapa persegi satuan minimal?",c:["2","3","4","5"],j:1},
+      {q:"Bentuk yang sama dari depan, samping, dan atas adalah...",c:["Kubus","Balok","Kerucut","Silinder"],j:0},
+      {q:"Setengah persegi panjang yang dipotong diagonal menghasilkan...",c:["2 segitiga","2 persegi","2 lingkaran","1 trapesium"],j:0},
+      {q:"Bintang 5 ujung bisa dibagi menjadi berapa segitiga?",c:["3","4","5","6"],j:2},
+    ]
+  },
+  {
+    id:7, name:"Manajemen Koperasi", total:20, time:1200,
+    soal:[
+      {q:"Kekuasaan tertinggi dalam koperasi dipegang oleh...",c:["Ketua pengurus","Manajer","Rapat Anggota (RAT)","Pengawas"],j:2},
+      {q:"SHU singkatan dari...",c:["Simpanan Harian Umum","Sisa Hasil Usaha","Simpan Hutang Utang","Sistem Harga Usaha"],j:1},
+      {q:"Prinsip koperasi '1 anggota 1 suara' mencerminkan nilai...",c:["Kemandirian","Demokrasi","Modal","Gotong royong"],j:1},
+      {q:"SHU dibagikan berdasarkan...",c:["Besarnya modal awal","Lamanya jadi anggota","Besarnya transaksi anggota","Jabatan dalam koperasi"],j:2},
+      {q:"Simpanan yang TIDAK bisa ditarik selama jadi anggota koperasi?",c:["Simpanan sukarela","Simpanan wajib","Simpanan pokok","Tabungan berjangka"],j:2},
+      {q:"Manajer koperasi bertanggung jawab kepada...",c:["Rapat Anggota","Pengawas","Pengurus","Pemerintah desa"],j:2},
+      {q:"Kuorum Rapat Anggota minimal dihadiri...",c:["25% anggota","33% anggota","Lebih dari 50% anggota","75% anggota"],j:2},
+      {q:"Fungsi utama Pengawas dalam koperasi adalah...",c:["Menjalankan operasional","Mengawasi kinerja pengurus","Membagi SHU","Mengangkat manajer"],j:1},
+      {q:"UU yang mengatur koperasi di Indonesia adalah...",c:["UU No. 20/1992","UU No. 25/1992","UU No. 17/2012","UU No. 40/2007"],j:1},
+      {q:"Kopdes Merah Putih memiliki berapa unit usaha utama?",c:["4","5","6","7"],j:2},
+      {q:"Modal koperasi yang berasal dari luar anggota disebut...",c:["Simpanan pokok","Modal sendiri","Modal pinjaman","SHU"],j:2},
+      {q:"Perbedaan koperasi dengan PT (perseroan) dalam hal suara adalah...",c:["Sama-sama proporsional modal","Koperasi: 1 anggota 1 suara","PT: 1 orang 1 suara","Keduanya sama"],j:1},
+      {q:"Rapat Anggota Tahunan (RAT) diadakan minimal...",c:["Setiap 6 bulan","Setahun sekali","Setiap 2 tahun","Sesuai kebutuhan"],j:1},
+      {q:"Tujuan utama koperasi adalah...",c:["Mencari laba sebesar-besarnya","Mensejahterakan anggota","Mengalahkan pesaing","Memperbesar aset"],j:1},
+      {q:"Dalam Kopdes, unit simpan pinjam berfungsi untuk...",c:["Jual sembako","Layanan kredit warga desa","Distribusi pupuk","Jual LPG"],j:1},
+      {q:"Simpanan sukarela dalam koperasi...",c:["Tidak bisa ditarik","Bisa ditarik kapan saja","Hanya bisa ditarik saat RAT","Hanya bisa ditarik setahun sekali"],j:1},
+      {q:"Bapak Koperasi Indonesia adalah...",c:["Soekarno","Sri Sultan","Mohammad Hatta","Sjahrir"],j:2},
+      {q:"Dalam pembagian SHU, yang mendapat porsi lebih besar adalah anggota yang...",c:["Paling lama jadi anggota","Simpanannya paling besar","Paling sering transaksi di koperasi","Jabatannya paling tinggi"],j:2},
+      {q:"Hari Koperasi Indonesia diperingati setiap tanggal...",c:["1 Juni","12 Juli","17 Agustus","28 Oktober"],j:1},
+      {q:"Pengurus koperasi dipilih oleh...",c:["Pemerintah desa","Manajer","Rapat Anggota","Pengawas"],j:2},
+    ]
+  }
+];
+
+let currentSubtesIdx = 0;
+let currentSoalIdx = 0;
+let timer = null;
+let timeLeft = 0;
+let scores = [];
+let answered = false;
+
+function startTest() {
+  currentSubtesIdx = 0;
+  scores = SUBTESTS.map(s => ({name: s.name, total: s.total, benar: 0, dijawab: 0}));
+  document.getElementById('welcomeScreen').style.display = 'none';
+  showTransition(true);
+}
+
+function showTransition(isFirst) {
+  clearTimer();
+  const sub = SUBTESTS[currentSubtesIdx];
+  document.getElementById('testScreen').style.display = 'none';
+  document.getElementById('scoreScreen').style.display = 'none';
+  document.getElementById('transitionScreen').style.display = 'block';
+
+  if (isFirst) {
+    document.getElementById('tr-title').textContent = 'Siap Memulai Tes!';
+    document.getElementById('tr-prev-score').style.display = 'none';
+    document.getElementById('tr-desc').textContent = 'Kerjakan setiap soal secepat mungkin. Timer berjalan otomatis per subtes.';
+  } else {
+    const prev = scores[currentSubtesIdx - 1];
+    document.getElementById('tr-title').textContent = 'Subtes Selesai!';
+    document.getElementById('tr-prev-score').style.display = 'block';
+    document.getElementById('tr-score-val').textContent = prev.benar + ' / ' + prev.dijawab + ' benar';
+    document.getElementById('tr-desc').textContent = 'Bersiaplah untuk subtes berikutnya.';
+  }
+
+  document.getElementById('tr-next-name').textContent = 'Subtes ' + sub.id + ': ' + sub.name;
+  document.getElementById('tr-next-detail').textContent = sub.total + ' soal · ' + (sub.time/60) + ' menit';
+}
+
+function startSubtes() {
+  currentSoalIdx = 0;
+  answered = false;
+  document.getElementById('transitionScreen').style.display = 'none';
+  document.getElementById('testScreen').style.display = 'block';
+
+  const sub = SUBTESTS[currentSubtesIdx];
+  document.getElementById('subtesLabel').textContent = 'Subtes ' + sub.id + ' dari 7';
+  document.getElementById('subtesName').textContent = sub.name;
+
+  timeLeft = sub.time;
+  updateTimer();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) {
+      clearTimer();
+      nextSubtes();
+    }
+  }, 1000);
+
+  showSoal();
+}
+
+function showSoal() {
+  answered = false;
+  const sub = SUBTESTS[currentSubtesIdx];
+  const soalArr = sub.soal;
+  const idx = currentSoalIdx % soalArr.length;
+  const s = soalArr[idx];
+
+  document.getElementById('qNum').textContent = 'Soal ' + (currentSoalIdx + 1);
+  document.getElementById('qProg').textContent = (currentSoalIdx + 1) + ' / ' + sub.total;
+  document.getElementById('qText').textContent = s.q;
+
+  const pct = (currentSoalIdx / sub.total) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  const cd = document.getElementById('choicesDiv');
+  cd.innerHTML = '';
+  s.c.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = '<span class="choice-key">' + ['A','B','C','D'][i] + '</span>' + choice;
+    btn.onclick = () => pilihJawaban(i, s.j, btn);
+    cd.appendChild(btn);
+  });
+}
+
+function pilihJawaban(idx, correct, btn) {
+  if (answered) return;
+  answered = true;
+
+  scores[currentSubtesIdx].dijawab++;
+  const isBenar = idx === correct;
+  if (isBenar) scores[currentSubtesIdx].benar++;
+
+  const allBtns = document.querySelectorAll('.choice-btn');
+  allBtns.forEach((b, i) => {
+    b.onclick = null;
+    if (i === correct) b.classList.add('reveal-correct');
+  });
+  if (!isBenar) btn.classList.add('selected-wrong');
+
+  setTimeout(() => {
+    currentSoalIdx++;
+    if (currentSoalIdx >= SUBTESTS[currentSubtesIdx].total) {
+      nextSubtes();
+    } else {
+      showSoal();
+    }
+  }, 300);
+}
+
+function nextSubtes() {
+  clearTimer();
+  currentSubtesIdx++;
+  if (currentSubtesIdx >= SUBTESTS.length) {
+    showFinalScore();
+  } else {
+    showTransition(false);
+  }
+}
+
+function showFinalScore() {
+  document.getElementById('testScreen').style.display = 'none';
+  document.getElementById('transitionScreen').style.display = 'none';
+  document.getElementById('scoreScreen').style.display = 'block';
+
+  const totalBenar = scores.reduce((a, s) => a + s.benar, 0);
+  const totalSoal = scores.reduce((a, s) => a + s.dijawab, 0);
+
+  document.getElementById('scoreBig').textContent = totalBenar;
+  document.getElementById('scoreSub').textContent = 'dari ' + totalSoal + ' soal dikerjakan';
+
+  const tbody = document.getElementById('scoreTableBody');
+  tbody.innerHTML = '';
+  scores.forEach(s => {
+    const pct = s.dijawab > 0 ? Math.round(s.benar / s.dijawab * 100) : 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + s.name + '</td><td class="right">' + s.benar + '</td><td>' + s.dijawab + '</td><td class="pct">' + pct + '%</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function updateTimer() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2,'0');
+  const s = (timeLeft % 60).toString().padStart(2,'0');
+  const el = document.getElementById('timerVal');
+  el.textContent = m + ':' + s;
+  el.className = 'timer-val';
+  if (timeLeft <= 60) el.classList.add('danger');
+  else if (timeLeft <= 120) el.classList.add('warn');
+}
+
+function clearTimer() {
+  if (timer) { clearInterval(timer); timer = null; }
+}
+
+function restartTest() {
+  document.getElementById('scoreScreen').style.display = 'none';
+  document.getElementById('welcomeScreen').style.display = 'block';
+}
+</script>
+</body>
+</html>
