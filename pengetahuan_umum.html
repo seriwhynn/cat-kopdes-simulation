@@ -49,6 +49,135 @@ button {
     background: blue;
     display: none;
 }
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:system-ui,sans-serif;
+  background:#f5f5f0;
+  margin:0;
+  padding:12px;
+}
+
+/* CARD (sudah responsive) */
+.card{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 2px 16px rgba(0,0,0,.08);
+  width:100%;
+  max-width:520px;
+  margin:20px auto;
+  overflow:hidden;
+}
+
+/* WELCOME */
+.welcome{padding:24px 18px;text-align:center;}
+.welcome h1{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
+.welcome p{font-size:14px;color:#666;margin-bottom:20px;line-height:1.6;}
+
+/* GRID */
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:24px;
+}
+.info-cell{
+  background:#f8f8f5;
+  border-radius:10px;
+  padding:12px;
+  text-align:center;
+}
+.info-cell .num{font-size:20px;font-weight:700;color:#1a1a1a;}
+.info-cell .lbl{font-size:12px;color:#888;margin-top:2px;}
+
+/* BUTTON */
+.btn-start{
+  background:#1a1a1a;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  width:100%;
+}
+
+/* TEST SCREEN */
+.test-screen{display:none;}
+
+.top-bar{
+  background:#1a1a1a;
+  padding:12px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.subtes-label{font-size:11px;color:#aaa;}
+.subtes-name{font-size:13px;font-weight:600;color:#fff;margin-top:2px;}
+
+.timer-wrap{text-align:right;}
+.timer-label{font-size:10px;color:#aaa;}
+.timer-val{font-size:20px;font-weight:700;color:#fff;}
+
+.progress-bar-wrap{height:4px;background:#333;}
+.progress-bar{height:4px;background:#22c55e;}
+
+.question-area{padding:18px 14px;}
+
+.q-meta{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.q-num{font-size:11px;color:#888;}
+.q-prog{font-size:11px;color:#bbb;}
+
+.q-text{
+  font-size:15px;
+  color:#1a1a1a;
+  margin-bottom:16px;
+  line-height:1.5;
+}
+
+/* CHOICES */
+.choices{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:0 14px 20px;
+}
+
+.choice-btn{
+  background:#f8f8f5;
+  border:1px solid #e8e8e0;
+  border-radius:10px;
+  padding:12px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* SCORE */
+.score-screen{display:none;padding:24px 16px;text-align:center;}
+.score-big{font-size:40px;font-weight:800;margin:10px 0;}
+.btn-restart{
+  background:#1a1a1a;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:12px;
+  width:100%;
+}
+
+/* RESPONSIVE TAMBAHAN */
+@media (max-width:480px){
+  .welcome h1{font-size:18px;}
+  .q-text{font-size:14px;}
+  .choice-btn{font-size:13px;}
+}
+</style>
 </style>
 </head>
 <body>
