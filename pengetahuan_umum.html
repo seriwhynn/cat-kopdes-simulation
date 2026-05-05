@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>TO Pengetahuan Umum</title>
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    background: #1c1c1c;
+    padding: 25px;
+    border-radius: 15px;
+    width: 450px;
+}
+.timer {
+    text-align: center;
+    color: red;
+}
+.progress {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+.question {
+    margin: 15px 0;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.correct { background: green !important; }
+.wrong { background: red !important; }
+.next-btn {
+    margin-top: 10px;
+    background: blue;
+    display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2 align="center">Pengetahuan Umum</h2>
+<div class="timer" id="timer">07:00</div>
+<div class="progress" id="progress"></div>
+<div id="quiz"></div>
+<button class="next-btn" id="nextBtn">Next</button>
+</div>
+
+<script>
+
+let questions = [
+{q:"Planet terbesar?",o:["Mars","Jupiter","Bumi","Venus"],a:"Jupiter",e:"Jupiter terbesar di tata surya."},
+{q:"Planet terpanas?",o:["Merkurius","Venus","Mars","Bumi"],a:"Venus",e:"Venus panas karena efek rumah kaca."},
+{q:"Planet terdekat?",o:["Venus","Mars","Merkurius","Bumi"],a:"Merkurius",e:"Merkurius paling dekat matahari."},
+{q:"Matahari adalah?",o:["Planet","Bintang","Satelit","Asteroid"],a:"Bintang",e:"Matahari menghasilkan cahaya sendiri."},
+{q:"Air jadi uap?",o:["Kondensasi","Evaporasi","Sublimasi","Presipitasi"],a:"Evaporasi",e:"Evaporasi = penguapan."},
+{q:"Uap jadi air?",o:["Evaporasi","Kondensasi","Pembekuan","Sublimasi"],a:"Kondensasi",e:"Kondensasi = uap ke cair."},
+{q:"Air jadi es?",o:["Kondensasi","Pembekuan","Sublimasi","Evaporasi"],a:"Pembekuan",e:"Pembekuan = cair ke padat."},
+{q:"Hujan disebut?",o:["Evaporasi","Presipitasi","Sublimasi","Difusi"],a:"Presipitasi",e:"Presipitasi = turunnya hujan."},
+{q:"1 km = ?",o:["100","500","1000","2000"],a:"1000",e:"1 km = 1000 meter."},
+{q:"Air membeku?",o:["0°C","50°C","100°C","-10°C"],a:"0°C",e:"Air beku di 0°C."},
+
+{q:"Air mendidih?",o:["0°C","50°C","100°C","200°C"],a:"100°C",e:"Air mendidih 100°C."},
+{q:"Satuan gaya?",o:["Joule","Watt","Newton","Pascal"],a:"Newton",e:"Gaya = Newton."},
+{q:"Satuan energi?",o:["Joule","Watt","Newton","Pascal"],a:"Joule",e:"Energi = Joule."},
+{q:"Satuan daya?",o:["Joule","Watt","Newton","Pascal"],a:"Watt",e:"Daya = Watt."},
+{q:"Gas napas?",o:["CO2","O2","H2","N2"],a:"O2",e:"Manusia butuh oksigen."},
+{q:"Organ napas?",o:["Jantung","Paru","Ginjal","Hati"],a:"Paru",e:"Paru untuk napas."},
+{q:"Fungsi jantung?",o:["Pompa darah","Saring darah","Buat oksigen","Serap nutrisi"],a:"Pompa darah",e:"Jantung memompa darah."},
+{q:"Fotosintesis di?",o:["Akar","Batang","Daun","Buah"],a:"Daun",e:"Terjadi di daun."},
+{q:"Rumus air?",o:["CO2","H2O","O2","H2"],a:"H2O",e:"Air = H2O."},
+{q:"Garam dapur?",o:["NaCl","HCl","CO2","O2"],a:"NaCl",e:"Garam = NaCl."},
+
+{q:"pH netral?",o:["0","5","7","10"],a:"7",e:"Netral = 7."},
+{q:"Asam rasanya?",o:["Manis","Pahit","Asam","Asin"],a:"Asam",e:"Asam = masam."},
+{q:"Penemu lampu?",o:["Newton","Edison","Tesla","Bell"],a:"Edison",e:"Edison penemu lampu."},
+{q:"Penemu telepon?",o:["Edison","Bell","Newton","Faraday"],a:"Bell",e:"Bell penemu telepon."},
+{q:"Penemu radio?",o:["Bell","Marconi","Edison","Tesla"],a:"Marconi",e:"Marconi radio."},
+{q:"Teori gravitasi?",o:["Einstein","Newton","Tesla","Darwin"],a:"Newton",e:"Newton gravitasi."},
+{q:"1 jam?",o:["30 m","60 m","100 m","120 m"],a:"60 m",e:"1 jam = 60 menit."},
+{q:"1 hari?",o:["12 jam","24 jam","48 jam","60 jam"],a:"24 jam",e:"1 hari = 24 jam."},
+{q:"Matahari terbit?",o:["Barat","Timur","Utara","Selatan"],a:"Timur",e:"Terbit di timur."},
+{q:"Terbenam?",o:["Timur","Barat","Utara","Selatan"],a:"Barat",e:"Terbenam barat."},
+
+{q:"Planet merah?",o:["Venus","Mars","Bumi","Jupiter"],a:"Mars",e:"Mars planet merah."},
+{q:"Planet bercincin?",o:["Mars","Jupiter","Saturnus","Venus"],a:"Saturnus",e:"Saturnus bercincin."},
+{q:"Planet terbesar?",o:["Mars","Jupiter","Venus","Bumi"],a:"Jupiter",e:"Jupiter terbesar."},
+{q:"Bunyi tak merambat di?",o:["Air","Udara","Besi","Vakum"],a:"Vakum",e:"Butuh medium."},
+{q:"Cahaya merambat?",o:["Lurus","Zigzag","Acak","Melengkung"],a:"Lurus",e:"Cahaya lurus."},
+{q:"Bayangan pendek?",o:["Pagi","Siang","Sore","Malam"],a:"Siang",e:"Siang paling pendek."},
+{q:"1 liter?",o:["100ml","500ml","1000ml","2000ml"],a:"1000ml",e:"1L = 1000ml."},
+{q:"1 kg?",o:["100g","500g","1000g","2000g"],a:"1000g",e:"1kg=1000g."},
+{q:"Bumi kita?",o:["Planet","Bintang","Satelit","Komet"],a:"Planet",e:"Bumi adalah planet."},
+{q:"Matahari pusat?",o:["Bumi","Tata surya","Galaksi","Planet"],a:"Tata surya",e:"Pusat tata surya."}
+];
+
+let current=0,score=0,answers=[],answered=false;
+
+const quiz=document.getElementById("quiz");
+const nextBtn=document.getElementById("nextBtn");
+const progress=document.getElementById("progress");
+
+function load(){
+answered=false;
+nextBtn.style.display="none";
+quiz.innerHTML="";
+progress.innerText="Soal "+(current+1)+" / "+questions.length;
+
+let q=document.createElement("div");
+q.className="question";
+q.innerText=questions[current].q;
+quiz.appendChild(q);
+
+questions[current].o.forEach(opt=>{
+let b=document.createElement("button");
+b.innerText=opt;
+b.onclick=()=>{
+if(answered)return;
+answered=true;
+
+answers.push({q:questions[current].q,u:opt,c:questions[current].a,e:questions[current].e});
+
+if(opt===questions[current].a){b.classList.add("correct");score++;}
+else{b.classList.add("wrong");}
+
+nextBtn.style.display="block";
+};
+quiz.appendChild(b);
+});
+}
+
+nextBtn.onclick=()=>{
+current++;
+if(current<questions.length)load();
+else show();
+};
+
+function show(){
+quiz.innerHTML="<h3>Skor: "+score+" / "+questions.length+"</h3>";
+progress.innerText="Pembahasan";
+
+answers.forEach((a,i)=>{
+quiz.innerHTML+=`<p><b>${i+1}. ${a.q}</b><br>
+Jawaban kamu: ${a.u}<br>
+Benar: ${a.c}<br>
+${a.e}</p><hr>`;
+});
+
+nextBtn.style.display="none";
+}
+
+load();
+
+//timer
+let t=420;
+let timer=setInterval(()=>{
+let m=Math.floor(t/60),s=t%60;
+document.getElementById("timer").innerText=(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
+t--;
+if(t<0){clearInterval(timer);alert("Waktu habis");}
+},1000);
+
+</script>
+</body>
+</html>
