@@ -2,308 +2,246 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>TO Pengetahuan Umum</title>
-<style>
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #0f0f0f;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-.container {
-    background: #1c1c1c;
-    padding: 25px;
-    border-radius: 15px;
-    width: 450px;
-}
-.timer {
-    text-align: center;
-    color: red;
-}
-.progress {
-    text-align: center;
-    color: #aaa;
-    margin-bottom: 10px;
-}
-.question {
-    margin: 15px 0;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    background: #333;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.correct { background: green !important; }
-.wrong { background: red !important; }
-.next-btn {
-    margin-top: 10px;
-    background: blue;
-    display: none;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Pengetahuan Umum</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-
-body{
-  font-family:system-ui,sans-serif;
-  background:#f5f5f0;
-  margin:0;
-  padding:12px;
-}
-
-/* CARD (sudah responsive) */
-.card{
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 2px 16px rgba(0,0,0,.08);
-  width:100%;
-  max-width:520px;
-  margin:20px auto;
-  overflow:hidden;
-}
+body{font-family:system-ui,sans-serif;background:#f5f5f0;padding:12px;min-height:100vh;}
+.quiz-wrap{width:100%;max-width:560px;margin:20px auto;}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);overflow:hidden;}
 
 /* WELCOME */
-.welcome{padding:24px 18px;text-align:center;}
-.welcome h1{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
-.welcome p{font-size:14px;color:#666;margin-bottom:20px;line-height:1.6;}
+.welcome{padding:28px 20px;text-align:center;}
+.welcome h1{font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:8px;}
+.welcome p{font-size:14px;color:#666;margin-bottom:22px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.info-cell{background:#f8f8f5;border-radius:10px;padding:12px;text-align:center;}
+.info-cell .num{font-size:22px;font-weight:600;color:#1a1a1a;}
+.info-cell .lbl{font-size:12px;color:#888;margin-top:3px;}
+.btn-start{background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;transition:background .2s;}
+.btn-start:hover{background:#333;}
 
-/* GRID */
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:24px;
-}
-.info-cell{
-  background:#f8f8f5;
-  border-radius:10px;
-  padding:12px;
-  text-align:center;
-}
-.info-cell .num{font-size:20px;font-weight:700;color:#1a1a1a;}
-.info-cell .lbl{font-size:12px;color:#888;margin-top:2px;}
-
-/* BUTTON */
-.btn-start{
-  background:#1a1a1a;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:14px;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  width:100%;
-}
-
-/* TEST SCREEN */
+/* TEST */
 .test-screen{display:none;}
-
-.top-bar{
-  background:#1a1a1a;
-  padding:12px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.subtes-label{font-size:11px;color:#aaa;}
-.subtes-name{font-size:13px;font-weight:600;color:#fff;margin-top:2px;}
-
-.timer-wrap{text-align:right;}
-.timer-label{font-size:10px;color:#aaa;}
-.timer-val{font-size:20px;font-weight:700;color:#fff;}
-
-.progress-bar-wrap{height:4px;background:#333;}
-.progress-bar{height:4px;background:#22c55e;}
-
-.question-area{padding:18px 14px;}
-
-.q-meta{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-.q-num{font-size:11px;color:#888;}
-.q-prog{font-size:11px;color:#bbb;}
-
-.q-text{
-  font-size:15px;
-  color:#1a1a1a;
-  margin-bottom:16px;
-  line-height:1.5;
-}
-
-/* CHOICES */
-.choices{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  padding:0 14px 20px;
-}
-
-.choice-btn{
-  background:#f8f8f5;
-  border:1px solid #e8e8e0;
-  border-radius:10px;
-  padding:12px;
-  font-size:14px;
-  cursor:pointer;
-}
+.top-bar{background:#1a1a1a;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;}
+.subtes-name{font-size:14px;font-weight:500;color:#fff;}
+.timer-val{font-size:22px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;}
+.timer-danger{color:#f87171!important;}
+.prog-bar-wrap{height:3px;background:#333;}
+.prog-bar{height:3px;background:#22c55e;transition:width .3s;}
+.q-area{padding:18px 16px 10px;}
+.q-meta{display:flex;justify-content:space-between;margin-bottom:10px;}
+.q-num{font-size:12px;color:#888;}
+.q-text{font-size:15px;color:#1a1a1a;line-height:1.6;}
+.choices{display:flex;flex-direction:column;gap:8px;padding:10px 16px 16px;}
+.choice-btn{background:#f8f8f5;border:1px solid #e8e8e0;border-radius:10px;padding:12px 14px;font-size:14px;color:#1a1a1a;cursor:pointer;text-align:left;transition:background .15s,border .15s;}
+.choice-btn:hover:not(:disabled){background:#f0f0ea;border-color:#ccc;}
+.choice-btn:disabled{cursor:default;}
+.choice-correct{background:#dcfce7!important;border-color:#86efac!important;color:#166534!important;font-weight:500;}
+.choice-wrong{background:#fee2e2!important;border-color:#fca5a5!important;color:#991b1b!important;}
+.next-btn{display:none;width:calc(100% - 32px);margin:0 16px 16px;background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;}
+.next-btn:hover{background:#333;}
 
 /* SCORE */
-.score-screen{display:none;padding:24px 16px;text-align:center;}
-.score-big{font-size:40px;font-weight:800;margin:10px 0;}
-.btn-restart{
-  background:#1a1a1a;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:12px;
-  width:100%;
-}
+.score-screen{display:none;padding:24px 16px;}
+.score-header{text-align:center;margin-bottom:20px;}
+.score-big{font-size:44px;font-weight:700;color:#1a1a1a;}
+.score-sub{font-size:14px;color:#666;margin-top:6px;line-height:1.5;}
+.review-item{padding:12px 0;border-top:1px solid #f0f0ea;}
+.review-q{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:6px;}
+.review-row{font-size:13px;color:#555;margin-bottom:3px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;margin-right:6px;}
+.badge-right{background:#dcfce7;color:#166534;}
+.badge-wrong{background:#fee2e2;color:#991b1b;}
+.review-exp{font-size:13px;color:#777;margin-top:4px;font-style:italic;}
+.btn-restart{background:#1a1a1a;color:#fff;border:none;border-radius:10px;padding:13px;width:100%;font-size:14px;font-weight:600;cursor:pointer;margin-top:16px;transition:background .2s;}
+.btn-restart:hover{background:#333;}
 
-/* RESPONSIVE TAMBAHAN */
-@media (max-width:480px){
+@media(max-width:480px){
   .welcome h1{font-size:18px;}
   .q-text{font-size:14px;}
-  .choice-btn{font-size:13px;}
+  .choice-btn{font-size:13px;padding:11px 12px;}
+  .score-big{font-size:36px;}
+  body{padding:8px;}
+  .quiz-wrap{margin:10px auto;}
 }
-</style>
 </style>
 </head>
 <body>
 
-<div class="container">
-<h2 align="center">Pengetahuan Umum</h2>
-<div class="timer" id="timer">07:00</div>
-<div class="progress" id="progress"></div>
-<div id="quiz"></div>
-<button class="next-btn" id="nextBtn">Next</button>
+<div class="quiz-wrap">
+  <div class="card">
+
+    <div id="welcome-screen" class="welcome">
+      <h1>Pengetahuan Umum</h1>
+      <p>Uji pengetahuan umummu tentang sains, astronomi, dan fakta sehari-hari. Jawab semua soal sebelum waktu habis!</p>
+      <div class="info-grid">
+        <div class="info-cell"><div class="num">40</div><div class="lbl">Soal</div></div>
+        <div class="info-cell"><div class="num">7:00</div><div class="lbl">Waktu</div></div>
+        <div class="info-cell"><div class="num">4</div><div class="lbl">Pilihan tiap soal</div></div>
+        <div class="info-cell"><div class="num">1 poin</div><div class="lbl">Tiap jawaban benar</div></div>
+      </div>
+      <button class="btn-start" onclick="startQuiz()">Mulai ▶</button>
+    </div>
+
+    <div id="test-screen" class="test-screen">
+      <div class="top-bar">
+        <span class="subtes-name">Pengetahuan Umum</span>
+        <span class="timer-val" id="timer">07:00</span>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+      <div class="q-area">
+        <div class="q-meta">
+          <span class="q-num" id="qNum">Soal 1 dari 40</span>
+        </div>
+        <p class="q-text" id="qText"></p>
+      </div>
+      <div class="choices" id="choices"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQ()">Lanjut →</button>
+    </div>
+
+    <div class="score-screen" id="score-screen">
+      <div class="score-header">
+        <div class="score-big" id="scoreBig"></div>
+        <div class="score-sub" id="scoreSub"></div>
+      </div>
+      <div id="reviewList"></div>
+      <button class="btn-restart" onclick="restartQuiz()">↺ Ulangi Quiz</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
-
-let questions = [
-{q:"Planet terbesar?",o:["Mars","Jupiter","Bumi","Venus"],a:"Jupiter",e:"Jupiter terbesar di tata surya."},
-{q:"Planet terpanas?",o:["Merkurius","Venus","Mars","Bumi"],a:"Venus",e:"Venus panas karena efek rumah kaca."},
-{q:"Planet terdekat?",o:["Venus","Mars","Merkurius","Bumi"],a:"Merkurius",e:"Merkurius paling dekat matahari."},
-{q:"Matahari adalah?",o:["Planet","Bintang","Satelit","Asteroid"],a:"Bintang",e:"Matahari menghasilkan cahaya sendiri."},
-{q:"Air jadi uap?",o:["Kondensasi","Evaporasi","Sublimasi","Presipitasi"],a:"Evaporasi",e:"Evaporasi = penguapan."},
-{q:"Uap jadi air?",o:["Evaporasi","Kondensasi","Pembekuan","Sublimasi"],a:"Kondensasi",e:"Kondensasi = uap ke cair."},
-{q:"Air jadi es?",o:["Kondensasi","Pembekuan","Sublimasi","Evaporasi"],a:"Pembekuan",e:"Pembekuan = cair ke padat."},
-{q:"Hujan disebut?",o:["Evaporasi","Presipitasi","Sublimasi","Difusi"],a:"Presipitasi",e:"Presipitasi = turunnya hujan."},
-{q:"1 km = ?",o:["100","500","1000","2000"],a:"1000",e:"1 km = 1000 meter."},
-{q:"Air membeku?",o:["0°C","50°C","100°C","-10°C"],a:"0°C",e:"Air beku di 0°C."},
-
-{q:"Air mendidih?",o:["0°C","50°C","100°C","200°C"],a:"100°C",e:"Air mendidih 100°C."},
-{q:"Satuan gaya?",o:["Joule","Watt","Newton","Pascal"],a:"Newton",e:"Gaya = Newton."},
-{q:"Satuan energi?",o:["Joule","Watt","Newton","Pascal"],a:"Joule",e:"Energi = Joule."},
-{q:"Satuan daya?",o:["Joule","Watt","Newton","Pascal"],a:"Watt",e:"Daya = Watt."},
-{q:"Gas napas?",o:["CO2","O2","H2","N2"],a:"O2",e:"Manusia butuh oksigen."},
-{q:"Organ napas?",o:["Jantung","Paru","Ginjal","Hati"],a:"Paru",e:"Paru untuk napas."},
-{q:"Fungsi jantung?",o:["Pompa darah","Saring darah","Buat oksigen","Serap nutrisi"],a:"Pompa darah",e:"Jantung memompa darah."},
-{q:"Fotosintesis di?",o:["Akar","Batang","Daun","Buah"],a:"Daun",e:"Terjadi di daun."},
-{q:"Rumus air?",o:["CO2","H2O","O2","H2"],a:"H2O",e:"Air = H2O."},
-{q:"Garam dapur?",o:["NaCl","HCl","CO2","O2"],a:"NaCl",e:"Garam = NaCl."},
-
-{q:"pH netral?",o:["0","5","7","10"],a:"7",e:"Netral = 7."},
-{q:"Asam rasanya?",o:["Manis","Pahit","Asam","Asin"],a:"Asam",e:"Asam = masam."},
-{q:"Penemu lampu?",o:["Newton","Edison","Tesla","Bell"],a:"Edison",e:"Edison penemu lampu."},
-{q:"Penemu telepon?",o:["Edison","Bell","Newton","Faraday"],a:"Bell",e:"Bell penemu telepon."},
-{q:"Penemu radio?",o:["Bell","Marconi","Edison","Tesla"],a:"Marconi",e:"Marconi radio."},
-{q:"Teori gravitasi?",o:["Einstein","Newton","Tesla","Darwin"],a:"Newton",e:"Newton gravitasi."},
-{q:"1 jam?",o:["30 m","60 m","100 m","120 m"],a:"60 m",e:"1 jam = 60 menit."},
-{q:"1 hari?",o:["12 jam","24 jam","48 jam","60 jam"],a:"24 jam",e:"1 hari = 24 jam."},
-{q:"Matahari terbit?",o:["Barat","Timur","Utara","Selatan"],a:"Timur",e:"Terbit di timur."},
-{q:"Terbenam?",o:["Timur","Barat","Utara","Selatan"],a:"Barat",e:"Terbenam barat."},
-
-{q:"Planet merah?",o:["Venus","Mars","Bumi","Jupiter"],a:"Mars",e:"Mars planet merah."},
-{q:"Planet bercincin?",o:["Mars","Jupiter","Saturnus","Venus"],a:"Saturnus",e:"Saturnus bercincin."},
-{q:"Planet terbesar?",o:["Mars","Jupiter","Venus","Bumi"],a:"Jupiter",e:"Jupiter terbesar."},
-{q:"Bunyi tak merambat di?",o:["Air","Udara","Besi","Vakum"],a:"Vakum",e:"Butuh medium."},
-{q:"Cahaya merambat?",o:["Lurus","Zigzag","Acak","Melengkung"],a:"Lurus",e:"Cahaya lurus."},
-{q:"Bayangan pendek?",o:["Pagi","Siang","Sore","Malam"],a:"Siang",e:"Siang paling pendek."},
-{q:"1 liter?",o:["100ml","500ml","1000ml","2000ml"],a:"1000ml",e:"1L = 1000ml."},
-{q:"1 kg?",o:["100g","500g","1000g","2000g"],a:"1000g",e:"1kg=1000g."},
-{q:"Bumi kita?",o:["Planet","Bintang","Satelit","Komet"],a:"Planet",e:"Bumi adalah planet."},
-{q:"Matahari pusat?",o:["Bumi","Tata surya","Galaksi","Planet"],a:"Tata surya",e:"Pusat tata surya."}
+const questions=[
+{q:"Planet terbesar di tata surya?",o:["Mars","Jupiter","Bumi","Venus"],a:"Jupiter",e:"Jupiter adalah planet terbesar di tata surya."},
+{q:"Planet terpanas di tata surya?",o:["Merkurius","Venus","Mars","Bumi"],a:"Venus",e:"Venus paling panas karena efek rumah kaca yang kuat."},
+{q:"Planet terdekat dari matahari?",o:["Venus","Mars","Merkurius","Bumi"],a:"Merkurius",e:"Merkurius adalah planet paling dekat dengan matahari."},
+{q:"Matahari termasuk jenis benda langit?",o:["Planet","Bintang","Satelit","Asteroid"],a:"Bintang",e:"Matahari adalah bintang yang menghasilkan cahaya sendiri."},
+{q:"Proses air berubah menjadi uap disebut?",o:["Kondensasi","Evaporasi","Sublimasi","Presipitasi"],a:"Evaporasi",e:"Evaporasi adalah proses penguapan air."},
+{q:"Proses uap berubah menjadi air disebut?",o:["Evaporasi","Kondensasi","Pembekuan","Sublimasi"],a:"Kondensasi",e:"Kondensasi adalah perubahan uap menjadi cair."},
+{q:"Proses air berubah menjadi es disebut?",o:["Kondensasi","Pembekuan","Sublimasi","Evaporasi"],a:"Pembekuan",e:"Pembekuan adalah perubahan cair menjadi padat."},
+{q:"Turunnya hujan dalam siklus air disebut?",o:["Evaporasi","Presipitasi","Sublimasi","Difusi"],a:"Presipitasi",e:"Presipitasi adalah proses turunnya hujan."},
+{q:"1 kilometer sama dengan berapa meter?",o:["100 m","500 m","1000 m","2000 m"],a:"1000 m",e:"1 kilometer = 1000 meter."},
+{q:"Air membeku pada suhu?",o:["0°C","50°C","100°C","-10°C"],a:"0°C",e:"Air membeku pada suhu 0°C."},
+{q:"Air mendidih pada suhu?",o:["0°C","50°C","100°C","200°C"],a:"100°C",e:"Air mendidih pada suhu 100°C."},
+{q:"Satuan SI untuk gaya adalah?",o:["Joule","Watt","Newton","Pascal"],a:"Newton",e:"Satuan gaya adalah Newton (N)."},
+{q:"Satuan SI untuk energi adalah?",o:["Joule","Watt","Newton","Pascal"],a:"Joule",e:"Satuan energi adalah Joule (J)."},
+{q:"Satuan SI untuk daya adalah?",o:["Joule","Watt","Newton","Pascal"],a:"Watt",e:"Satuan daya adalah Watt (W)."},
+{q:"Gas yang dibutuhkan manusia untuk bernapas?",o:["CO2","O2","H2","N2"],a:"O2",e:"Manusia membutuhkan oksigen (O2) untuk bernapas."},
+{q:"Organ pernapasan utama manusia?",o:["Jantung","Paru-paru","Ginjal","Hati"],a:"Paru-paru",e:"Paru-paru adalah organ utama pernapasan."},
+{q:"Fungsi utama jantung?",o:["Memompa darah","Menyaring darah","Menghasilkan oksigen","Menyerap nutrisi"],a:"Memompa darah",e:"Jantung berfungsi memompa darah ke seluruh tubuh."},
+{q:"Fotosintesis pada tumbuhan terjadi di?",o:["Akar","Batang","Daun","Buah"],a:"Daun",e:"Fotosintesis terjadi di daun karena adanya klorofil."},
+{q:"Rumus kimia air adalah?",o:["CO2","H2O","O2","H2"],a:"H2O",e:"Air memiliki rumus kimia H2O."},
+{q:"Rumus kimia garam dapur adalah?",o:["NaCl","HCl","CO2","O2"],a:"NaCl",e:"Garam dapur adalah natrium klorida (NaCl)."},
+{q:"Nilai pH larutan netral adalah?",o:["0","5","7","10"],a:"7",e:"Larutan netral memiliki pH 7."},
+{q:"Larutan asam memiliki rasa?",o:["Manis","Pahit","Masam","Asin"],a:"Masam",e:"Larutan asam umumnya terasa masam."},
+{q:"Penemu bola lampu?",o:["Newton","Edison","Tesla","Bell"],a:"Edison",e:"Thomas Edison menemukan bola lampu listrik."},
+{q:"Penemu telepon?",o:["Edison","Bell","Newton","Faraday"],a:"Bell",e:"Alexander Graham Bell menemukan telepon."},
+{q:"Penemu radio?",o:["Bell","Marconi","Edison","Tesla"],a:"Marconi",e:"Guglielmo Marconi menemukan radio."},
+{q:"Ilmuwan yang merumuskan teori gravitasi?",o:["Einstein","Newton","Tesla","Darwin"],a:"Newton",e:"Isaac Newton merumuskan teori gravitasi."},
+{q:"1 jam sama dengan berapa menit?",o:["30 menit","60 menit","100 menit","120 menit"],a:"60 menit",e:"1 jam = 60 menit."},
+{q:"1 hari sama dengan berapa jam?",o:["12 jam","24 jam","48 jam","60 jam"],a:"24 jam",e:"1 hari = 24 jam."},
+{q:"Matahari terbit dari arah?",o:["Barat","Timur","Utara","Selatan"],a:"Timur",e:"Matahari selalu terbit dari arah timur."},
+{q:"Matahari terbenam ke arah?",o:["Timur","Barat","Utara","Selatan"],a:"Barat",e:"Matahari selalu terbenam ke arah barat."},
+{q:"Planet yang dijuluki planet merah?",o:["Venus","Mars","Bumi","Jupiter"],a:"Mars",e:"Mars disebut planet merah karena warna permukaannya."},
+{q:"Planet yang memiliki cincin paling terkenal?",o:["Mars","Jupiter","Saturnus","Venus"],a:"Saturnus",e:"Saturnus terkenal dengan cincinnya yang indah."},
+{q:"Bunyi tidak dapat merambat melalui?",o:["Air","Udara","Besi","Vakum"],a:"Vakum",e:"Bunyi memerlukan medium untuk merambat, tidak bisa di vakum."},
+{q:"Cahaya merambat secara?",o:["Lurus","Zigzag","Acak","Melengkung"],a:"Lurus",e:"Cahaya merambat dalam garis lurus."},
+{q:"Bayangan terpendek terjadi pada saat?",o:["Pagi hari","Siang hari","Sore hari","Malam hari"],a:"Siang hari",e:"Siang hari posisi matahari tegak lurus sehingga bayangan terpendek."},
+{q:"1 liter sama dengan?",o:["100 ml","500 ml","1000 ml","2000 ml"],a:"1000 ml",e:"1 liter = 1000 mililiter."},
+{q:"1 kilogram sama dengan?",o:["100 gram","500 gram","1000 gram","2000 gram"],a:"1000 gram",e:"1 kilogram = 1000 gram."},
+{q:"Bumi termasuk jenis benda langit?",o:["Planet","Bintang","Satelit","Komet"],a:"Planet",e:"Bumi adalah planet ketiga dari matahari."},
+{q:"Matahari merupakan pusat dari?",o:["Bumi","Tata surya","Galaksi","Planet"],a:"Tata surya",e:"Matahari adalah pusat tata surya kita."},
+{q:"Proses perubahan padat langsung ke gas disebut?",o:["Evaporasi","Kondensasi","Sublimasi","Pembekuan"],a:"Sublimasi",e:"Sublimasi adalah perubahan langsung dari padat ke gas."}
 ];
 
-let current=0,score=0,answers=[],answered=false;
+let current=0,score=0,answers=[],answered=false,timerInt=null;
 
-const quiz=document.getElementById("quiz");
-const nextBtn=document.getElementById("nextBtn");
-const progress=document.getElementById("progress");
-
-function load(){
-answered=false;
-nextBtn.style.display="none";
-quiz.innerHTML="";
-progress.innerText="Soal "+(current+1)+" / "+questions.length;
-
-let q=document.createElement("div");
-q.className="question";
-q.innerText=questions[current].q;
-quiz.appendChild(q);
-
-questions[current].o.forEach(opt=>{
-let b=document.createElement("button");
-b.innerText=opt;
-b.onclick=()=>{
-if(answered)return;
-answered=true;
-
-answers.push({q:questions[current].q,u:opt,c:questions[current].a,e:questions[current].e});
-
-if(opt===questions[current].a){b.classList.add("correct");score++;}
-else{b.classList.add("wrong");}
-
-nextBtn.style.display="block";
-};
-quiz.appendChild(b);
-});
+function startQuiz(){
+  document.getElementById('welcome-screen').style.display='none';
+  document.getElementById('test-screen').style.display='block';
+  startTimer();
+  loadQ();
 }
 
-nextBtn.onclick=()=>{
-current++;
-if(current<questions.length)load();
-else show();
-};
-
-function show(){
-quiz.innerHTML="<h3>Skor: "+score+" / "+questions.length+"</h3>";
-progress.innerText="Pembahasan";
-
-answers.forEach((a,i)=>{
-quiz.innerHTML+=`<p><b>${i+1}. ${a.q}</b><br>
-Jawaban kamu: ${a.u}<br>
-Benar: ${a.c}<br>
-${a.e}</p><hr>`;
-});
-
-nextBtn.style.display="none";
+function loadQ(){
+  answered=false;
+  document.getElementById('nextBtn').style.display='none';
+  document.getElementById('qNum').textContent='Soal '+(current+1)+' dari '+questions.length;
+  document.getElementById('qText').textContent=questions[current].q;
+  document.getElementById('progBar').style.width=((current/questions.length)*100)+'%';
+  const c=document.getElementById('choices');
+  c.innerHTML='';
+  questions[current].o.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='choice-btn';
+    b.textContent=opt;
+    b.onclick=()=>answer(b,opt);
+    c.appendChild(b);
+  });
 }
 
-load();
+function answer(btn,opt){
+  if(answered)return;
+  answered=true;
+  const correct=questions[current].a;
+  answers.push({q:questions[current].q,u:opt,c:correct,e:questions[current].e});
+  document.querySelectorAll('.choice-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correct)b.classList.add('choice-correct');
+    else if(b===btn)b.classList.add('choice-wrong');
+  });
+  if(opt===correct)score++;
+  document.getElementById('nextBtn').style.display='block';
+}
 
-//timer
-let t=420;
-let timer=setInterval(()=>{
-let m=Math.floor(t/60),s=t%60;
-document.getElementById("timer").innerText=(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
-t--;
-if(t<0){clearInterval(timer);alert("Waktu habis");}
-},1000);
+function nextQ(){
+  current++;
+  if(current<questions.length)loadQ();
+  else showScore();
+}
 
+function startTimer(){
+  let t=420;
+  const el=document.getElementById('timer');
+  timerInt=setInterval(()=>{
+    const m=Math.floor(t/60),s=t%60;
+    el.textContent=(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+    if(t<=30)el.classList.add('timer-danger');
+    t--;
+    if(t<0){clearInterval(timerInt);alert('Waktu habis!');showScore();}
+  },1000);
+}
+
+function showScore(){
+  clearInterval(timerInt);
+  document.getElementById('test-screen').style.display='none';
+  const ss=document.getElementById('score-screen');
+  ss.style.display='block';
+  document.getElementById('scoreBig').textContent=score+' / '+questions.length;
+  const pct=Math.round((score/questions.length)*100);
+  let label=pct>=80?'Luar biasa! 🎉':pct>=60?'Bagus! Terus tingkatkan. 👍':'Jangan menyerah, coba lagi! 💪';
+  document.getElementById('scoreSub').textContent=pct+'% benar — '+label;
+  const rl=document.getElementById('reviewList');
+  rl.innerHTML='';
+  answers.forEach((a,i)=>{
+    const ok=a.u===a.c;
+    rl.innerHTML+=`<div class="review-item">
+      <div class="review-q">${i+1}. ${a.q}</div>
+      <div class="review-row"><span class="badge ${ok?'badge-right':'badge-wrong'}">${ok?'Benar':'Salah'}</span>Jawabanmu: <b>${a.u}</b></div>
+      ${!ok?`<div class="review-row">Jawaban benar: <b>${a.c}</b></div>`:''}
+      <div class="review-exp">${a.e}</div>
+    </div>`;
+  });
+}
+
+function restartQuiz(){
+  current=0;score=0;answers=[];answered=false;
+  clearInterval(timerInt);
+  document.getElementById('score-screen').style.display='none';
+  document.getElementById('welcome-screen').style.display='block';
+}
 </script>
 </body>
 </html>
