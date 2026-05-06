@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT – Pengetahuan Umum</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#0d0f14;color:#f0f2f8;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 60px;}
+#wrap{max-width:640px;width:100%;}
+
+/* LANDING */
+#landing{animation:fadeUp .5s ease both;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;color:#8b84ff;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#8b84ff;animation:pulse 1.5s infinite;}
+h1{font-size:clamp(26px,5vw,38px);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:14px;}
+h1 span{color:#8b84ff;}
+.desc{font-size:15px;color:#9097b0;line-height:1.7;margin-bottom:28px;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;}
+.info-box{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;text-align:center;}
+.info-num{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:#8b84ff;}
+.info-label{font-size:11px;color:#5a607a;margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+.topic-list{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-bottom:28px;}
+.topic-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:#c5c9d8;}
+.topic-item:last-child{border-bottom:none;}
+.t-icon{font-size:16px;width:28px;text-align:center;}
+.btn-start{width:100%;background:#6c63ff;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s,transform .15s;letter-spacing:.01em;}
+.btn-start:hover{background:#8b84ff;transform:translateY(-1px);}
+
+/* APP */
+#app{display:none;}
+.header-bar{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.h-left .h-sub{font-size:11px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;}
+.h-left .h-title{font-size:17px;font-weight:700;}
+.h-right{text-align:right;}
+.t-label{font-size:10px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+#timer{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;}
+#timer.ok{color:#22c55e;}#timer.warn{color:#f59e0b;}#timer.danger{color:#ef4444;}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.pbar{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+.pfill{height:100%;background:#6c63ff;border-radius:99px;transition:width .4s;}
+.plabel{font-size:12px;color:#5a607a;font-family:'Space Mono',monospace;white-space:nowrap;}
+.soal-card{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px;margin-bottom:14px;animation:fadeUp .3s ease both;}
+.soal-tag{display:inline-block;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.2);color:#8b84ff;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:99px;margin-bottom:14px;}
+.soal-q{font-size:15px;font-weight:600;color:#f0f2f8;line-height:1.7;margin-bottom:20px;white-space:pre-wrap;}
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{background:#13161e;border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:12px 14px;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#d0d4e8;cursor:pointer;display:flex;align-items:flex-start;gap:11px;line-height:1.5;transition:all .15s;}
+.opt:hover:not(:disabled){background:#1a1e28;border-color:rgba(255,255,255,.15);}
+.opt-lbl{min-width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#9097b0;flex-shrink:0;font-family:'Space Mono',monospace;transition:all .15s;}
+.opt:disabled{cursor:default;}
+/* states */
+.opt.correct{border-color:#22c55e;background:rgba(34,197,94,.1);}
+.opt.correct .opt-lbl{background:#22c55e;color:#fff;}
+.opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.1);}
+.opt.wrong .opt-lbl{background:#ef4444;color:#fff;}
+.opt.reveal{border-color:#22c55e;background:rgba(34,197,94,.07);}
+.opt.reveal .opt-lbl{background:rgba(34,197,94,.3);color:#22c55e;}
+/* feedback */
+.feedback{margin-top:14px;border-radius:8px;padding:11px 14px;font-size:13px;line-height:1.6;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;}
+.feedback.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;}
+/* waktu habis */
+#wh{display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:8px;padding:10px 16px;text-align:center;font-size:14px;font-weight:600;margin-bottom:12px;}
+/* SKOR */
+.skor-wrap{animation:fadeUp .4s ease both;}
+.skor-hero{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px 24px;text-align:center;margin-bottom:16px;}
+.skor-badge2{display:inline-block;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);color:#8b84ff;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:14px;}
+.skor-pct{font-family:'Space Mono',monospace;font-size:58px;font-weight:700;color:#8b84ff;line-height:1;}
+.skor-sub{font-size:14px;color:#9097b0;margin:8px 0 22px;}
+.skor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px;}
+.si{background:#13161e;border-radius:9px;padding:14px;text-align:center;}
+.si-label{font-size:11px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.si-val{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;}
+.si-val.g{color:#22c55e;}.si-val.r{color:#ef4444;}.si-val.a{color:#9097b0;}
+.btn-review{width:100%;background:#1a1e28;color:#8b84ff;border:1px solid rgba(108,99,255,.3);border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:10px;transition:background .2s;}
+.btn-review:hover{background:rgba(108,99,255,.12);}
+.btn-ulang{width:100%;background:#6c63ff;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s,transform .15s;}
+.btn-ulang:hover{background:#8b84ff;transform:translateY(-1px);}
+/* REVIEW */
+.review-wrap{animation:fadeUp .4s ease both;}
+.review-item{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;margin-bottom:12px;}
+.ri-num{font-size:10px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.ri-q{font-size:14px;font-weight:600;color:#f0f2f8;line-height:1.6;margin-bottom:12px;white-space:pre-wrap;}
+.ri-opts{display:flex;flex-direction:column;gap:6px;}
+.ri-opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:7px;font-size:13px;border:1px solid transparent;}
+.ri-opt.rc{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#86efac;}
+.ri-opt.rw{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:#fca5a5;}
+.ri-opt.rn{color:#9097b0;}
+.ri-lbl{min-width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'Space Mono',monospace;}
+.rc .ri-lbl{background:#22c55e;color:#fff;}
+.rw .ri-lbl{background:#ef4444;color:#fff;}
+.rn .ri-lbl{background:rgba(255,255,255,.08);color:#5a607a;}
+.ri-exp{margin-top:10px;background:rgba(255,255,255,.04);border-radius:7px;padding:9px 12px;font-size:12px;color:#9097b0;line-height:1.6;}
+.back-btn{background:#1a1e28;color:#8b84ff;border:1px solid rgba(108,99,255,.3);border-radius:10px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:16px;transition:background .2s;}
+.back-btn:hover{background:rgba(108,99,255,.12);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="badge"><div class="dot"></div>CAT KDKMP / KNMP 2026</div>
+  <h1>Subtes 3:<br><span>Pengetahuan Umum</span></h1>
+  <p class="desc">Soal mencakup IPA dasar, sains, geografi, sejarah, dan wawasan Indonesia. Waktu <strong>7 menit</strong> untuk <strong>40 soal</strong>. Jawaban benar/salah langsung ditampilkan setelah kamu memilih.</p>
+  <div class="info-grid">
+    <div class="info-box"><div class="info-num">40</div><div class="info-label">Total Soal</div></div>
+    <div class="info-box"><div class="info-num">7'</div><div class="info-label">Waktu</div></div>
+    <div class="info-box"><div class="info-num">~10s</div><div class="info-label">Per Soal</div></div>
+  </div>
+  <div class="topic-list">
+    <div class="topic-item"><div class="t-icon">🔬</div>IPA Dasar (Fisika, Kimia, Biologi)</div>
+    <div class="topic-item"><div class="t-icon">🌍</div>Geografi & Siklus Alam</div>
+    <div class="topic-item"><div class="t-icon">🧬</div>Sistem Tubuh Manusia</div>
+    <div class="topic-item"><div class="t-icon">🌌</div>Tata Surya & Planet</div>
+    <div class="topic-item"><div class="t-icon">⚗️</div>Reaksi & Perubahan Zat</div>
+    <div class="topic-item"><div class="t-icon">📜</div>Sejarah & Tokoh Penemu</div>
+    <div class="topic-item"><div class="t-icon">🇮🇩</div>Wawasan Indonesia</div>
+  </div>
+  <button class="btn-start" onclick="startTest()">Mulai Tes →</button>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="wh">⏰ Waktu habis! Lihat hasil di bawah.</div>
+  <div id="main"></div>
+</div>
+
+</div>
+<script>
+const SOAL = [
+  // === SIKLUS AIR & PERUBAHAN ZAT ===
+  {q:"Proses perubahan air menjadi uap air disebut?",opts:["A. Kondensasi","B. Evaporasi","C. Presipitasi","D. Sublimasi"],ans:1,exp:"Evaporasi = penguapan air dari permukaan. Kondensasi = uap → air. Presipitasi = hujan/salju turun."},
+  {q:"Proses perubahan uap air menjadi titik-titik air (embun/awan) disebut?",opts:["A. Evaporasi","B. Sublimasi","C. Kondensasi","D. Infiltrasi"],ans:2,exp:"Kondensasi terjadi saat uap air mendingin dan berubah menjadi cair, membentuk awan atau embun."},
+  {q:"Jatuhnya air dari atmosfer ke permukaan bumi dalam bentuk hujan, salju, atau es disebut?",opts:["A. Evaporasi","B. Kondensasi","C. Transpirasi","D. Presipitasi"],ans:3,exp:"Presipitasi mencakup segala bentuk air yang jatuh dari atmosfer: hujan, salju, hujan es."},
+  {q:"Proses perubahan zat padat langsung menjadi gas tanpa melalui fase cair disebut?",opts:["A. Evaporasi","B. Kondensasi","C. Sublimasi","D. Presipitasi"],ans:2,exp:"Sublimasi contohnya: kapur barus (kamper) yang menyusut tanpa menjadi cair. Es kering (CO₂ padat) juga menyublim."},
+  {q:"Proses penguapan air melalui daun tumbuhan disebut?",opts:["A. Fotosintesis","B. Transpirasi","C. Respirasi","D. Evaporasi"],ans:1,exp:"Transpirasi adalah penguapan air dari stomata (pori-pori) daun tumbuhan. Berbeda dengan evaporasi yang terjadi dari permukaan air bebas."},
+  {q:"Proses resapan air ke dalam tanah disebut?",opts:["A. Runoff","B. Transpirasi","C. Infiltrasi","D. Kondensasi"],ans:2,exp:"Infiltrasi adalah proses meresapnya air ke dalam tanah. Air yang tidak meresap mengalir di permukaan (runoff)."},
+  {q:"Perubahan es menjadi air merupakan contoh perubahan?",opts:["A. Kimia","B. Biologi","C. Fisika","D. Nuklir"],ans:2,exp:"Perubahan fisika tidak menghasilkan zat baru. Es → air hanya perubahan wujud (padat→cair), zat tetap H₂O."},
+  {q:"Besi berkarat adalah contoh perubahan?",opts:["A. Fisika","B. Kimia","C. Biologis","D. Mekanik"],ans:1,exp:"Perubahan kimia menghasilkan zat baru. Besi (Fe) + oksigen → Fe₂O₃ (karat). Tidak dapat dikembalikan dengan mudah."},
+
+  // === FISIKA DASAR ===
+  {q:"Besar percepatan gravitasi bumi yang umum digunakan adalah?",opts:["A. 8,9 m/s²","B. 9,8 m/s²","C. 10,8 m/s²","D. 11 m/s²"],ans:1,exp:"Percepatan gravitasi bumi g ≈ 9,8 m/s² (sering dibulatkan 10 m/s² untuk kemudahan hitung). Nilainya bervariasi sedikit bergantung lokasi."},
+  {q:"Satuan gaya dalam Sistem Internasional (SI) adalah?",opts:["A. Joule","B. Watt","C. Newton","D. Pascal"],ans:2,exp:"Satuan gaya = Newton (N). Joule = energi/usaha. Watt = daya. Pascal = tekanan."},
+  {q:"Rumus usaha (kerja) dalam fisika adalah?",opts:["A. W = m × g","B. W = F × d","C. W = ½mv²","D. W = P × t"],ans:1,exp:"Usaha W = F × d (gaya dikali perpindahan). Satuan = Joule (J). ½mv² adalah rumus energi kinetik."},
+  {q:"Cahaya merambat dalam ruang hampa dengan kecepatan sekitar?",opts:["A. 3 × 10⁶ m/s","B. 3 × 10⁸ m/s","C. 3 × 10¹⁰ m/s","D. 3 × 10⁴ m/s"],ans:1,exp:"Kecepatan cahaya = 3 × 10⁸ m/s (300.000 km/s). Ini adalah batas kecepatan tertinggi di alam semesta."},
+  {q:"Hukum Newton I menyatakan bahwa benda diam akan tetap diam jika?",opts:["A. Ada gaya besar","B. Tidak ada resultan gaya yang bekerja","C. Massanya besar","D. Berada di luar angkasa"],ans:1,exp:"Hukum I Newton (Inersia): benda akan mempertahankan keadaannya (diam/bergerak lurus) selama tidak ada resultan gaya yang bekerja padanya."},
+  {q:"Alat untuk mengukur tekanan udara disebut?",opts:["A. Termometer","B. Higrometer","C. Barometer","D. Anemometer"],ans:2,exp:"Barometer = tekanan udara. Termometer = suhu. Higrometer = kelembaban. Anemometer = kecepatan angin."},
+  {q:"Satuan suhu dalam Sistem Internasional adalah?",opts:["A. Celsius","B. Fahrenheit","C. Kelvin","D. Rankine"],ans:2,exp:"Kelvin (K) adalah satuan SI untuk suhu. 0 K = −273,15°C = nol mutlak. Untuk kehidupan sehari-hari dipakai Celsius."},
+
+  // === TATA SURYA & PLANET ===
+  {q:"Urutan planet dalam tata surya dari yang terdekat ke Matahari adalah?",opts:["A. Merkurius-Venus-Bumi-Mars-Jupiter-Saturnus-Uranus-Neptunus","B. Venus-Merkurius-Bumi-Mars-Jupiter-Saturnus-Uranus-Neptunus","C. Merkurius-Bumi-Venus-Mars-Jupiter-Saturnus-Uranus-Neptunus","D. Merkurius-Venus-Mars-Bumi-Jupiter-Saturnus-Uranus-Neptunus"],ans:0,exp:"Mnemonik: Me-Ve-Bu-Ma-Ju-Sa-U-Ne = Merkurius, Venus, Bumi, Mars, Jupiter, Saturnus, Uranus, Neptunus."},
+  {q:"Planet terbesar dalam tata surya adalah?",opts:["A. Saturnus","B. Uranus","C. Neptunus","D. Jupiter"],ans:3,exp:"Jupiter adalah planet terbesar, diameternya ~143.000 km, sekitar 11 kali diameter Bumi. Dikenal dengan bercak merah besar (badai raksasa)."},
+  {q:"Planet yang dikenal memiliki cincin paling indah dan jelas adalah?",opts:["A. Jupiter","B. Saturnus","C. Uranus","D. Neptunus"],ans:1,exp:"Saturnus terkenal dengan cincinnya yang terdiri dari es dan debu batu. Semua planet raksasa punya cincin, tapi Saturnus paling terlihat."},
+  {q:"Planet yang paling dekat dengan Matahari adalah?",opts:["A. Venus","B. Bumi","C. Merkurius","D. Mars"],ans:2,exp:"Merkurius adalah planet terdekat dari Matahari (±57,9 juta km). Meski paling dekat, Venus lebih panas karena efek rumah kaca."},
+  {q:"Planet yang dijuluki 'Planet Merah' adalah?",opts:["A. Jupiter","B. Venus","C. Mars","D. Merkurius"],ans:2,exp:"Mars berwarna kemerahan karena permukaannya mengandung banyak besi oksida (karat). Memiliki gunung tertinggi: Olympus Mons."},
+  {q:"Berapa jumlah planet dalam tata surya kita saat ini (Pluto sudah tidak dihitung)?",opts:["A. 7","B. 8","C. 9","D. 10"],ans:1,exp:"Sejak 2006, IAU menetapkan 8 planet. Pluto diklasifikasikan ulang sebagai 'planet kerdil' karena tidak memenuhi kriteria ketiga (membersihkan orbitnya)."},
+
+  // === TOKOH PENEMU ===
+  {q:"Siapa penemu bola lampu pijar?",opts:["A. Nikola Tesla","B. Alexander Graham Bell","C. Thomas Alva Edison","D. Benjamin Franklin"],ans:2,exp:"Thomas Alva Edison (1879) menemukan bola lampu pijar yang praktis. Edison juga dikenal atas patennya yang sangat banyak (>1000 paten)."},
+  {q:"Siapa ilmuwan yang merumuskan Hukum Gravitasi Universal?",opts:["A. Albert Einstein","B. Isaac Newton","C. Galileo Galilei","D. Nicolaus Copernicus"],ans:1,exp:"Isaac Newton (1687) merumuskan hukum gravitasi universal dalam karyanya Principia Mathematica. Terinspirasi dari apel yang jatuh (menurut legenda)."},
+  {q:"Teori relativitas dikemukakan oleh?",opts:["A. Max Planck","B. Niels Bohr","C. Albert Einstein","D. Stephen Hawking"],ans:2,exp:"Albert Einstein (1905 & 1915) mengemukakan teori relativitas khusus dan umum. Termasuk rumus terkenal E = mc²."},
+  {q:"Siapa penemu telepon?",opts:["A. Thomas Edison","B. Guglielmo Marconi","C. Alexander Graham Bell","D. Nikola Tesla"],ans:2,exp:"Alexander Graham Bell dipatenkan sebagai penemu telepon (1876). Ia mendirikan Bell Telephone Company yang menjadi cikal bakal AT&T."},
+  {q:"Siapa yang pertama kali membuktikan bumi mengelilingi matahari (heliosentris)?",opts:["A. Ptolemeus","B. Galileo Galilei","C. Nicolaus Copernicus","D. Johannes Kepler"],ans:2,exp:"Nicolaus Copernicus (1543) menyatakan model heliosentris (matahari sebagai pusat). Galileo kemudian mendukung dan membuktikannya dengan teleskop."},
+  {q:"Penemu vaksin cacar pertama di dunia adalah?",opts:["A. Louis Pasteur","B. Alexander Fleming","C. Edward Jenner","D. Robert Koch"],ans:2,exp:"Edward Jenner (1796) menemukan vaksin cacar dengan menggunakan virus cacar sapi (cowpox). Ini adalah vaksin pertama dalam sejarah."},
+  {q:"Penisilin (antibiotik pertama) ditemukan oleh?",opts:["A. Louis Pasteur","B. Alexander Fleming","C. Robert Koch","D. Joseph Lister"],ans:1,exp:"Alexander Fleming (1928) menemukan penisilin secara tidak sengaja saat memperhatikan jamur Penicillium yang membunuh bakteri di cawan petrinya."},
+  {q:"Siapa yang menemukan sel pertama kali menggunakan mikroskop?",opts:["A. Antonie van Leeuwenhoek","B. Robert Hooke","C. Matthias Schleiden","D. Louis Pasteur"],ans:1,exp:"Robert Hooke (1665) pertama kali mengamati sel dari irisan tipis gabus menggunakan mikroskop buatannya, dan menamainya 'cell' (sel)."},
+  {q:"Siapa penemu Hukum Archimedes tentang benda yang dicelupkan dalam air?",opts:["A. Pythagoras","B. Aristoteles","C. Archimedes","D. Euclid"],ans:2,exp:"Archimedes dari Syracusa merumuskan hukum bahwa benda dalam fluida mengalami gaya apung sebesar berat fluida yang dipindahkan. Konon ditemukan saat mandi."},
+
+  // === BIOLOGI & TUBUH MANUSIA ===
+  {q:"Organ tubuh manusia yang berfungsi memompa darah ke seluruh tubuh adalah?",opts:["A. Paru-paru","B. Ginjal","C. Jantung","D. Hati"],ans:2,exp:"Jantung adalah pompa darah. Bilik kiri memompa darah beroksigen ke seluruh tubuh, bilik kanan memompa darah ke paru-paru."},
+  {q:"Proses fotosintesis pada tumbuhan menghasilkan?",opts:["A. CO₂ dan air","B. Glukosa dan oksigen","C. Nitrogen dan glukosa","D. Oksigen dan CO₂"],ans:1,exp:"Reaksi fotosintesis: CO₂ + H₂O + cahaya → C₆H₁₂O₆ (glukosa) + O₂. Tumbuhan menyerap CO₂ dan melepaskan O₂."},
+  {q:"Tulang yang berfungsi melindungi otak disebut?",opts:["A. Tulang dada","B. Tulang belikat","C. Tulang tengkorak","D. Tulang rusuk"],ans:2,exp:"Tulang tengkorak (kranium) melindungi otak. Tulang rusuk melindungi jantung dan paru-paru. Tulang dada di bagian depan dada."},
+  {q:"Vitamin yang dibutuhkan untuk kesehatan mata (penglihatan) adalah?",opts:["A. Vitamin B","B. Vitamin C","C. Vitamin D","D. Vitamin A"],ans:3,exp:"Vitamin A penting untuk kesehatan mata, terutama penglihatan malam. Kekurangan vitamin A dapat menyebabkan rabun senja."},
+  {q:"Bagian sel yang disebut 'pusat kendali' karena mengandung DNA adalah?",opts:["A. Mitokondria","B. Ribosom","C. Nukleus (inti sel)","D. Membran sel"],ans:2,exp:"Nukleus mengandung DNA dan mengontrol aktivitas sel. Mitokondria = penghasil energi. Ribosom = tempat sintesis protein."},
+  {q:"Sistem peredaran darah pada manusia terdiri dari?",opts:["A. Jantung dan paru-paru","B. Jantung, pembuluh darah, dan darah","C. Jantung dan ginjal","D. Darah dan limpa"],ans:1,exp:"Sistem peredaran darah mencakup jantung (pompa), pembuluh darah (arteri, vena, kapiler), dan darah sebagai media transport."},
+
+  // === KIMIA DASAR ===
+  {q:"Rumus kimia air adalah?",opts:["A. H₂O₂","B. CO₂","C. H₂O","D. NaCl"],ans:2,exp:"Air = H₂O (2 atom hidrogen + 1 atom oksigen). H₂O₂ = hidrogen peroksida. CO₂ = karbon dioksida. NaCl = garam dapur."},
+  {q:"Gas yang paling banyak terkandung dalam udara adalah?",opts:["A. Oksigen","B. Karbon dioksida","C. Nitrogen","D. Argon"],ans:2,exp:"Komposisi udara kering: N₂ ≈78%, O₂ ≈21%, Ar ≈0,9%, CO₂ ≈0,04%. Nitrogen mendominasi namun tidak mudah bereaksi."},
+  {q:"Lambang kimia untuk emas adalah?",opts:["A. Go","B. Au","C. Ag","D. Ge"],ans:1,exp:"Au berasal dari bahasa Latin 'Aurum'. Ag = Argentum (perak). Ge = Germanium. Go bukan simbol unsur."},
+  {q:"Proses pemisahan campuran berdasarkan perbedaan titik didih disebut?",opts:["A. Filtrasi","B. Kristalisasi","C. Destilasi","D. Evaporasi"],ans:2,exp:"Destilasi (penyulingan) memisahkan campuran berdasarkan perbedaan titik didih. Contoh: pemurnian air, pembuatan bensin dari minyak bumi."},
+
+  // === GEOGRAFI & LINGKUNGAN ===
+  {q:"Lapisan atmosfer tempat terjadinya cuaca dan iklim adalah?",opts:["A. Stratosfer","B. Troposfer","C. Mesosfer","D. Termosfer"],ans:1,exp:"Troposfer = lapisan terbawah (0–12 km), tempat cuaca terjadi. Stratosfer = lapisan ozon. Mesosfer = meteor terbakar. Termosfer = aurora."},
+  {q:"Lapisan ozon yang melindungi bumi dari sinar UV berada di lapisan?",opts:["A. Troposfer","B. Mesosfer","C. Stratosfer","D. Termosfer"],ans:2,exp:"Lapisan ozon (O₃) berada di stratosfer, ketinggian 15–35 km. Berfungsi menyerap sinar ultraviolet berbahaya dari Matahari."},
+  {q:"Gempa bumi yang terjadi akibat pergerakan lempeng tektonik disebut gempa?",opts:["A. Vulkanik","B. Runtuhan","C. Tektonik","D. Buatan"],ans:2,exp:"Gempa tektonik = akibat pergerakan/tumbukan lempeng. Gempa vulkanik = akibat aktivitas gunung berapi. Indonesia berada di zona gempa aktif."},
+  {q:"Garis khayal yang membagi bumi menjadi bagian utara dan selatan disebut?",opts:["A. Garis bujur","B. Garis lintang khatulistiwa","C. Garis meridian","D. Garis balik"],ans:1,exp:"Garis khatulistiwa (ekuator) = garis lintang 0° yang membagi bumi jadi belahan utara dan selatan. Indonesia dilalui garis khatulistiwa."},
+
+  // === INDONESIA & WAWASAN ===
+  {q:"Indonesia terletak di antara dua benua, yaitu?",opts:["A. Asia dan Eropa","B. Asia dan Australia","C. Australia dan Amerika","D. Afrika dan Asia"],ans:1,exp:"Indonesia secara geografis diapit Benua Asia (utara) dan Benua Australia (selatan), serta Samudra Hindia (barat) dan Pasifik (timur)."},
+  {q:"Gunung tertinggi di Indonesia adalah?",opts:["A. Gunung Kerinci","B. Gunung Semeru","C. Puncak Jaya (Cartensz)","D. Gunung Rinjani"],ans:2,exp:"Puncak Jaya (Cartensz Pyramid) di Papua setinggi 4.884 mdpl adalah gunung tertinggi Indonesia. Semeru tertinggi di Jawa (3.676 mdpl)."},
+  {q:"Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?",opts:["A. 17 Agustus 1944","B. 17 Agustus 1945","C. 18 Agustus 1945","D. 1 Juni 1945"],ans:1,exp:"Proklamasi dibacakan Soekarno-Hatta pada 17 Agustus 1945 pukul 10.00 WIB di Jl. Pegangsaan Timur No. 56, Jakarta."},
+  {q:"Sungai terpanjang di Indonesia adalah?",opts:["A. Sungai Kapuas","B. Sungai Mahakam","C. Sungai Musi","D. Sungai Citarum"],ans:0,exp:"Sungai Kapuas di Kalimantan Barat sepanjang ±1.143 km adalah sungai terpanjang di Indonesia. Kapuas juga terpanjang di Pulau Kalimantan."},
+  {q:"Danau terdalam di Indonesia adalah?",opts:["A. Danau Toba","B. Danau Singkarak","C. Danau Matano","D. Danau Ranau"],ans:2,exp:"Danau Matano di Sulawesi Selatan (kedalaman ±590 m) adalah danau terdalam di Indonesia. Danau Toba di Sumatera Utara adalah danau vulkanik terbesar."},
+];
+
+// shuffle
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+const ST={
+  qs:[],
+  idx:0,
+  answered:false,
+  timeLeft:420,
+  interval:null,
+  history:[], // {qIdx, chosen, ans}
+  phase:'soal' // soal | skor | review
+};
+
+function startTest(){
+  ST.qs=shuffle(SOAL).slice(0,40);
+  ST.idx=0;ST.answered=false;ST.timeLeft=420;ST.history=[];ST.phase='soal';
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='block';
+  clearInterval(ST.interval);
+  ST.interval=setInterval(tick,1000);
+  render();
+}
+
+function tick(){
+  ST.timeLeft--;
+  const el=document.getElementById('timer');
+  if(el){
+    const m=Math.floor(ST.timeLeft/60),s=ST.timeLeft%60;
+    el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className=ST.timeLeft<=30?'danger':ST.timeLeft<=90?'warn':'ok';
+  }
+  if(ST.timeLeft<=0){clearInterval(ST.interval);timeUp();}
+}
+
+function timeUp(){
+  document.getElementById('wh').style.display='block';
+  setTimeout(()=>{document.getElementById('wh').style.display='none';showSkor();},1600);
+}
+
+function render(){
+  const q=ST.qs[ST.idx];
+  const total=ST.qs.length;
+  const pct=Math.round((ST.idx/total)*100);
+  const m=Math.floor(ST.timeLeft/60),s=ST.timeLeft%60;
+  const tcls=ST.timeLeft<=30?'danger':ST.timeLeft<=90?'warn':'ok';
+  const labs=['A','B','C','D'];
+  document.getElementById('main').innerHTML=`
+    <div class="header-bar">
+      <div class="h-left">
+        <div class="h-sub">Pengetahuan Umum</div>
+        <div class="h-title">Subtes 3 dari 7</div>
+      </div>
+      <div class="h-right">
+        <div class="t-label">Waktu tersisa</div>
+        <div id="timer" class="${tcls}">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div>
+      </div>
+    </div>
+    <div class="prog-row">
+      <div class="pbar"><div class="pfill" id="pfill" style="width:${pct}%"></div></div>
+      <div class="plabel">${ST.idx+1}/${total}</div>
+    </div>
+    <div class="soal-card">
+      <div class="soal-tag">Soal ke-${ST.idx+1}</div>
+      <div class="soal-q">${q.q}</div>
+      <div class="opts" id="opts">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="pilih(${i})" id="o${i}">
+          <span class="opt-lbl">${labs[i]}</span>
+          <span>${o.replace(/^[A-D]\.\s*/,'')}</span>
+        </button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>
+  `;
+}
+
+function pilih(chosen){
+  if(ST.answered)return;
+  ST.answered=true;
+  const q=ST.qs[ST.idx];
+  ST.history.push({idx:ST.idx,chosen,ans:q.ans});
+  const labs=['A','B','C','D'];
+
+  // disable all
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+
+  if(chosen===q.ans){
+    document.getElementById('o'+chosen).classList.add('correct');
+  } else {
+    document.getElementById('o'+chosen).classList.add('wrong');
+    document.getElementById('o'+q.ans).classList.add('reveal');
+  }
+
+  // show explanation
+  const fb=document.getElementById('fb');
+  fb.className='feedback show '+(chosen===q.ans?'ok':'err');
+  fb.innerHTML=(chosen===q.ans?'✅ <strong>Benar!</strong> ':'❌ <strong>Salah.</strong> ')+q.exp;
+
+  // auto next after 1.8s
+  setTimeout(()=>{
+    ST.idx++;
+    ST.answered=false;
+    if(ST.idx>=ST.qs.length){clearInterval(ST.interval);showSkor();}
+    else render();
+  },1800);
+}
+
+function showSkor(){
+  ST.phase='skor';
+  const benar=ST.history.filter(h=>h.chosen===h.ans).length;
+  const salah=ST.history.filter(h=>h.chosen!==h.ans).length;
+  const skip=ST.qs.length-ST.history.length;
+  const total=ST.qs.length;
+  const pct=Math.round((benar/total)*100);
+  document.getElementById('main').innerHTML=`
+    <div class="skor-wrap">
+      <div class="skor-hero">
+        <div class="skor-badge2">Subtes Selesai – Pengetahuan Umum</div>
+        <div class="skor-pct">${pct}%</div>
+        <div class="skor-sub">${benar} benar dari ${total} soal</div>
+        <div class="skor-grid">
+          <div class="si"><div class="si-label">Benar</div><div class="si-val g">${benar}</div></div>
+          <div class="si"><div class="si-label">Salah</div><div class="si-val r">${salah}</div></div>
+          <div class="si"><div class="si-label">Tidak dijawab</div><div class="si-val a">${skip}</div></div>
+          <div class="si"><div class="si-label">Total Soal</div><div class="si-val a">${total}</div></div>
+        </div>
+        <button class="btn-review" onclick="showReview()">📋 Lihat Pembahasan Semua Soal</button>
+        <button class="btn-ulang" onclick="resetTest()">🔄 Ulangi Tes</button>
+      </div>
+    </div>
+  `;
+}
+
+function showReview(){
+  const labs=['A','B','C','D'];
+  const items=ST.qs.map((q,i)=>{
+    const h=ST.history.find(x=>x.idx===i);
+    const chosen=h?h.chosen:-1;
+    const opts=q.opts.map((o,j)=>{
+      let cls='ri-opt rn';
+      if(j===q.ans)cls='ri-opt rc';
+      else if(j===chosen&&chosen!==q.ans)cls='ri-opt rw';
+      return `<div class="${cls}"><div class="ri-lbl">${labs[j]}</div><span>${o.replace(/^[A-D]\.\s*/,'')}</span></div>`;
+    }).join('');
+    const status=chosen===-1?'⬜ Tidak dijawab':chosen===q.ans?'✅ Benar':'❌ Salah';
+    return `<div class="review-item">
+      <div class="ri-num">Soal ${i+1} — ${status}</div>
+      <div class="ri-q">${q.q}</div>
+      <div class="ri-opts">${opts}</div>
+      <div class="ri-exp">💡 ${q.exp}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('main').innerHTML=`
+    <div class="review-wrap">
+      <button class="back-btn" onclick="showSkor()">← Kembali ke Skor</button>
+      ${items}
+      <button class="btn-ulang" onclick="resetTest()" style="margin-top:8px;">🔄 Ulangi Tes</button>
+    </div>
+  `;
+}
+
+function resetTest(){
+  clearInterval(ST.interval);
+  document.getElementById('app').style.display='none';
+  document.getElementById('landing').style.display='block';
+}
+</script>
+</body>
+</html>
