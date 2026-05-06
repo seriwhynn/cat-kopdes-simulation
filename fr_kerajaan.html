@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT – Kerajaan-Kerajaan di Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#0d0f14;color:#f0f2f8;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 60px;}
+#wrap{max-width:640px;width:100%;}
+
+/* LANDING */
+#landing{animation:fadeUp .5s ease both;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(180,120,40,.18);border:1px solid rgba(200,150,60,.35);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;color:#e8b96a;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#e8b96a;animation:pulse 1.5s infinite;}
+h1{font-size:clamp(24px,5vw,36px);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:14px;}
+h1 span{color:#e8b96a;}
+.desc{font-size:15px;color:#9097b0;line-height:1.7;margin-bottom:28px;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.info-box{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;text-align:center;}
+.info-num{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:#e8b96a;}
+.info-label{font-size:11px;color:#5a607a;margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+.topic-list{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-bottom:28px;}
+.topic-item{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:#c5c9d8;}
+.topic-item:last-child{border-bottom:none;}
+.t-icon{font-size:16px;width:28px;text-align:center;}
+.btn-start{width:100%;background:#b8860b;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s,transform .15s;}
+.btn-start:hover{background:#e8b96a;color:#1a1200;transform:translateY(-1px);}
+
+/* APP */
+#app{display:none;}
+.header-bar{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.h-left .h-sub{font-size:11px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;}
+.h-left .h-title{font-size:17px;font-weight:700;}
+.h-right{text-align:right;}
+.t-label{font-size:10px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+#timer{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;}
+#timer.ok{color:#22c55e;}#timer.warn{color:#f59e0b;}#timer.danger{color:#ef4444;}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.pbar{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+.pfill{height:100%;background:#b8860b;border-radius:99px;transition:width .4s;}
+.plabel{font-size:12px;color:#5a607a;font-family:'Space Mono',monospace;white-space:nowrap;}
+.soal-card{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px;margin-bottom:14px;animation:fadeUp .3s ease both;}
+.soal-tag{display:inline-block;background:rgba(184,134,11,.18);border:1px solid rgba(184,134,11,.3);color:#e8b96a;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:99px;margin-bottom:14px;}
+.soal-q{font-size:15px;font-weight:600;color:#f0f2f8;line-height:1.7;margin-bottom:20px;white-space:pre-wrap;}
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{background:#13161e;border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:12px 14px;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#d0d4e8;cursor:pointer;display:flex;align-items:flex-start;gap:11px;line-height:1.5;transition:all .15s;}
+.opt:hover:not(:disabled){background:#1a1e28;border-color:rgba(255,255,255,.15);}
+.opt-lbl{min-width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#9097b0;flex-shrink:0;font-family:'Space Mono',monospace;transition:all .15s;}
+.opt:disabled{cursor:default;}
+.opt.correct{border-color:#22c55e;background:rgba(34,197,94,.1);}
+.opt.correct .opt-lbl{background:#22c55e;color:#fff;}
+.opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.1);}
+.opt.wrong .opt-lbl{background:#ef4444;color:#fff;}
+.opt.reveal{border-color:#22c55e;background:rgba(34,197,94,.07);}
+.opt.reveal .opt-lbl{background:rgba(34,197,94,.3);color:#22c55e;}
+.feedback{margin-top:14px;border-radius:8px;padding:11px 14px;font-size:13px;line-height:1.6;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;}
+.feedback.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;}
+#wh{display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:8px;padding:10px 16px;text-align:center;font-size:14px;font-weight:600;margin-bottom:12px;}
+
+/* SKOR */
+.skor-wrap{animation:fadeUp .4s ease both;}
+.skor-hero{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px 24px;text-align:center;margin-bottom:16px;}
+.skor-badge2{display:inline-block;background:rgba(184,134,11,.18);border:1px solid rgba(184,134,11,.3);color:#e8b96a;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:14px;}
+.skor-pct{font-family:'Space Mono',monospace;font-size:58px;font-weight:700;color:#e8b96a;line-height:1;}
+.skor-sub{font-size:14px;color:#9097b0;margin:8px 0 22px;}
+.skor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px;}
+.si{background:#13161e;border-radius:9px;padding:14px;text-align:center;}
+.si-label{font-size:11px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.si-val{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;}
+.si-val.g{color:#22c55e;}.si-val.r{color:#ef4444;}.si-val.a{color:#9097b0;}
+.btn-review{width:100%;background:#1a1e28;color:#e8b96a;border:1px solid rgba(184,134,11,.3);border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:10px;transition:background .2s;}
+.btn-review:hover{background:rgba(184,134,11,.1);}
+.btn-ulang{width:100%;background:#b8860b;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s,transform .15s;}
+.btn-ulang:hover{background:#e8b96a;color:#1a1200;transform:translateY(-1px);}
+
+/* REVIEW */
+.review-wrap{animation:fadeUp .4s ease both;}
+.review-item{background:#1e2230;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;margin-bottom:12px;}
+.ri-num{font-size:10px;color:#5a607a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.ri-q{font-size:14px;font-weight:600;color:#f0f2f8;line-height:1.6;margin-bottom:12px;white-space:pre-wrap;}
+.ri-opts{display:flex;flex-direction:column;gap:6px;}
+.ri-opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:7px;font-size:13px;border:1px solid transparent;}
+.ri-opt.rc{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#86efac;}
+.ri-opt.rw{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:#fca5a5;}
+.ri-opt.rn{color:#9097b0;}
+.ri-lbl{min-width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'Space Mono',monospace;}
+.rc .ri-lbl{background:#22c55e;color:#fff;}
+.rw .ri-lbl{background:#ef4444;color:#fff;}
+.rn .ri-lbl{background:rgba(255,255,255,.08);color:#5a607a;}
+.ri-exp{margin-top:10px;background:rgba(255,255,255,.04);border-radius:7px;padding:9px 12px;font-size:12px;color:#9097b0;line-height:1.6;}
+.back-btn{background:#1a1e28;color:#e8b96a;border:1px solid rgba(184,134,11,.3);border-radius:10px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:16px;transition:background .2s;}
+.back-btn:hover{background:rgba(184,134,11,.1);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="badge"><div class="dot"></div>CAT KDKMP / KNMP 2026</div>
+  <h1>Kerajaan-Kerajaan<br><span>di Indonesia</span></h1>
+  <p class="desc">Soal mencakup 16 kerajaan besar Nusantara — Hindu, Buddha, Islam — beserta raja, lokasi, peninggalan, dan masa kejayaannya. <strong>40 soal</strong> dalam <strong>7 menit</strong>. Jawaban ditampilkan langsung saat diklik.</p>
+  <div class="info-grid">
+    <div class="info-box"><div class="info-num">40</div><div class="info-label">Total Soal</div></div>
+    <div class="info-box"><div class="info-num">7'</div><div class="info-label">Waktu</div></div>
+    <div class="info-box"><div class="info-num">16</div><div class="info-label">Kerajaan</div></div>
+  </div>
+  <div class="topic-list">
+    <div class="topic-item"><div class="t-icon">🏛️</div>Kutai, Tarumanegara, Sriwijaya, Mataram Kuno</div>
+    <div class="topic-item"><div class="t-icon">⚔️</div>Kediri, Singasari, Majapahit</div>
+    <div class="topic-item"><div class="t-icon">🕌</div>Demak, Banten, Cirebon, Pajang, Mataram Islam</div>
+    <div class="topic-item"><div class="t-icon">🌺</div>Aceh, Ternate, Goa-Tallo, Lombok</div>
+    <div class="topic-item"><div class="t-icon">📜</div>Raja, prasasti, candi, sumpah, peninggalan</div>
+  </div>
+  <button class="btn-start" onclick="startTest()">Mulai Tes →</button>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="wh">⏰ Waktu habis! Lihat hasil di bawah.</div>
+  <div id="main"></div>
+</div>
+
+</div>
+<script>
+const SOAL = [
+  // KUTAI
+  {q:"Kerajaan Hindu tertua di Indonesia adalah?",opts:["A. Tarumanegara","B. Kutai","C. Sriwijaya","D. Majapahit"],ans:1,exp:"Kerajaan Kutai di Kalimantan Timur berdiri sekitar abad ke-4 Masehi, menjadikannya kerajaan Hindu tertua di Indonesia."},
+  {q:"Kerajaan Kutai terletak di provinsi?",opts:["A. Kalimantan Selatan","B. Kalimantan Barat","C. Kalimantan Timur","D. Kalimantan Tengah"],ans:2,exp:"Kutai berada di Kalimantan Timur, tepatnya di sekitar Sungai Mahakam. Ibu kotanya diperkirakan di Muara Kaman."},
+  {q:"Peninggalan tertulis Kerajaan Kutai yang terkenal berbentuk?",opts:["A. Arca","B. Candi","C. Prasasti Yupa","D. Naskah lontar"],ans:2,exp:"Yupa adalah tiang batu peringatan (prasasti) yang ditemukan di Kutai, berisi tulisan huruf Pallawa dan bahasa Sanskerta."},
+  {q:"Kerajaan Kutai berdiri sekitar abad ke-?",opts:["A. 2 Masehi","B. 4 Masehi","C. 6 Masehi","D. 8 Masehi"],ans:1,exp:"Kutai diperkirakan berdiri sekitar abad ke-4 Masehi, berdasarkan perkiraan usia prasasti Yupa yang ditemukan."},
+
+  // TARUMANEGARA
+  {q:"Kerajaan Hindu tertua di Jawa Barat adalah?",opts:["A. Pajajaran","B. Mataram Kuno","C. Tarumanegara","D. Cirebon"],ans:2,exp:"Tarumanegara adalah kerajaan Hindu tertua di Jawa Barat, dipimpin oleh Raja Purnawarman yang terkenal."},
+  {q:"Raja yang terkenal dari Kerajaan Tarumanegara adalah?",opts:["A. Hayam Wuruk","B. Purnawarman","C. Ken Arok","D. Sultan Agung"],ans:1,exp:"Raja Purnawarman adalah penguasa Tarumanegara yang terkenal membangun saluran irigasi Sungai Gomati untuk rakyatnya."},
+  {q:"Kerajaan Tarumanegara dikenal dengan pembangunan apa?",opts:["A. Candi Prambanan","B. Pelabuhan Sunda Kelapa","C. Sistem irigasi Sungai Gomati","D. Benteng Keraton"],ans:2,exp:"Tarumanegara dikenal dengan sistem irigasi dan pembangunan Sungai Gomati sepanjang ±12 km untuk pertanian dan mengatasi banjir."},
+
+  // SRIWIJAYA
+  {q:"Kerajaan maritim Buddha terbesar di Asia Tenggara adalah?",opts:["A. Majapahit","B. Mataram Kuno","C. Sriwijaya","D. Kediri"],ans:2,exp:"Sriwijaya adalah kerajaan maritim Buddha besar yang menguasai jalur perdagangan di Selat Malaka pada abad ke-7 hingga 13."},
+  {q:"Pusat Kerajaan Sriwijaya berada di?",opts:["A. Medan","B. Palembang","C. Jambi","D. Padang"],ans:1,exp:"Palembang (Sumatera Selatan) adalah pusat Kerajaan Sriwijaya. Kota ini strategis di tepi Sungai Musi dekat Selat Malaka."},
+  {q:"Sriwijaya menguasai jalur perdagangan di?",opts:["A. Selat Lombok","B. Selat Sunda","C. Selat Malaka","D. Selat Makassar"],ans:2,exp:"Selat Malaka adalah jalur perdagangan internasional yang dikuasai Sriwijaya, menghubungkan India, Tiongkok, dan Asia Tenggara."},
+  {q:"Sriwijaya terletak di pulau?",opts:["A. Jawa","B. Kalimantan","C. Sulawesi","D. Sumatra"],ans:3,exp:"Sriwijaya berpusat di Palembang, Sumatera Selatan. Kerajaan ini merupakan kekuatan maritim terbesar di Nusantara."},
+
+  // MATARAM KUNO
+  {q:"Candi Prambanan merupakan peninggalan Kerajaan?",opts:["A. Singasari","B. Majapahit","C. Mataram Kuno","D. Kediri"],ans:2,exp:"Candi Prambanan (candi Hindu terbesar di Indonesia) dibangun pada masa Kerajaan Mataram Kuno, sekitar abad ke-9 Masehi."},
+  {q:"Kerajaan Mataram Kuno berada di pulau?",opts:["A. Sumatra","B. Kalimantan","C. Jawa","D. Bali"],ans:2,exp:"Mataram Kuno berada di Jawa Tengah. Selain Prambanan, kerajaan ini juga berkaitan dengan pembangunan Candi Borobudur."},
+  {q:"Kerajaan Mataram Kuno berdiri sekitar abad ke-?",opts:["A. 5","B. 6","C. 7","D. 8"],ans:3,exp:"Mataram Kuno diperkirakan berdiri sekitar abad ke-8 Masehi di Jawa Tengah, menganut agama Hindu dan Buddha."},
+
+  // KEDIRI
+  {q:"Kerajaan Kediri berada di?",opts:["A. Jawa Tengah","B. Jawa Barat","C. Jawa Timur","D. Bali"],ans:2,exp:"Kediri adalah kerajaan Hindu di Jawa Timur. Raja terkenalnya adalah Raja Jayabaya yang dikenal dengan ramalannya."},
+  {q:"Raja Kediri yang terkenal dengan ramalannya adalah?",opts:["A. Ken Arok","B. Hayam Wuruk","C. Raja Jayabaya","D. Raden Patah"],ans:2,exp:"Raja Jayabaya dikenal dengan Jangka Jayabaya (ramalan). Kediri mencapai puncak kejayaan pada abad ke-12 masa pemerintahannya."},
+  {q:"Kerajaan Kediri mencapai puncak kejayaan pada abad ke-?",opts:["A. 10","B. 11","C. 12","D. 13"],ans:2,exp:"Kediri mencapai puncak kejayaan pada abad ke-12, terutama di masa Raja Jayabaya dan menghasilkan banyak karya sastra."},
+
+  // SINGASARI
+  {q:"Kerajaan Singasari didirikan oleh?",opts:["A. Hayam Wuruk","B. Gajah Mada","C. Ken Arok","D. Raden Wijaya"],ans:2,exp:"Ken Arok mendirikan Kerajaan Singasari pada tahun 1222 di Jawa Timur setelah mengalahkan Kerajaan Kediri."},
+  {q:"Kerajaan Singasari didirikan pada tahun?",opts:["A. 1200","B. 1215","C. 1222","D. 1230"],ans:2,exp:"Singasari berdiri pada tahun 1222 M, didirikan Ken Arok di Jawa Timur dan merupakan cikal bakal Kerajaan Majapahit."},
+  {q:"Kerajaan Singasari merupakan cikal bakal dari kerajaan?",opts:["A. Kediri","B. Majapahit","C. Demak","D. Mataram Islam"],ans:1,exp:"Singasari adalah pendahulu Majapahit. Raden Wijaya (cucu pendiri Singasari) kemudian mendirikan Kerajaan Majapahit."},
+
+  // MAJAPAHIT
+  {q:"Kerajaan Hindu terbesar di Nusantara adalah?",opts:["A. Sriwijaya","B. Kutai","C. Majapahit","D. Mataram Kuno"],ans:2,exp:"Majapahit adalah kerajaan Hindu terbesar di Nusantara, mencapai kejayaan pada abad ke-14 di bawah Hayam Wuruk dan Gajah Mada."},
+  {q:"Majapahit mencapai kejayaan pada masa pemerintahan raja?",opts:["A. Ken Arok","B. Raden Wijaya","C. Hayam Wuruk","D. Sultan Agung"],ans:2,exp:"Hayam Wuruk (1350–1389) adalah raja terbesar Majapahit, didampingi Mahapatih Gajah Mada yang terkenal dengan Sumpah Palapa."},
+  {q:"Sumpah Palapa diucapkan oleh?",opts:["A. Hayam Wuruk","B. Raden Wijaya","C. Ken Arok","D. Gajah Mada"],ans:3,exp:"Gajah Mada bersumpah tidak akan menikmati palapa (rempah-rempah) sebelum menyatukan seluruh Nusantara di bawah Majapahit."},
+  {q:"Kerajaan Majapahit terletak di?",opts:["A. Jawa Tengah","B. Jawa Timur","C. Jawa Barat","D. Bali"],ans:1,exp:"Majapahit berpusat di Trowulan, Jawa Timur. Wilayah kekuasaannya meliputi hampir seluruh Nusantara."},
+
+  // DEMAK
+  {q:"Kerajaan Islam pertama di Pulau Jawa adalah?",opts:["A. Banten","B. Cirebon","C. Mataram Islam","D. Demak"],ans:3,exp:"Demak adalah kerajaan Islam pertama di Pulau Jawa, didirikan oleh Raden Patah pada abad ke-15."},
+  {q:"Kerajaan Demak didirikan oleh?",opts:["A. Sunan Kalijaga","B. Sultan Agung","C. Raden Patah","D. Jaka Tingkir"],ans:2,exp:"Raden Patah mendirikan Demak pada abad ke-15. Demak menjadi pusat penyebaran Islam di Pulau Jawa."},
+  {q:"Kerajaan Demak berperan penting dalam?",opts:["A. Perdagangan rempah-rempah","B. Penyebaran Islam di Pulau Jawa","C. Pembangunan candi","D. Penguasaan Selat Malaka"],ans:1,exp:"Demak menjadi pusat penyebaran Islam di Jawa, dengan dukungan para Wali Songo yang menyebarkan Islam secara damai."},
+
+  // BANTEN
+  {q:"Kerajaan Islam di ujung barat Pulau Jawa adalah?",opts:["A. Demak","B. Cirebon","C. Banten","D. Pajang"],ans:2,exp:"Banten berada di ujung barat Pulau Jawa (kini Provinsi Banten), merupakan kerajaan Islam dan pelabuhan perdagangan internasional."},
+  {q:"Kerajaan Banten terkenal sebagai?",opts:["A. Pusat pertanian","B. Pelabuhan perdagangan internasional","C. Pusat pendidikan Islam","D. Penghasil emas"],ans:1,exp:"Banten adalah pelabuhan perdagangan internasional yang ramai, menjadi pusat perdagangan lada dan komoditas dari berbagai negara."},
+
+  // CIREBON
+  {q:"Kerajaan Cirebon berada di?",opts:["A. Jawa Timur","B. Jawa Tengah","C. Jawa Barat","D. Banten"],ans:2,exp:"Cirebon berada di pantai utara Jawa Barat, merupakan kerajaan Islam yang dikenal dengan budaya dan seni yang berkembang pesat."},
+  {q:"Kerajaan Cirebon berdiri sekitar abad ke-?",opts:["A. 13","B. 14","C. 15","D. 16"],ans:2,exp:"Cirebon berdiri sekitar abad ke-15, berkembang sebagai pusat perdagangan dan penyebaran Islam di pesisir utara Jawa Barat."},
+
+  // PAJANG & MATARAM ISLAM
+  {q:"Kerajaan Pajang merupakan penerus dari kerajaan?",opts:["A. Demak","B. Singasari","C. Kediri","D. Banten"],ans:0,exp:"Pajang merupakan penerus Demak, dipimpin oleh Jaka Tingkir (Sultan Hadiwijaya) yang sebelumnya adalah menantu raja Demak."},
+  {q:"Kerajaan Mataram Islam didirikan oleh?",opts:["A. Sultan Agung","B. Jaka Tingkir","C. Panembahan Senopati","D. Raden Patah"],ans:2,exp:"Panembahan Senopati mendirikan Mataram Islam pada abad ke-16 di Jawa Tengah, meneruskan kekuasaan dari Kerajaan Pajang."},
+  {q:"Raja terbesar Kerajaan Mataram Islam adalah?",opts:["A. Panembahan Senopati","B. Sultan Agung","C. Amangkurat I","D. Pakubuwono I"],ans:1,exp:"Sultan Agung (1613–1645) adalah raja terbesar Mataram Islam, memperluas wilayah hingga hampir seluruh Jawa dan menyerang VOC Belanda."},
+
+  // ACEH
+  {q:"Kerajaan Islam terbesar di Sumatra adalah?",opts:["A. Sriwijaya","B. Ternate","C. Aceh","D. Goa-Tallo"],ans:2,exp:"Aceh adalah kerajaan Islam terbesar di Sumatra, berpusat di Aceh dan menjadi pusat perdagangan serta penyebaran Islam."},
+  {q:"Masa kejayaan Kerajaan Aceh terjadi pada masa pemerintahan?",opts:["A. Sultan Hasanuddin","B. Sultan Iskandar Muda","C. Sultan Agung","D. Sultan Baab Ullah"],ans:1,exp:"Sultan Iskandar Muda (1607–1636) membawa Aceh ke puncak kejayaan, menjadikannya kekuatan maritim dan pusat Islam di Asia Tenggara."},
+
+  // TERNATE
+  {q:"Kerajaan Ternate berada di?",opts:["A. Maluku Selatan","B. Maluku Utara","C. Papua","D. Sulawesi Utara"],ans:1,exp:"Ternate berada di Maluku Utara, terkenal sebagai penghasil rempah-rempah terutama cengkih yang diperdagangkan ke seluruh dunia."},
+  {q:"Kerajaan Ternate terkenal sebagai penghasil?",opts:["A. Emas","B. Beras","C. Rempah-rempah (cengkih)","D. Kain sutra"],ans:2,exp:"Ternate adalah penghasil cengkih terbesar, menjadikan Maluku Utara pusat perdagangan rempah yang diperebutkan bangsa Eropa."},
+  {q:"Ternate berperan penting dalam perdagangan?",opts:["A. Emas dunia","B. Rempah-rempah dunia","C. Tekstil Asia","D. Hasil laut"],ans:1,exp:"Ternate berperan besar dalam perdagangan rempah-rempah dunia, hingga bangsa Portugis, Spanyol, dan Belanda bersaing menguasainya."},
+
+  // GOA-TALLO
+  {q:"Kerajaan Goa-Tallo merupakan kerajaan tertua di?",opts:["A. Kalimantan","B. Sulawesi Selatan","C. Sulawesi Utara","D. Maluku"],ans:1,exp:"Goa-Tallo adalah kerajaan tertua di Sulawesi Selatan, awalnya bercorak Hindu-Buddha kemudian memeluk Islam."},
+  {q:"Kerajaan Goa-Tallo awalnya beragama apa sebelum memeluk Islam?",opts:["A. Animisme saja","B. Hindu-Buddha","C. Kristen","D. Konghucu"],ans:1,exp:"Goa-Tallo awalnya bercorak Hindu-Buddha, kemudian memeluk Islam pada abad ke-16 dan menjadi pusat penyebaran Islam di Sulawesi."},
+  {q:"Kerajaan Goa-Tallo dikenal sebagai?",opts:["A. Pusat pertanian","B. Pusat perdagangan","C. Pusat pendidikan","D. Pusat pertambangan"],ans:1,exp:"Goa-Tallo (Makassar) dikenal sebagai pusat perdagangan di Sulawesi Selatan, menghubungkan pedagang dari berbagai wilayah Nusantara."},
+
+  // LOMBOK & WARISAN
+  {q:"Kerajaan Lombok dikenal dengan?",opts:["A. Candi megah","B. Adat, budaya, dan arsitektur khas","C. Rempah-rempah","D. Armada laut terbesar"],ans:1,exp:"Kerajaan Lombok di Pulau Lombok dikenal dengan adat, budaya, dan arsitektur khasnya yang unik, berdiri sekitar abad ke-17."},
+  {q:"Warisan kerajaan-kerajaan di Indonesia yang masih bisa dilihat hingga kini antara lain?",opts:["A. Senjata perang","B. Candi, masjid, keraton, dan prasasti","C. Kapal perang kuno","D. Uang koin emas"],ans:1,exp:"Peninggalan kerajaan Indonesia meliputi candi (Prambanan, Borobudur), masjid (Demak, Banten), keraton, dan prasasti batu bertulis."},
+];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+const ST={qs:[],idx:0,answered:false,timeLeft:420,interval:null,history:[],phase:'soal'};
+
+function startTest(){
+  ST.qs=shuffle(SOAL).slice(0,40);
+  ST.idx=0;ST.answered=false;ST.timeLeft=420;ST.history=[];ST.phase='soal';
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='block';
+  clearInterval(ST.interval);
+  ST.interval=setInterval(tick,1000);
+  render();
+}
+
+function tick(){
+  ST.timeLeft--;
+  const el=document.getElementById('timer');
+  if(el){
+    const m=Math.floor(ST.timeLeft/60),s=ST.timeLeft%60;
+    el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className=ST.timeLeft<=30?'danger':ST.timeLeft<=90?'warn':'ok';
+  }
+  if(ST.timeLeft<=0){clearInterval(ST.interval);timeUp();}
+}
+
+function timeUp(){
+  document.getElementById('wh').style.display='block';
+  setTimeout(()=>{document.getElementById('wh').style.display='none';showSkor();},1600);
+}
+
+function render(){
+  const q=ST.qs[ST.idx];
+  const total=ST.qs.length;
+  const pct=Math.round((ST.idx/total)*100);
+  const m=Math.floor(ST.timeLeft/60),s=ST.timeLeft%60;
+  const tcls=ST.timeLeft<=30?'danger':ST.timeLeft<=90?'warn':'ok';
+  const labs=['A','B','C','D'];
+  document.getElementById('main').innerHTML=`
+    <div class="header-bar">
+      <div class="h-left">
+        <div class="h-sub">Kerajaan Indonesia</div>
+        <div class="h-title">Pengetahuan Umum</div>
+      </div>
+      <div class="h-right">
+        <div class="t-label">Waktu tersisa</div>
+        <div id="timer" class="${tcls}">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div>
+      </div>
+    </div>
+    <div class="prog-row">
+      <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+      <div class="plabel">${ST.idx+1}/${total}</div>
+    </div>
+    <div class="soal-card">
+      <div class="soal-tag">Soal ke-${ST.idx+1}</div>
+      <div class="soal-q">${q.q}</div>
+      <div class="opts" id="opts">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="pilih(${i})" id="o${i}">
+          <span class="opt-lbl">${labs[i]}</span>
+          <span>${o.replace(/^[A-D]\.\s*/,'')}</span>
+        </button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>
+  `;
+}
+
+function pilih(chosen){
+  if(ST.answered)return;
+  ST.answered=true;
+  const q=ST.qs[ST.idx];
+  ST.history.push({idx:ST.idx,chosen,ans:q.ans});
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  if(chosen===q.ans){
+    document.getElementById('o'+chosen).classList.add('correct');
+  } else {
+    document.getElementById('o'+chosen).classList.add('wrong');
+    document.getElementById('o'+q.ans).classList.add('reveal');
+  }
+  const fb=document.getElementById('fb');
+  fb.className='feedback show '+(chosen===q.ans?'ok':'err');
+  fb.innerHTML=(chosen===q.ans?'✅ <strong>Benar!</strong> ':'❌ <strong>Salah.</strong> ')+q.exp;
+  setTimeout(()=>{
+    ST.idx++;ST.answered=false;
+    if(ST.idx>=ST.qs.length){clearInterval(ST.interval);showSkor();}
+    else render();
+  },1800);
+}
+
+function showSkor(){
+  ST.phase='skor';
+  const benar=ST.history.filter(h=>h.chosen===h.ans).length;
+  const salah=ST.history.filter(h=>h.chosen!==h.ans).length;
+  const skip=ST.qs.length-ST.history.length;
+  const total=ST.qs.length;
+  const pct=Math.round((benar/total)*100);
+  document.getElementById('main').innerHTML=`
+    <div class="skor-wrap">
+      <div class="skor-hero">
+        <div class="skor-badge2">Selesai – Kerajaan Indonesia</div>
+        <div class="skor-pct">${pct}%</div>
+        <div class="skor-sub">${benar} benar dari ${total} soal</div>
+        <div class="skor-grid">
+          <div class="si"><div class="si-label">Benar</div><div class="si-val g">${benar}</div></div>
+          <div class="si"><div class="si-label">Salah</div><div class="si-val r">${salah}</div></div>
+          <div class="si"><div class="si-label">Tidak dijawab</div><div class="si-val a">${skip}</div></div>
+          <div class="si"><div class="si-label">Total Soal</div><div class="si-val a">${total}</div></div>
+        </div>
+        <button class="btn-review" onclick="showReview()">📋 Lihat Pembahasan Semua Soal</button>
+        <button class="btn-ulang" onclick="resetTest()">🔄 Ulangi Tes</button>
+      </div>
+    </div>
+  `;
+}
+
+function showReview(){
+  const labs=['A','B','C','D'];
+  const items=ST.qs.map((q,i)=>{
+    const h=ST.history.find(x=>x.idx===i);
+    const chosen=h?h.chosen:-1;
+    const opts=q.opts.map((o,j)=>{
+      let cls='ri-opt rn';
+      if(j===q.ans)cls='ri-opt rc';
+      else if(j===chosen&&chosen!==q.ans)cls='ri-opt rw';
+      return `<div class="${cls}"><div class="ri-lbl">${labs[j]}</div><span>${o.replace(/^[A-D]\.\s*/,'')}</span></div>`;
+    }).join('');
+    const status=chosen===-1?'⬜ Tidak dijawab':chosen===q.ans?'✅ Benar':'❌ Salah';
+    return `<div class="review-item">
+      <div class="ri-num">Soal ${i+1} — ${status}</div>
+      <div class="ri-q">${q.q}</div>
+      <div class="ri-opts">${opts}</div>
+      <div class="ri-exp">💡 ${q.exp}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('main').innerHTML=`
+    <div class="review-wrap">
+      <button class="back-btn" onclick="showSkor()">← Kembali ke Skor</button>
+      ${items}
+      <button class="btn-ulang" onclick="resetTest()" style="margin-top:8px;">🔄 Ulangi Tes</button>
+    </div>
+  `;
+}
+
+function resetTest(){
+  clearInterval(ST.interval);
+  document.getElementById('app').style.display='none';
+  document.getElementById('landing').style.display='block';
+}
+</script>
+</body>
+</html>
