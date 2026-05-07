@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TES POTENSI KOGNITIF - BAHASA KDKMP/KNMP</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --merah: #d32f2f;
+    --merah-gelap: #b71c1c;
+    --kuning: #fdd835;
+    --biru: #1565c0;
+    --biru-muda: #1976d2;
+    --hijau: #2e7d32;
+    --hijau-muda: #43a047;
+    --putih: #ffffff;
+    --abu: #f5f5f5;
+    --abu-tua: #757575;
+    --teks: #212121;
+    --salah: #c62828;
+    --benar: #1b5e20;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #1565c0 100%);
+    min-height: 100vh;
+    padding: 0;
+    color: var(--teks);
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--merah);
+    color: white;
+    text-align: center;
+    padding: 12px 16px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .header .label-soal {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--kuning);
+    color: #000;
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+  }
+  .header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 4vw, 26px);
+    font-weight: 800;
+    letter-spacing: 1px;
+    line-height: 1.2;
+  }
+  .header .sub {
+    font-size: clamp(11px, 2.5vw, 14px);
+    opacity: 0.9;
+    margin-top: 2px;
+  }
+
+  /* TIMER BAR */
+  .timer-bar {
+    background: #0d47a1;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+  .timer-display {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 800;
+    color: var(--kuning);
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(253,216,53,0.5);
+    transition: color 0.3s;
+  }
+  .timer-display.warning { color: #ff5722; animation: blink 0.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .progress-info {
+    text-align: right;
+    color: white;
+  }
+  .progress-info .count {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 700;
+  }
+  .progress-info .label-prog {
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  .progress-track {
+    background: rgba(255,255,255,0.15);
+    height: 6px;
+  }
+  .progress-fill {
+    height: 6px;
+    background: linear-gradient(90deg, var(--kuning), #ff9800);
+    transition: width 0.4s ease;
+  }
+
+  /* MAIN CONTENT */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* INTRO SCREEN */
+  #intro-screen {
+    background: white;
+    border-radius: 16px;
+    padding: clamp(24px, 5vw, 48px);
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  #intro-screen h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 800;
+    color: var(--merah);
+    margin-bottom: 8px;
+  }
+  #intro-screen p {
+    color: #555;
+    font-size: clamp(13px, 2.5vw, 16px);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .info-card {
+    background: var(--abu);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .info-card .num {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--biru);
+  }
+  .info-card .desc { font-size: 12px; color: var(--abu-tua); font-weight: 600; }
+
+  .btn-mulai {
+    background: linear-gradient(135deg, var(--merah), #e53935);
+    color: white;
+    border: none;
+    padding: 14px 48px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(211,47,47,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-mulai:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(211,47,47,0.5); }
+  .btn-mulai:active { transform: translateY(0); }
+
+  /* SOAL SCREEN */
+  #soal-screen { display: none; }
+
+  .soal-card {
+    background: white;
+    border-radius: 16px;
+    padding: clamp(16px, 4vw, 32px);
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .soal-nomor {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--biru);
+    color: white;
+    border-radius: 50%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .soal-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .soal-teks {
+    font-size: clamp(13px, 2.5vw, 16px);
+    font-weight: 700;
+    color: var(--teks);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .pilihan-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .pilihan-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fafafa;
+    font-size: clamp(12px, 2.5vw, 15px);
+    line-height: 1.5;
+  }
+  .pilihan-item:hover:not(.disabled) {
+    border-color: var(--biru-muda);
+    background: #e3f2fd;
+    transform: translateX(2px);
+  }
+  .pilihan-item .huruf {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  /* BENAR */
+  .pilihan-item.benar {
+    border-color: var(--hijau-muda);
+    background: #e8f5e9;
+  }
+  .pilihan-item.benar .huruf {
+    background: var(--hijau-muda);
+    color: white;
+  }
+  .pilihan-item.benar::after {
+    content: '✓ BENAR';
+    margin-left: auto;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--hijau-muda);
+    white-space: nowrap;
+  }
+
+  /* SALAH */
+  .pilihan-item.salah {
+    border-color: var(--salah);
+    background: #ffebee;
+  }
+  .pilihan-item.salah .huruf {
+    background: var(--salah);
+    color: white;
+  }
+  .pilihan-item.salah::after {
+    content: '✗ SALAH';
+    margin-left: auto;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--salah);
+    white-space: nowrap;
+  }
+
+  /* JAWABAN BENAR setelah salah */
+  .pilihan-item.kunci-benar {
+    border-color: var(--hijau-muda);
+    background: #f1f8e9;
+  }
+  .pilihan-item.kunci-benar .huruf {
+    background: var(--hijau-muda);
+    color: white;
+  }
+  .pilihan-item.kunci-benar::after {
+    content: '← Jawaban Benar';
+    margin-left: auto;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--hijau);
+    white-space: nowrap;
+  }
+
+  .pilihan-item.disabled { cursor: default; pointer-events: none; }
+
+  /* NAVIGASI */
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-bar button {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .btn-prev { background: #e0e0e0; color: #424242; }
+  .btn-prev:hover { background: #bdbdbd; }
+  .btn-next { background: var(--biru); color: white; }
+  .btn-next:hover { background: var(--biru-muda); }
+  .btn-selesai { background: var(--merah); color: white; padding: 8px 24px; }
+  .btn-selesai:hover { background: var(--merah-gelap); }
+
+  .nomor-current {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--teks);
+  }
+
+  /* NOMOR GRID */
+  .nomor-grid-wrap {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .nomor-grid-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--abu-tua);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .nomor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .nomor-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #424242;
+  }
+  .nomor-btn:hover { border-color: var(--biru-muda); background: #e3f2fd; }
+  .nomor-btn.answered-benar { background: #e8f5e9; border-color: var(--hijau-muda); color: var(--hijau); }
+  .nomor-btn.answered-salah { background: #ffebee; border-color: var(--salah); color: var(--salah); }
+  .nomor-btn.active { background: var(--biru); border-color: var(--biru); color: white; }
+
+  /* HASIL SCREEN */
+  #hasil-screen {
+    display: none;
+    background: white;
+    border-radius: 16px;
+    padding: clamp(24px, 5vw, 48px);
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .hasil-icon { font-size: 64px; margin-bottom: 16px; }
+  #hasil-screen h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .score-big {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(60px, 15vw, 100px);
+    font-weight: 800;
+    line-height: 1;
+    margin: 16px 0;
+  }
+  .score-detail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .score-item {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .score-item .num {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+  }
+  .score-item .label { font-size: 12px; font-weight: 700; letter-spacing: 1px; opacity: 0.8; }
+  .score-benar { background: #e8f5e9; color: var(--hijau); }
+  .score-salah { background: #ffebee; color: var(--salah); }
+  .score-kosong { background: #e3f2fd; color: var(--biru); }
+
+  .predikat {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 700;
+    padding: 8px 24px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .btn-ulang {
+    background: linear-gradient(135deg, var(--biru), var(--biru-muda));
+    color: white;
+    border: none;
+    padding: 14px 48px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.4);
+    transition: all 0.2s;
+  }
+  .btn-ulang:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(21,101,192,0.5); }
+
+  /* RESPONSIVE */
+  @media(max-width: 480px) {
+    .pilihan-item { padding: 9px 10px; }
+    .nomor-btn { width: 30px; height: 30px; font-size: 11px; }
+    .score-detail { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="label-soal">SOAL KDKMP/KNMP 2025</div>
+  <h1>TES POTENSI KOGNITIF</h1>
+  <div class="sub">BAHASA — PART 2</div>
+</div>
+
+<!-- TIMER BAR (hanya tampil saat soal) -->
+<div class="timer-bar" id="timer-bar" style="display:none;">
+  <div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.7);font-weight:600;">⏱ WAKTU TERSISA</div>
+    <div class="timer-display" id="timer-display">7:00</div>
+  </div>
+  <div class="progress-info">
+    <div class="count"><span id="prog-now">1</span>/<span id="prog-total">50</span></div>
+    <div class="label-prog">pertanyaan</div>
+  </div>
+</div>
+<div class="progress-track" id="progress-track" style="display:none;">
+  <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div id="intro-screen">
+    <h2>📝 TES BAHASA</h2>
+    <p>Tes Potensi Kognitif bidang Bahasa untuk seleksi KDKMP/KNMP.<br>Pilih jawaban yang paling tepat!</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="num">50</div><div class="desc">Soal</div></div>
+      <div class="info-card"><div class="num">7</div><div class="desc">Menit</div></div>
+      <div class="info-card"><div class="num">A–E</div><div class="desc">Pilihan</div></div>
+    </div>
+    <p style="font-size:13px;color:#888;">Klik jawaban → langsung tahu benar/salah<br>Skor akhir ditampilkan di akhir tes</p>
+    <br>
+    <button class="btn-mulai" onclick="mulaiTes()">▶ MULAI TES</button>
+  </div>
+
+  <!-- SOAL -->
+  <div id="soal-screen">
+    <div class="nomor-grid-wrap">
+      <div class="nomor-grid-title">📋 Navigasi Soal</div>
+      <div class="nomor-grid" id="nomor-grid"></div>
+    </div>
+
+    <div id="soal-container"></div>
+
+    <div class="nav-bar">
+      <button class="btn-prev" onclick="prevSoal()">← Sebelumnya</button>
+      <span class="nomor-current">Soal <span id="nav-current">1</span> dari 50</span>
+      <button class="btn-next" onclick="nextSoal()">Berikutnya →</button>
+    </div>
+    <div style="text-align:center; margin-bottom:20px;">
+      <button class="btn-selesai" onclick="selesaiTes()">✅ SELESAI & LIHAT NILAI</button>
+    </div>
+  </div>
+
+  <!-- HASIL -->
+  <div id="hasil-screen">
+    <div class="hasil-icon" id="hasil-icon">🎉</div>
+    <h2 id="hasil-judul">Tes Selesai!</h2>
+    <div class="score-big" id="score-big">0</div>
+    <div style="font-size:14px;color:#888;margin-bottom:8px;">Nilai (dari 100)</div>
+    <div class="predikat" id="predikat-badge"></div>
+    <div class="score-detail">
+      <div class="score-item score-benar">
+        <div class="num" id="jml-benar">0</div>
+        <div class="label">✓ BENAR</div>
+      </div>
+      <div class="score-item score-salah">
+        <div class="num" id="jml-salah">0</div>
+        <div class="label">✗ SALAH</div>
+      </div>
+      <div class="score-item score-kosong">
+        <div class="num" id="jml-kosong">0</div>
+        <div class="label">— BELUM</div>
+      </div>
+    </div>
+    <button class="btn-ulang" onclick="ulangTes()">🔄 ULANGI TES</button>
+  </div>
+
+</div>
+
+<script>
+const soalData = [
+  // 1-5: Persamaan / Analogi Konsep
+  {
+    q: "Apakah persamaan fenomena hujan dan salju?",
+    pilihan: ["Keduanya memiliki suhu jauh di atas titik didih air","Merupakan bentuk presipitasi (air) yang turun dari awan ke bumi","Keduanya selalu dan hanya terjadi di puncak musim panas","Keduanya berwujud gas karbon yang tidak terlihat","Berasal dari semburan magma di dalam lapisan inti bumi"],
+    jawaban: 1
+  },
+  {
+    q: "Apakah persamaan antara bakat dan minat?",
+    pilihan: ["Keduanya hanya dimiliki oleh orang yang berpendidikan tinggi","Keduanya merupakan faktor yang memengaruhi prestasi dan karier seseorang","Keduanya bersifat permanen dan tidak bisa berubah sepanjang hidup","Keduanya hanya dipengaruhi oleh faktor genetik","Keduanya tidak ada hubungannya dengan motivasi belajar"],
+    jawaban: 1
+  },
+  {
+    q: "Manakah persamaan antara membaca dan mendengarkan?",
+    pilihan: ["Keduanya menggunakan indera penglihatan","Keduanya merupakan keterampilan berbahasa yang bersifat reseptif","Keduanya menghasilkan sebuah karya tulis","Keduanya selalu memerlukan alat bantu elektronik","Keduanya adalah keterampilan produktif dalam bahasa"],
+    jawaban: 1
+  },
+  {
+    q: "Apakah persamaan antara sinonim dan antonim dalam ilmu bahasa?",
+    pilihan: ["Keduanya membahas persamaan makna kata","Keduanya merupakan cabang kajian semantik (makna kata)","Keduanya hanya berlaku untuk kata benda","Keduanya tidak memiliki hubungan dengan konteks kalimat","Keduanya digunakan hanya dalam puisi"],
+    jawaban: 1
+  },
+  {
+    q: "Manakah persamaan antara pantun dan puisi?",
+    pilihan: ["Keduanya tidak memiliki rima","Keduanya adalah bentuk karya sastra yang menggunakan bahasa indah","Keduanya harus terdiri dari empat bait","Keduanya ditulis dalam bahasa asing","Keduanya tidak dapat dibacakan di depan umum"],
+    jawaban: 1
+  },
+  // 6-10: Makna Kata / Sinonim
+  {
+    q: "Kata 'absurd' dalam bahasa Indonesia bermakna...",
+    pilihan: ["Sangat masuk akal dan logis","Tidak masuk akal; mustahil atau janggal","Sangat menarik dan memukau","Bersifat ilmiah dan dapat dibuktikan","Berkaitan dengan hal-hal spiritual"],
+    jawaban: 1
+  },
+  {
+    q: "Sinonim kata 'cerdas' adalah...",
+    pilihan: ["Lalai","Pandai","Lambat","Malas","Bingung"],
+    jawaban: 1
+  },
+  {
+    q: "Antonim kata 'dermawan' adalah...",
+    pilihan: ["Pemurah","Kikir","Baik hati","Sopan","Rajin"],
+    jawaban: 1
+  },
+  {
+    q: "Kata 'efisien' bersinonim dengan...",
+    pilihan: ["Boros","Hemat dan tepat guna","Lambat","Mahal","Rumit"],
+    jawaban: 1
+  },
+  {
+    q: "Antonim kata 'eksplisit' adalah...",
+    pilihan: ["Jelas","Tersurat","Implisit (tersirat)","Nyata","Gamblang"],
+    jawaban: 2
+  },
+  // 11-15: Analogi Kata
+  {
+    q: "Dokter : Pasien = Guru : ...",
+    pilihan: ["Rumah sakit","Murid","Kantor","Buku","Ilmu"],
+    jawaban: 1
+  },
+  {
+    q: "Pena : Menulis = Pisau : ...",
+    pilihan: ["Memotong","Memasak","Mencuci","Menggambar","Membaca"],
+    jawaban: 0
+  },
+  {
+    q: "Buku : Perpustakaan = Lukisan : ...",
+    pilihan: ["Toko buku","Museum / Galeri","Sekolah","Kantor","Pasar"],
+    jawaban: 1
+  },
+  {
+    q: "Lapar : Makan = Haus : ...",
+    pilihan: ["Tidur","Berlari","Minum","Membaca","Bernyanyi"],
+    jawaban: 2
+  },
+  {
+    q: "Hakim : Pengadilan = Dokter : ...",
+    pilihan: ["Sekolah","Rumah sakit","Kantor polisi","Pasar","Laboratorium"],
+    jawaban: 1
+  },
+  // 16-20: Ejaan & Tata Bahasa
+  {
+    q: "Penulisan kata yang benar menurut KBBI/EYD adalah...",
+    pilihan: ["Nasehat","Aktifitas","Jadual","Nasihat","Praktek"],
+    jawaban: 3
+  },
+  {
+    q: "Kalimat yang menggunakan tanda koma dengan tepat adalah...",
+    pilihan: ["Saya suka makan, nasi goreng","Ibu memasak, dan ayah membaca koran","Dia pergi ke pasar, membeli sayur, dan ikan","Mereka bermain, di lapangan","Adik tidur, siang hari"],
+    jawaban: 2
+  },
+  {
+    q: "Kata berimbuhan yang tepat untuk kalimat 'Dia ... surat itu dengan hati-hati' adalah...",
+    pilihan: ["menuliskan","tuliskan","tertulis","ditulisi","penulisan"],
+    jawaban: 0
+  },
+  {
+    q: "Manakah penulisan huruf kapital yang benar?",
+    pilihan: ["ia belajar di universitas indonesia","Ia belajar di Universitas Indonesia","ia belajar Di universitas Indonesia","Ia Belajar Di Universitas Indonesia","ia Belajar di universitas indonesia"],
+    jawaban: 1
+  },
+  {
+    q: "Kata 'sangat' termasuk dalam kelas kata...",
+    pilihan: ["Kata benda (nomina)","Kata kerja (verba)","Kata keterangan (adverbia)","Kata sifat (adjektiva)","Kata sambung (konjungsi)"],
+    jawaban: 2
+  },
+  // 21-25: Pemahaman Bacaan / Ide Pokok
+  {
+    q: "Kalimat utama dalam suatu paragraf berfungsi untuk...",
+    pilihan: ["Memberikan contoh-contoh rinci","Mengulang kalimat sebelumnya","Menyatakan pokok pikiran yang dikembangkan paragraf","Menghubungkan paragraf satu dengan lainnya","Memberikan data statistik"],
+    jawaban: 2
+  },
+  {
+    q: "Gagasan pendukung dalam paragraf berfungsi untuk...",
+    pilihan: ["Mengganti kalimat utama","Memperjelas dan memperinci kalimat utama","Membuat paragraf lebih panjang","Mengubah topik pembicaraan","Menutup paragraf"],
+    jawaban: 1
+  },
+  {
+    q: "Jenis paragraf yang kalimat utamanya berada di awal paragraf disebut...",
+    pilihan: ["Paragraf induktif","Paragraf deduktif","Paragraf deskriptif","Paragraf naratif","Paragraf campuran"],
+    jawaban: 1
+  },
+  {
+    q: "Paragraf induktif adalah paragraf yang...",
+    pilihan: ["Kalimat utamanya di awal","Kalimat utamanya di akhir","Tidak memiliki kalimat utama","Kalimat utamanya di tengah","Memiliki dua kalimat utama"],
+    jawaban: 1
+  },
+  {
+    q: "Teks yang bertujuan memengaruhi pembaca untuk melakukan sesuatu disebut teks...",
+    pilihan: ["Deskripsi","Narasi","Persuasi","Eksposisi","Argumentasi murni"],
+    jawaban: 2
+  },
+  // 26-30: Kata Baku & Tidak Baku
+  {
+    q: "Manakah kata yang TIDAK baku?",
+    pilihan: ["Mengubah","Hakikat","Ijazah","Apotek","Merubah"],
+    jawaban: 4
+  },
+  {
+    q: "Kata baku dari 'aktifkan' adalah...",
+    pilihan: ["Aktifkan","Aktifkanlah","Aktifasikan","Aktifasi","Aktivasi"],
+    jawaban: 4
+  },
+  {
+    q: "Penulisan nama gelar yang benar adalah...",
+    pilihan: ["dr. Budi Santoso, Sp.PD","Dr Budi Santoso Sp PD","dr budi santoso, sp.pd","DR. budi santoso, SP.PD","dr. budi Santoso, sp.pd"],
+    jawaban: 0
+  },
+  {
+    q: "Kata yang merupakan bentuk baku adalah...",
+    pilihan: ["Hipotesa","Analisa","Hipotesis","Sistematika","Legalisir"],
+    jawaban: 2
+  },
+  {
+    q: "Manakah penulisan kata serapan yang benar?",
+    pilihan: ["Tehnik","Nopember","Sistim","Kwitansi","Teknik"],
+    jawaban: 4
+  },
+  // 31-35: Peribahasa & Ungkapan
+  {
+    q: "Peribahasa 'air beriak tanda tak dalam' bermakna...",
+    pilihan: ["Orang yang banyak bicara biasanya tidak berpengetahuan luas","Air yang beriak adalah air yang jernih","Orang pendiam selalu bijaksana","Sungai dangkal mudah dilintasi","Orang yang diam selalu berbahaya"],
+    jawaban: 0
+  },
+  {
+    q: "Makna ungkapan 'naik daun' adalah...",
+    pilihan: ["Memanjat pohon","Sedang populer atau terkenal","Mendapat musibah","Bekerja di kebun","Mendapat keuntungan besar"],
+    jawaban: 1
+  },
+  {
+    q: "Peribahasa 'bagai pinang dibelah dua' menggambarkan...",
+    pilihan: ["Dua hal yang sangat berbeda","Dua hal yang sangat mirip / serupa","Dua orang yang bertengkar","Sebuah pilihan yang sulit","Dua hal yang tidak berhubungan"],
+    jawaban: 1
+  },
+  {
+    q: "Ungkapan 'buah tangan' bermakna...",
+    pilihan: ["Buah yang dipegang","Oleh-oleh / hadiah","Hasil kerja keras","Tangan yang terluka","Keahlian seseorang"],
+    jawaban: 1
+  },
+  {
+    q: "Peribahasa 'ada udang di balik batu' bermakna...",
+    pilihan: ["Udang hidup di bawah batu","Ada maksud tersembunyi di balik suatu tindakan","Sesuatu yang mustahil ditemukan","Keberuntungan yang tidak terduga","Sikap yang polos dan jujur"],
+    jawaban: 1
+  },
+  // 36-40: Kalimat Efektif
+  {
+    q: "Manakah kalimat efektif yang benar?",
+    pilihan: ["Para hadirin sekalian dipersilakan duduk","Para hadirin dipersilakan duduk","Semua para hadirin dipersilakan duduk","Para hadirin-hadirin dipersilakan duduk","Hadirin-hadirin sekalian dipersilakan duduk"],
+    jawaban: 1
+  },
+  {
+    q: "Kalimat 'Banyak siswa-siswa yang berprestasi' mengandung kesalahan berupa...",
+    pilihan: ["Salah tanda baca","Pemborosan kata (pleonasme): 'banyak' dan 'siswa-siswa' redundan","Salah penggunaan subjek","Salah imbuhan","Kalimat tidak lengkap"],
+    jawaban: 1
+  },
+  {
+    q: "Manakah kalimat yang menggunakan kata penghubung dengan tepat?",
+    pilihan: ["Dia tidak hadir karena dia sedang sakit walaupun dia mau datang","Meskipun hujan deras, dia tetap berangkat ke kantor","Dia pergi karena meskipun hari sudah sore","Walaupun dia datang, tetapi dia tidak masuk kelas","Dia rajin belajar, karena meskipun nilainya bagus"],
+    jawaban: 1
+  },
+  {
+    q: "Apa yang dimaksud dengan kalimat aktif?",
+    pilihan: ["Kalimat yang predikatnya berupa kata sifat","Kalimat yang subjeknya melakukan pekerjaan","Kalimat yang tidak memiliki objek","Kalimat yang menggunakan kata 'adalah'","Kalimat yang subjeknya dikenai pekerjaan"],
+    jawaban: 1
+  },
+  {
+    q: "Kalimat 'Buku itu dibaca oleh Siti' merupakan kalimat...",
+    pilihan: ["Kalimat aktif transitif","Kalimat aktif intransitif","Kalimat pasif","Kalimat majemuk","Kalimat tunggal aktif"],
+    jawaban: 2
+  },
+  // 41-45: Jenis Teks
+  {
+    q: "Teks yang menggambarkan suatu objek secara detail sehingga pembaca seolah melihat langsung disebut teks...",
+    pilihan: ["Narasi","Deskripsi","Eksposisi","Argumentasi","Persuasi"],
+    jawaban: 1
+  },
+  {
+    q: "Struktur teks prosedur secara umum adalah...",
+    pilihan: ["Orientasi – Komplikasi – Resolusi","Tujuan – Alat/bahan – Langkah-langkah","Pernyataan umum – Deskripsi – Penutup","Tesis – Argumen – Penegasan ulang","Abstrak – Isi – Simpulan"],
+    jawaban: 1
+  },
+  {
+    q: "Ciri-ciri teks berita yang baik harus memenuhi unsur 5W+1H. '1H' dalam rumus ini merujuk pada...",
+    pilihan: ["Who (siapa)","When (kapan)","Where (di mana)","Why (mengapa)","How (bagaimana)"],
+    jawaban: 4
+  },
+  {
+    q: "Manakah yang termasuk ciri teks eksposisi?",
+    pilihan: ["Bersifat imajinatif dan fiktif","Bertujuan menjelaskan dan memberikan informasi faktual","Mengandung konflik tokoh","Menggunakan majas sebagai ciri khas","Hanya terdiri dari satu paragraf"],
+    jawaban: 1
+  },
+  {
+    q: "Dalam surat resmi, bagian yang memuat tujuan penulisan surat disebut...",
+    pilihan: ["Kepala surat","Nomor surat","Isi surat / perihal","Lampiran","Tembusan"],
+    jawaban: 2
+  },
+  // 46-50: Soal Tambahan Sering Keluar
+  {
+    q: "Kata 'literasi' dalam konteks pendidikan berarti...",
+    pilihan: ["Hanya kemampuan membaca buku cerita","Kemampuan membaca, menulis, dan memahami informasi secara kritis","Kemampuan berhitung matematika","Kemampuan berbicara di depan umum","Kemampuan mengoperasikan komputer"],
+    jawaban: 1
+  },
+  {
+    q: "Apakah persamaan antara prosa dan puisi?",
+    pilihan: ["Keduanya menggunakan rima yang ketat","Keduanya merupakan bentuk karya sastra yang menggunakan bahasa","Keduanya tidak boleh mengandung perasaan","Keduanya ditulis dalam bait-bait","Keduanya hanya boleh berbicara tentang alam"],
+    jawaban: 1
+  },
+  {
+    q: "Kalimat manakah yang menggunakan kata 'daripada' dengan benar?",
+    pilihan: ["Dia lebih suka membaca daripada menonton","Dia pergi daripada ke pasar","Buku ini bagus daripada teman saya","Dia berbicara daripada dengan sopan","Saya belajar daripada di rumah"],
+    jawaban: 0
+  },
+  {
+    q: "Apa yang dimaksud dengan 'konotasi' sebuah kata?",
+    pilihan: ["Makna dasar / pokok yang ada dalam kamus","Makna tambahan atau nilai rasa yang melekat di luar makna dasar","Cara pengucapan kata yang benar","Asal-usul atau etimologi kata","Bentuk jamak dari kata tersebut"],
+    jawaban: 1
+  },
+  {
+    q: "Apakah persamaan antara fakta dan opini dalam sebuah teks?",
+    pilihan: ["Keduanya selalu dapat dibuktikan secara ilmiah","Keduanya merupakan jenis informasi yang dapat muncul dalam teks","Keduanya bersifat subjektif","Keduanya tidak boleh dicantumkan dalam berita","Keduanya memiliki sumber data yang sama"],
+    jawaban: 1
+  }
+];
+
+let currentSoal = 0;
+let jawabanUser = new Array(soalData.length).fill(-1); // -1 = belum
+let timerInterval = null;
+let waktuSisa = 7 * 60; // 7 menit
+let tesAktif = false;
+
+function mulaiTes() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('soal-screen').style.display = 'block';
+  document.getElementById('timer-bar').style.display = 'flex';
+  document.getElementById('progress-track').style.display = 'block';
+  document.getElementById('prog-total').textContent = soalData.length;
+  tesAktif = true;
+  buildNomorGrid();
+  tampilSoal(0);
+  startTimer();
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    waktuSisa--;
+    updateTimerDisplay();
+    if (waktuSisa <= 0) {
+      clearInterval(timerInterval);
+      selesaiTes();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const menit = Math.floor(waktuSisa / 60);
+  const detik = waktuSisa % 60;
+  const display = document.getElementById('timer-display');
+  display.textContent = `${menit}:${detik.toString().padStart(2,'0')}`;
+  if (waktuSisa <= 60) display.classList.add('warning');
+  else display.classList.remove('warning');
+}
+
+function buildNomorGrid() {
+  const grid = document.getElementById('nomor-grid');
+  grid.innerHTML = '';
+  soalData.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nomor-btn';
+    btn.textContent = i + 1;
+    btn.id = `nbtn-${i}`;
+    btn.onclick = () => tampilSoal(i);
+    grid.appendChild(btn);
+  });
+}
+
+function tampilSoal(idx) {
+  currentSoal = idx;
+  document.getElementById('nav-current').textContent = idx + 1;
+  document.getElementById('prog-now').textContent = idx + 1;
+
+  // Update progress bar
+  const pct = ((idx + 1) / soalData.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Update nomor grid active
+  document.querySelectorAll('.nomor-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+
+  const soal = soalData[idx];
+  const container = document.getElementById('soal-container');
+  const sudahDijawab = jawabanUser[idx] !== -1;
+
+  let pilihanHTML = soal.pilihan.map((p, pi) => {
+    const huruf = ['A','B','C','D','E'][pi];
+    let cls = 'pilihan-item';
+    if (sudahDijawab) {
+      cls += ' disabled';
+      if (pi === jawabanUser[idx]) {
+        cls += (jawabanUser[idx] === soal.jawaban) ? ' benar' : ' salah';
+      } else if (pi === soal.jawaban && jawabanUser[idx] !== soal.jawaban) {
+        cls += ' kunci-benar';
+      }
+    }
+    return `<li class="${cls}" onclick="pilihJawaban(${idx}, ${pi})">
+      <span class="huruf">${huruf}</span>
+      <span>${p}</span>
+    </li>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="soal-card">
+      <div class="soal-header">
+        <div class="soal-nomor">${idx + 1}</div>
+        <div class="soal-teks">${soal.q}</div>
+      </div>
+      <ul class="pilihan-list">${pilihanHTML}</ul>
+    </div>`;
+}
+
+function pilihJawaban(soalIdx, pilihanIdx) {
+  if (jawabanUser[soalIdx] !== -1) return; // sudah dijawab
+  jawabanUser[soalIdx] = pilihanIdx;
+
+  // Update nomor grid
+  const benar = pilihanIdx === soalData[soalIdx].jawaban;
+  const btn = document.getElementById(`nbtn-${soalIdx}`);
+  btn.classList.remove('answered-benar','answered-salah');
+  btn.classList.add(benar ? 'answered-benar' : 'answered-salah');
+
+  // Refresh tampilan soal
+  tampilSoal(soalIdx);
+}
+
+function prevSoal() {
+  if (currentSoal > 0) tampilSoal(currentSoal - 1);
+}
+
+function nextSoal() {
+  if (currentSoal < soalData.length - 1) tampilSoal(currentSoal + 1);
+}
+
+function selesaiTes() {
+  if (tesAktif) {
+    clearInterval(timerInterval);
+    tesAktif = false;
+  }
+  document.getElementById('soal-screen').style.display = 'none';
+  document.getElementById('timer-bar').style.display = 'none';
+  document.getElementById('progress-track').style.display = 'none';
+
+  let benar = 0, salah = 0, kosong = 0;
+  soalData.forEach((soal, i) => {
+    if (jawabanUser[i] === -1) kosong++;
+    else if (jawabanUser[i] === soal.jawaban) benar++;
+    else salah++;
+  });
+
+  const nilai = Math.round((benar / soalData.length) * 100);
+
+  document.getElementById('jml-benar').textContent = benar;
+  document.getElementById('jml-salah').textContent = salah;
+  document.getElementById('jml-kosong').textContent = kosong;
+  document.getElementById('score-big').textContent = nilai;
+
+  let predikat = '', warna = '', icon = '';
+  if (nilai >= 85) { predikat='SANGAT BAIK 🏆'; warna='background:#e8f5e9;color:#1b5e20'; icon='🏆'; }
+  else if (nilai >= 70) { predikat='BAIK 👍'; warna='background:#e3f2fd;color:#0d47a1'; icon='👍'; }
+  else if (nilai >= 55) { predikat='CUKUP 📚'; warna='background:#fff8e1;color:#f57f17'; icon='📚'; }
+  else { predikat='PERLU BELAJAR LAGI 💪'; warna='background:#ffebee;color:#b71c1c'; icon='💪'; }
+
+  document.getElementById('predikat-badge').textContent = predikat;
+  document.getElementById('predikat-badge').style.cssText = warna;
+  document.getElementById('hasil-icon').textContent = icon;
+  document.getElementById('hasil-judul').textContent = nilai >= 70 ? 'Selamat! Tes Selesai!' : 'Tes Selesai!';
+  document.getElementById('score-big').style.color = nilai >= 70 ? '#1565c0' : nilai >= 55 ? '#f57f17' : '#c62828';
+
+  document.getElementById('hasil-screen').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function ulangTes() {
+  jawabanUser = new Array(soalData.length).fill(-1);
+  waktuSisa = 7 * 60;
+  currentSoal = 0;
+  clearInterval(timerInterval);
+  document.getElementById('timer-display').textContent = '7:00';
+  document.getElementById('timer-display').classList.remove('warning');
+  document.getElementById('hasil-screen').style.display = 'none';
+  document.getElementById('intro-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
