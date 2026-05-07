@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TES POTENSI KOGNITIF – KDKMP/KNMP 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --merah: #D32F2F;
+    --merah-tua: #B71C1C;
+    --putih: #fff;
+    --kuning: #FFC107;
+    --hijau: #2E7D32;
+    --hijau-muda: #43A047;
+    --abu: #F5F5F5;
+    --teks: #1A1A1A;
+    --biru: #1565C0;
+    --biru-muda: #E3F2FD;
+    --shadow: 0 4px 20px rgba(0,0,0,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #B71C1C 0%, #D32F2F 40%, #FF5722 100%);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--merah-tua);
+    color: #fff;
+    text-align: center;
+    padding: 18px 16px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+  .header .badge {
+    background: var(--kuning);
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1.2;
+  }
+  .header .subtitle { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+  /* TIMER */
+  .timer-bar {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 3px solid var(--merah);
+  }
+  .timer-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--merah);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(211,47,47,0.4);
+    transition: background 0.5s;
+  }
+  .timer-circle.warning { background: #E65100; animation: pulse 1s infinite; }
+  .timer-circle.danger { background: #B71C1C; animation: pulse 0.5s infinite; }
+  .timer-circle small { font-size: 8px; font-weight: 600; letter-spacing: 1px; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  .timer-info { flex: 1; }
+  .timer-info .label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .timer-progress-wrap { background: #eee; border-radius: 8px; height: 8px; margin-top: 4px; overflow: hidden; }
+  .timer-progress { height: 8px; border-radius: 8px; background: var(--merah); transition: width 1s linear, background 0.5s; }
+  .score-badge {
+    background: var(--biru);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-align: center;
+    min-width: 70px;
+  }
+  .score-badge small { display: block; font-size: 9px; font-weight: 400; opacity: 0.8; }
+
+  /* NAVIGATION */
+  .nav-scroll {
+    background: #fff;
+    border-bottom: 2px solid #eee;
+    padding: 8px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    background: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: all 0.2s;
+    color: var(--teks);
+  }
+  .nav-btn.active { background: var(--merah); border-color: var(--merah); color: #fff; }
+  .nav-btn.answered { background: #E8F5E9; border-color: var(--hijau-muda); color: var(--hijau); }
+  .nav-btn.answered.correct { background: #C8E6C9; border-color: var(--hijau); }
+  .nav-btn.answered.wrong { background: #FFCDD2; border-color: var(--merah); }
+
+  /* QUIZ CONTAINER */
+  .quiz-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  .question-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 22px 20px 18px;
+    display: none;
+    animation: slideIn 0.3s ease;
+  }
+  .question-card.active { display: block; }
+  @keyframes slideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .q-num {
+    background: var(--merah);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .q-category {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .q-text {
+    font-size: clamp(14px, 3.5vw, 16px);
+    font-weight: 700;
+    color: var(--teks);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fafafa;
+    font-size: clamp(13px, 3vw, 15px);
+    color: var(--teks);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+  }
+  .option:hover:not(.disabled) { border-color: var(--merah); background: #FFF5F5; transform: translateX(3px); }
+  .option .opt-letter {
+    min-width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .option.correct {
+    background: #E8F5E9;
+    border-color: var(--hijau);
+    color: var(--hijau);
+    animation: popIn 0.3s ease;
+  }
+  .option.correct .opt-letter { background: var(--hijau); color: #fff; }
+  .option.wrong {
+    background: #FFEBEE;
+    border-color: var(--merah);
+    color: var(--merah);
+    animation: shake 0.4s ease;
+  }
+  .option.wrong .opt-letter { background: var(--merah); color: #fff; }
+  .option.show-correct {
+    background: #E8F5E9;
+    border-color: var(--hijau);
+    color: var(--hijau);
+  }
+  .option.show-correct .opt-letter { background: var(--hijau); color: #fff; }
+  .option.disabled { cursor: not-allowed; }
+
+  @keyframes popIn { 0%{transform:scale(0.97)} 60%{transform:scale(1.02)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+
+  .feedback-badge {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .feedback-badge.show { display: block; }
+  .feedback-badge.correct-fb { background: #E8F5E9; color: var(--hijau); border-left: 4px solid var(--hijau); }
+  .feedback-badge.wrong-fb { background: #FFEBEE; color: var(--merah); border-left: 4px solid var(--merah); }
+
+  /* NAVIGATION BUTTONS */
+  .q-nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn {
+    padding: 11px 22px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-prev { background: #eee; color: #555; }
+  .btn-prev:hover { background: #ddd; }
+  .btn-next { background: var(--merah); color: #fff; box-shadow: 0 3px 10px rgba(211,47,47,0.35); }
+  .btn-next:hover { background: var(--merah-tua); transform: translateY(-1px); }
+  .btn-finish { background: var(--hijau); color: #fff; box-shadow: 0 3px 10px rgba(46,125,50,0.35); }
+  .btn-finish:hover { background: #1B5E20; }
+  .q-counter { font-size: 12px; color: #aaa; font-weight: 600; }
+
+  /* RESULT SCREEN */
+  #result-screen {
+    display: none;
+    max-width: 760px;
+    margin: 20px auto;
+    padding: 0 16px 40px;
+  }
+  #result-screen.show { display: block; }
+  .result-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .result-emoji { font-size: 60px; margin-bottom: 12px; }
+  .result-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    color: var(--teks);
+    margin-bottom: 6px;
+  }
+  .result-score {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    color: var(--merah);
+    line-height: 1;
+    margin: 16px 0 4px;
+  }
+  .result-score span { font-size: 22px; color: #999; }
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .stat-box {
+    background: var(--abu);
+    border-radius: 12px;
+    padding: 14px 8px;
+  }
+  .stat-box .val {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+  }
+  .stat-box .lbl { font-size: 11px; color: #888; font-weight: 600; margin-top: 2px; }
+  .stat-box.green .val { color: var(--hijau); }
+  .stat-box.red .val { color: var(--merah); }
+  .stat-box.blue .val { color: var(--biru); }
+  .result-msg {
+    font-size: 14px;
+    color: #666;
+    margin: 12px 0 20px;
+    line-height: 1.6;
+  }
+  .btn-restart {
+    background: var(--merah);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(211,47,47,0.4);
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .btn-restart:hover { background: var(--merah-tua); transform: translateY(-2px); }
+
+  /* REVIEW TABLE */
+  .review-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--teks);
+    margin: 28px 0 12px;
+    text-align: left;
+  }
+  .review-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    text-align: left;
+  }
+  .review-item .ri-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .ri-icon { font-size: 18px; }
+  .ri-q { font-size: 13px; font-weight: 700; color: var(--teks); }
+  .ri-detail { font-size: 12px; color: #888; margin-top: 3px; }
+  .ri-detail span { font-weight: 700; }
+  .ri-detail .right { color: var(--hijau); }
+  .ri-detail .wrong-ans { color: var(--merah); }
+
+  /* INTRO SCREEN */
+  #intro-screen {
+    max-width: 760px;
+    margin: 20px auto;
+    padding: 0 16px 40px;
+  }
+  .intro-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 30px 24px;
+    text-align: center;
+  }
+  .intro-logo {
+    font-size: 52px;
+    margin-bottom: 12px;
+  }
+  .intro-card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: clamp(18px, 5vw, 26px);
+    color: var(--merah);
+    margin-bottom: 6px;
+  }
+  .intro-card .sub {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  .info-box {
+    background: var(--abu);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .info-box .icon { font-size: 22px; }
+  .info-box .ttl { font-weight: 700; font-size: 13px; color: var(--teks); }
+  .info-box .dsc { font-size: 12px; color: #888; margin-top: 2px; }
+  .rules {
+    background: #FFF8E1;
+    border: 1px solid var(--kuning);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: left;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #5D4037;
+    line-height: 1.7;
+  }
+  .rules strong { color: #E65100; }
+  .btn-start {
+    background: var(--merah);
+    color: #fff;
+    border: none;
+    padding: 15px 44px;
+    border-radius: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(211,47,47,0.4);
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .btn-start:hover { background: var(--merah-tua); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(211,47,47,0.5); }
+
+  /* TIME UP OVERLAY */
+  #timeup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  #timeup-overlay.show { display: flex; }
+  .timeup-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+  }
+  .timeup-box h2 { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 22px; color: var(--merah); margin: 12px 0 6px; }
+  .timeup-box p { font-size: 14px; color: #666; margin-bottom: 20px; }
+
+  @media(max-width: 480px) {
+    .result-stats { grid-template-columns: repeat(3,1fr); }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+    .q-nav { gap: 6px; }
+    .btn { padding: 10px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="intro-screen">
+  <div style="text-align:center;padding:30px 16px 16px;">
+    <div style="display:inline-block;background:#fff;border-radius:16px;padding:6px 18px;margin-bottom:16px;">
+      <span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:12px;color:var(--merah);letter-spacing:2px;">KOPERASI DESA MERAH PUTIH</span>
+    </div>
+  </div>
+  <div class="intro-card">
+    <div class="intro-logo">🏆</div>
+    <h2>TES POTENSI KOGNITIF<br>KDKMP / KNMP 4</h2>
+    <p class="sub">Seleksi Pengurus & Pengawas Koperasi Desa Merah Putih</p>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="icon">📝</div>
+        <div>
+          <div class="ttl">31 Soal</div>
+          <div class="dsc">Pilihan Ganda (A–D)</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="icon">⏱️</div>
+        <div>
+          <div class="ttl">7 Menit</div>
+          <div class="dsc">Waktu Pengerjaan</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="icon">🧮</div>
+        <div>
+          <div class="ttl">Hitung Cepat</div>
+          <div class="dsc">Usia, Deret, Keuntungan</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="icon">💡</div>
+        <div>
+          <div class="ttl">Bahasa & Logika</div>
+          <div class="dsc">Sinonim, Analogi, Deret</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rules">
+      <strong>📋 Petunjuk:</strong><br>
+      • Klik jawaban untuk melihat benar/salah langsung<br>
+      • Timer <strong>7 menit</strong> akan berjalan otomatis<br>
+      • Navigasi soal bebas lewat tombol angka di atas<br>
+      • Skor final ditampilkan setelah selesai/waktu habis
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">🚀 MULAI TES SEKARANG</button>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN (hidden initially) -->
+<div id="quiz-screen" style="display:none;">
+  <div class="header">
+    <div class="badge">🏢 Koperasi Desa Merah Putih</div>
+    <h1>TES POTENSI KOGNITIF – KDKMP 4</h1>
+    <div class="subtitle">Seleksi Pengurus & Pengawas Koperasi</div>
+  </div>
+
+  <div class="timer-bar">
+    <div class="timer-circle" id="timer-circle">
+      <span id="timer-min">07</span>
+      <small>menit</small>
+    </div>
+    <div class="timer-info">
+      <div class="label">⏱ Waktu Tersisa</div>
+      <div class="timer-progress-wrap">
+        <div class="timer-progress" id="timer-bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="score-badge">
+      <span id="score-display">0</span>
+      <small>SKOR</small>
+    </div>
+  </div>
+
+  <div class="nav-scroll" id="nav-scroll"></div>
+
+  <div class="quiz-wrap" id="quiz-wrap"></div>
+
+  <div id="timeup-overlay">
+    <div class="timeup-box">
+      <div style="font-size:52px;">⏰</div>
+      <h2>WAKTU HABIS!</h2>
+      <p>Waktu pengerjaan sudah selesai. Lihat hasil akhir kamu sekarang!</p>
+      <button class="btn-finish" onclick="showResult()" style="padding:12px 30px;border-radius:10px;border:none;background:var(--merah);color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;cursor:pointer;">Lihat Hasil →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen"></div>
+
+<script>
+const TOTAL_TIME = 7 * 60; // 7 minutes
+let timeLeft = TOTAL_TIME;
+let timerInterval = null;
+let currentQ = 0;
+let userAnswers = new Array(31).fill(null);
+let score = 0;
+
+const questions = [
+  // ===== PERHITUNGAN USIA / PERBANDINGAN =====
+  {
+    cat: "🔢 Perbandingan Usia",
+    q: "Perbandingan usia Ani dan Budi adalah 3 : 4. Jika jumlah usia keduanya 35 tahun, berapakah usia Ani?",
+    opts: ["12 tahun", "15 tahun", "18 tahun", "20 tahun"],
+    ans: 1,
+    exp: "3+4=7 bagian. Usia Ani = (3/7) × 35 = 15 tahun."
+  },
+  {
+    cat: "🔢 Perbandingan Usia",
+    q: "Usia Pak Hasan 3 kali usia anaknya. Selisih usia mereka 24 tahun. Berapakah usia anaknya?",
+    opts: ["10 tahun", "12 tahun", "14 tahun", "16 tahun"],
+    ans: 1,
+    exp: "Usia anak = x, Pak Hasan = 3x. 3x - x = 24 → 2x = 24 → x = 12 tahun."
+  },
+  {
+    cat: "🔢 Perbandingan Usia",
+    q: "Perbandingan usia Rina dan Sinta adalah 2 : 5. Jika usia Sinta 30 tahun, berapakah usia Rina?",
+    opts: ["10 tahun", "12 tahun", "15 tahun", "18 tahun"],
+    ans: 1,
+    exp: "Usia Rina = (2/5) × 30 = 12 tahun."
+  },
+  {
+    cat: "🔢 Perbandingan Usia",
+    q: "5 tahun lalu, usia Doni 2 kali usia adiknya. Sekarang jumlah usia keduanya 43 tahun. Berapakah usia Doni sekarang?",
+    opts: ["25 tahun", "27 tahun", "29 tahun", "31 tahun"],
+    ans: 2,
+    exp: "5 tahun lalu: D-5 = 2(A-5) → D = 2A - 5. Sekarang D + A = 43, maka (2A-5)+A=43 → 3A=48 → A=16, D=27."
+  },
+  {
+    cat: "🔢 Perbandingan Usia",
+    q: "Perbandingan modal Koperasi A dan B adalah 5 : 3. Jika total modal keduanya Rp 160 juta, berapakah modal Koperasi B?",
+    opts: ["Rp 40 juta", "Rp 50 juta", "Rp 60 juta", "Rp 80 juta"],
+    ans: 2,
+    exp: "Modal B = (3/8) × 160 = 60 juta."
+  },
+  {
+    cat: "🔢 Perbandingan",
+    q: "Jika 4 pekerja bisa menyelesaikan pekerjaan dalam 12 hari, berapa hari yang dibutuhkan 6 pekerja untuk pekerjaan yang sama?",
+    opts: ["6 hari", "8 hari", "9 hari", "10 hari"],
+    ans: 1,
+    exp: "4 × 12 = 6 × x → x = 48/6 = 8 hari."
+  },
+
+  // ===== DERET ANGKA =====
+  {
+    cat: "📊 Deret Angka",
+    q: "Lanjutkan pola deret berikut: 2, 5, 8, 11, 14, ...",
+    opts: ["16", "17", "18", "19"],
+    ans: 1,
+    exp: "Deret naik +3. Setelah 14 → 14+3 = 17."
+  },
+  {
+    cat: "📊 Deret Angka",
+    q: "Deret: 3, 6, 12, 24, 48, ... Berapakah suku berikutnya?",
+    opts: ["72", "84", "96", "56"],
+    ans: 2,
+    exp: "Setiap suku dikali 2. 48 × 2 = 96."
+  },
+  {
+    cat: "📊 Deret Angka",
+    q: "Pola: 1, 4, 9, 16, 25, ... Angka selanjutnya adalah?",
+    opts: ["30", "34", "36", "40"],
+    ans: 2,
+    exp: "Deret kuadrat: 1², 2², 3², 4², 5², 6² = 36."
+  },
+  {
+    cat: "📊 Deret Angka",
+    q: "Deret: 100, 95, 85, 70, 50, ... Berapa angka selanjutnya?",
+    opts: ["20", "25", "30", "35"],
+    ans: 1,
+    exp: "Selisih: -5, -10, -15, -20, -25. Jadi 50 - 25 = 25."
+  },
+  {
+    cat: "📊 Deret Angka",
+    q: "Pola: 2, 3, 5, 8, 13, 21, ... Angka berikutnya?",
+    opts: ["29", "32", "34", "36"],
+    ans: 2,
+    exp: "Deret Fibonacci: setiap angka = jumlah dua angka sebelumnya. 13+21 = 34."
+  },
+  {
+    cat: "📊 Deret Angka",
+    q: "Deret: 1, 2, 4, 7, 11, 16, ... Berapa angka selanjutnya?",
+    opts: ["20", "22", "23", "25"],
+    ans: 1,
+    exp: "Selisih: +1, +2, +3, +4, +5, +6. Jadi 16+6 = 22."
+  },
+
+  // ===== KEUNTUNGAN & PERSENTASE =====
+  {
+    cat: "💰 Keuntungan %",
+    q: "Koperasi membeli beras seharga Rp 8.000/kg dan menjual Rp 10.000/kg. Berapa persen keuntungannya?",
+    opts: ["15%", "20%", "25%", "30%"],
+    ans: 2,
+    exp: "Untung = 2.000. % untung = (2.000/8.000) × 100 = 25%."
+  },
+  {
+    cat: "💰 Keuntungan %",
+    q: "Sebuah barang dibeli Rp 50.000, dijual Rp 60.000. Berapakah persentase keuntungannya?",
+    opts: ["15%", "20%", "25%", "30%"],
+    ans: 1,
+    exp: "Untung = 10.000. % untung = (10.000/50.000) × 100 = 20%."
+  },
+  {
+    cat: "💰 Keuntungan %",
+    q: "Koperasi menjual gula dengan keuntungan 15%. Jika harga beli Rp 12.000, berapakah harga jualnya?",
+    opts: ["Rp 13.200", "Rp 13.800", "Rp 14.000", "Rp 14.400"],
+    ans: 1,
+    exp: "Harga jual = 12.000 × 1,15 = 13.800."
+  },
+  {
+    cat: "💰 Keuntungan %",
+    q: "Barang dijual Rp 84.000 dengan keuntungan 20%. Berapakah harga beli barang tersebut?",
+    opts: ["Rp 60.000", "Rp 65.000", "Rp 70.000", "Rp 75.000"],
+    ans: 2,
+    exp: "Harga beli = 84.000 / 1,2 = 70.000."
+  },
+  {
+    cat: "💰 Keuntungan %",
+    q: "Koperasi mendapat diskon 10% saat membeli 100 kg minyak seharga Rp 15.000/kg. Berapa total yang dibayar?",
+    opts: ["Rp 1.200.000", "Rp 1.350.000", "Rp 1.400.000", "Rp 1.500.000"],
+    ans: 1,
+    exp: "Total awal = 100×15.000 = 1.500.000. Diskon 10% = 150.000. Bayar = 1.350.000."
+  },
+  {
+    cat: "💰 Keuntungan %",
+    q: "Modal usaha koperasi Rp 5.000.000. Setelah 1 bulan, modal menjadi Rp 5.500.000. Berapa persen keuntungannya?",
+    opts: ["5%", "8%", "10%", "12%"],
+    ans: 2,
+    exp: "Untung = 500.000. % untung = (500.000/5.000.000) × 100 = 10%."
+  },
+
+  // ===== BAHASA & SINONIM =====
+  {
+    cat: "📖 Bahasa Indonesia",
+    q: "Sinonim kata 'MANDIRI' yang paling tepat adalah...",
+    opts: ["Bergantung", "Berdikari", "Bersama", "Bertumpu"],
+    ans: 1,
+    exp: "MANDIRI berarti berdiri sendiri, sinonimnya BERDIKARI."
+  },
+  {
+    cat: "📖 Bahasa Indonesia",
+    q: "Antonim kata 'TRANSPARAN' adalah...",
+    opts: ["Jelas", "Buram", "Terbuka", "Nyata"],
+    ans: 1,
+    exp: "TRANSPARAN = jelas/terbuka. Antonimnya = BURAM/tidak jelas."
+  },
+  {
+    cat: "📖 Bahasa Indonesia",
+    q: "Kata 'KOPERASI' berasal dari bahasa Latin yaitu...",
+    opts: ["Cooperativus", "Cooperare", "Corpus", "Cooperatio"],
+    ans: 1,
+    exp: "Koperasi berasal dari bahasa Latin 'Cooperare' yang berarti bekerja sama."
+  },
+  {
+    cat: "📖 Analogi Kata",
+    q: "PETANI : SAWAH = NELAYAN : ...",
+    opts: ["Ikan", "Kapal", "Laut", "Jala"],
+    ans: 2,
+    exp: "Petani bekerja di sawah, Nelayan bekerja di laut."
+  },
+  {
+    cat: "📖 Analogi Kata",
+    q: "KOPERASI : ANGGOTA = NEGARA : ...",
+    opts: ["Presiden", "Warga negara", "Pemerintah", "Undang-undang"],
+    ans: 1,
+    exp: "Koperasi beranggotakan anggota, Negara beranggotakan warga negara."
+  },
+
+  // ===== LOGIKA & PENGETAHUAN KOPERASI =====
+  {
+    cat: "🏢 Koperasi",
+    q: "Asas koperasi di Indonesia adalah...",
+    opts: ["Gotong royong dan kekeluargaan", "Profit dan efisiensi", "Persaingan bebas", "Kapitalisme rakyat"],
+    ans: 0,
+    exp: "Asas koperasi Indonesia adalah gotong royong dan kekeluargaan (UU No. 25/1992)."
+  },
+  {
+    cat: "🏢 Koperasi",
+    q: "SHU dalam koperasi singkatan dari...",
+    opts: ["Sisa Hasil Usaha", "Simpanan Hasil Usaha", "Saldo Hasil Umum", "Surplus Hasil Usaha"],
+    ans: 0,
+    exp: "SHU = Sisa Hasil Usaha, yaitu keuntungan bersih koperasi yang dibagikan ke anggota."
+  },
+  {
+    cat: "🏢 Koperasi",
+    q: "Program Koperasi Desa Merah Putih (KDMP) diluncurkan oleh pemerintah untuk tujuan...",
+    opts: ["Meningkatkan impor desa", "Mengembangkan ekonomi dan kesejahteraan masyarakat desa", "Menggantikan BUMN di pedesaan", "Membuka pasar saham desa"],
+    ans: 1,
+    exp: "KDMP bertujuan mengembangkan ekonomi desa dan meningkatkan kesejahteraan masyarakat desa."
+  },
+  {
+    cat: "🏢 Koperasi",
+    q: "Rapat Anggota Tahunan (RAT) koperasi diadakan minimal...",
+    opts: ["6 bulan sekali", "1 tahun sekali", "2 tahun sekali", "5 tahun sekali"],
+    ans: 1,
+    exp: "Berdasarkan UU Koperasi, RAT diadakan minimal 1 tahun sekali."
+  },
+
+  // ===== MATEMATIKA UMUM =====
+  {
+    cat: "🔢 Matematika",
+    q: "Jika harga 5 kg beras adalah Rp 75.000, berapakah harga 8 kg beras?",
+    opts: ["Rp 110.000", "Rp 115.000", "Rp 120.000", "Rp 125.000"],
+    ans: 2,
+    exp: "Harga per kg = 75.000/5 = 15.000. 8 kg = 8 × 15.000 = 120.000."
+  },
+  {
+    cat: "🔢 Matematika",
+    q: "Koperasi punya 3 cabang. Cabang A jual 250 unit, B jual 180 unit, C jual 320 unit. Rata-rata penjualan per cabang?",
+    opts: ["230 unit", "240 unit", "250 unit", "260 unit"],
+    ans: 2,
+    exp: "(250+180+320)/3 = 750/3 = 250 unit."
+  },
+  {
+    cat: "🔢 Matematika",
+    q: "Seorang pedagang menjual 120 buah jeruk. Sudah terjual 75 buah. Berapa persen yang belum terjual?",
+    opts: ["35,5%", "37,5%", "38,5%", "40%"],
+    ans: 1,
+    exp: "Belum terjual = 45. % = (45/120) × 100 = 37,5%."
+  },
+  {
+    cat: "🔢 Matematika",
+    q: "Kecepatan rata-rata mobil adalah 60 km/jam. Jarak tempuh 150 km. Berapa lama waktu perjalanan?",
+    opts: ["2 jam", "2,5 jam", "3 jam", "3,5 jam"],
+    ans: 1,
+    exp: "Waktu = Jarak/Kecepatan = 150/60 = 2,5 jam."
+  },
+  {
+    cat: "🔢 Deret & Logika",
+    q: "Di sebuah koperasi, simpanan pokok tiap anggota Rp 500.000, simpanan wajib Rp 50.000/bulan. Setelah 1 tahun, berapa total simpanan seorang anggota baru?",
+    opts: ["Rp 1.000.000", "Rp 1.100.000", "Rp 1.200.000", "Rp 1.500.000"],
+    ans: 1,
+    exp: "Simpanan pokok 500.000 + simpanan wajib 12×50.000 = 600.000. Total = 1.100.000."
+  }
+];
+
+function startQuiz() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  buildNav();
+  buildQuestions();
+  showQuestion(0);
+  startTimer();
+}
+
+function buildNav() {
+  const nav = document.getElementById('nav-scroll');
+  nav.innerHTML = '';
+  questions.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.id = `nav-${i}`;
+    btn.textContent = i + 1;
+    btn.onclick = () => showQuestion(i);
+    nav.appendChild(btn);
+  });
+}
+
+function buildQuestions() {
+  const wrap = document.getElementById('quiz-wrap');
+  wrap.innerHTML = '';
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q-card-${i}`;
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">Soal ${i + 1} / ${questions.length}</div>
+        <div class="q-category">${q.cat}</div>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${i}">
+        ${q.opts.map((opt, j) => `
+          <div class="option" id="opt-${i}-${j}" onclick="selectAnswer(${i}, ${j})">
+            <span class="opt-letter">${String.fromCharCode(65+j)}</span>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feedback-badge" id="fb-${i}"></div>
+      <div class="q-nav">
+        <button class="btn btn-prev" onclick="showQuestion(${i-1})" ${i===0?'style="visibility:hidden"':''}>← Sebelumnya</button>
+        <span class="q-counter">${i+1} / ${questions.length}</span>
+        ${i === questions.length-1
+          ? `<button class="btn btn-finish" onclick="showResult()">Selesai ✓</button>`
+          : `<button class="btn btn-next" onclick="showQuestion(${i+1})">Berikutnya →</button>`
+        }
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function showQuestion(idx) {
+  if (idx < 0 || idx >= questions.length) return;
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  document.getElementById(`q-card-${idx}`).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`nav-${idx}`).classList.add('active');
+  // scroll nav to active
+  const navBtn = document.getElementById(`nav-${idx}`);
+  navBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  currentQ = idx;
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== null) return; // already answered
+  userAnswers[qIdx] = optIdx;
+
+  const correct = questions[qIdx].ans;
+  const opts = document.getElementById(`opts-${qIdx}`).children;
+  const fb = document.getElementById(`fb-${qIdx}`);
+  const navBtn = document.getElementById(`nav-${qIdx}`);
+
+  // disable all options
+  Array.from(opts).forEach(o => o.classList.add('disabled'));
+
+  if (optIdx === correct) {
+    opts[optIdx].classList.add('correct');
+    score++;
+    document.getElementById('score-display').textContent = score;
+    fb.innerHTML = `✅ <strong>Jawaban Benar!</strong> ${questions[qIdx].exp}`;
+    fb.className = 'feedback-badge show correct-fb';
+    navBtn.classList.add('answered', 'correct');
+  } else {
+    opts[optIdx].classList.add('wrong');
+    opts[correct].classList.add('show-correct');
+    fb.innerHTML = `❌ <strong>Jawaban Salah.</strong> Jawaban benar: <strong>${String.fromCharCode(65+correct)}. ${questions[qIdx].opts[correct]}</strong>. ${questions[qIdx].exp}`;
+    fb.className = 'feedback-badge show wrong-fb';
+    navBtn.classList.add('answered', 'wrong');
+  }
+
+  // auto next after 1.5s if not last
+  if (qIdx < questions.length - 1) {
+    setTimeout(() => showQuestion(qIdx + 1), 1600);
+  }
+}
+
+function startTimer() {
+  const TOTAL = TOTAL_TIME;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const min = Math.floor(timeLeft / 60);
+    const sec = timeLeft % 60;
+    document.getElementById('timer-min').textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+
+    const pct = (timeLeft / TOTAL) * 100;
+    const bar = document.getElementById('timer-bar');
+    bar.style.width = pct + '%';
+
+    const circle = document.getElementById('timer-circle');
+    if (timeLeft <= 60) {
+      bar.style.background = '#D32F2F';
+      circle.classList.add('danger');
+      circle.classList.remove('warning');
+    } else if (timeLeft <= 120) {
+      bar.style.background = '#E65100';
+      circle.classList.add('warning');
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timeup-overlay').classList.add('show');
+    }
+  }, 1000);
+}
+
+function showResult() {
+  clearInterval(timerInterval);
+  document.getElementById('timeup-overlay').classList.remove('show');
+  document.getElementById('quiz-screen').style.display = 'none';
+
+  const answered = userAnswers.filter(a => a !== null).length;
+  const wrong = answered - score;
+  const unanswered = questions.length - answered;
+  const pct = Math.round((score / questions.length) * 100);
+
+  let emoji = '🏆', msg = 'Luar biasa! Kamu sangat siap untuk seleksi KDKMP!';
+  if (pct < 40) { emoji = '😓'; msg = 'Tetap semangat! Pelajari lagi materi koperasi dan matematika dasar.'; }
+  else if (pct < 60) { emoji = '📚'; msg = 'Cukup baik! Latihan lebih banyak akan membuat kamu makin siap.'; }
+  else if (pct < 80) { emoji = '👍'; msg = 'Bagus! Tingkatkan lagi untuk hasil yang lebih sempurna.'; }
+
+  // build review
+  let reviewHTML = '<div class="review-title">📋 Review Jawaban</div>';
+  questions.forEach((q, i) => {
+    const ua = userAnswers[i];
+    const isCorrect = ua === q.ans;
+    const isSkip = ua === null;
+    let icon = isSkip ? '⬜' : isCorrect ? '✅' : '❌';
+    let answerInfo = isSkip
+      ? `<span style="color:#aaa">Tidak dijawab</span> | Jawaban benar: <span class="right">${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}</span>`
+      : isCorrect
+        ? `Jawaban kamu: <span class="right">${String.fromCharCode(65+ua)}. ${q.opts[ua]}</span>`
+        : `Jawaban kamu: <span class="wrong-ans">${String.fromCharCode(65+ua)}. ${q.opts[ua]}</span> | Benar: <span class="right">${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}</span>`;
+
+    reviewHTML += `
+      <div class="review-item">
+        <div class="ri-top">
+          <span class="ri-icon">${icon}</span>
+          <span class="ri-q">Soal ${i+1}: ${q.q.substring(0,60)}${q.q.length>60?'...':''}</span>
+        </div>
+        <div class="ri-detail">${answerInfo}</div>
+      </div>`;
+  });
+
+  const rs = document.getElementById('result-screen');
+  rs.innerHTML = `
+    <div class="result-card">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-title">Tes Selesai!</div>
+      <div style="font-size:13px;color:#999;margin-top:4px;">TES POTENSI KOGNITIF KDKMP/KNMP 4</div>
+      <div class="result-score">${score}<span> / ${questions.length}</span></div>
+      <div style="font-size:18px;font-family:'Poppins',sans-serif;font-weight:700;color:${pct>=60?'var(--hijau)':'var(--merah)'};">${pct}%</div>
+
+      <div class="result-stats">
+        <div class="stat-box green"><div class="val">${score}</div><div class="lbl">✅ Benar</div></div>
+        <div class="stat-box red"><div class="val">${wrong}</div><div class="lbl">❌ Salah</div></div>
+        <div class="stat-box blue"><div class="val">${unanswered}</div><div class="lbl">⬜ Lewat</div></div>
+      </div>
+
+      <div class="result-msg">${msg}</div>
+      <button class="btn-restart" onclick="location.reload()">🔄 Ulangi Tes</button>
+    </div>
+    ${reviewHTML}
+  `;
+  rs.classList.add('show');
+  rs.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
