@@ -531,70 +531,569 @@
 </div>
 
 <script>
-const SUBTESTS = [
-  { nama: "Bahasa", jumlah: 50, menit: 7 },
-  { nama: "Hitungan", jumlah: 31, menit: 7 },
-  { nama: "Pengetahuan Umum", jumlah: 40, menit: 7 },
-  { nama: "Pola Gambar", jumlah: 55, menit: 7 },
-  { nama: "Abstraksi Ruang", jumlah: 27, menit: 7 },
-  { nama: "Bentuk", jumlah: 25, menit: 7 },
-  { nama: "Manajemen Koperasi", jumlah: 20, menit: 20 }
-];
-
-const BANK = {
-  "Bahasa": [
-   { q:"Persamaan pesawat dan kapal laut adalah ...", opts:["A. Sama-sama berjalan di rel","B. Sama-sama alat transportasi","C. Sama-sama digunakan di darat","D. Sama-sama tidak menggunakan mesin"], ans:1 },
-{ q:"Persamaan handphone dan laptop adalah ...", opts:["A. Sama-sama alat elektronik","B. Sama-sama tidak memiliki layar","C. Sama-sama hanya digunakan di rumah","D. Sama-sama tidak membutuhkan listrik"], ans:0 },
-{ q:"Persamaan dokter dan guru adalah ...", opts:["A. Sama-sama bekerja di pasar","B. Sama-sama profesi","C. Sama-sama memakai seragam polisi","D. Sama-sama menjual makanan"], ans:1 },
-{ q:"Persamaan buku dan majalah adalah ...", opts:["A. Sama-sama alat musik","B. Sama-sama bahan bacaan","C. Sama-sama kendaraan","D. Sama-sama makanan"], ans:1 },
-{ q:"Persamaan mobil dan motor adalah ...", opts:["A. Sama-sama hewan","B. Sama-sama alat transportasi","C. Sama-sama alat tulis","D. Sama-sama benda cair"], ans:1 },
-{ q:"Persamaan matahari dan lampu adalah ...", opts:["A. Sama-sama menghasilkan cahaya","B. Sama-sama hidup","C. Sama-sama alat komunikasi","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan pensil dan pulpen adalah ...", opts:["A. Sama-sama alat makan","B. Sama-sama alat tulis","C. Sama-sama kendaraan","D. Sama-sama alat olahraga"], ans:1 },
-{ q:"Persamaan ikan dan burung adalah ...", opts:["A. Sama-sama mamalia","B. Sama-sama hewan","C. Sama-sama hidup di darat","D. Sama-sama tidak bergerak"], ans:1 },
-{ q:"Persamaan hujan dan salju adalah ...", opts:["A. Sama-sama api","B. Sama-sama turun dari langit","C. Sama-sama benda padat","D. Sama-sama alat rumah tangga"], ans:1 },
-{ q:"Persamaan sepatu dan sandal adalah ...", opts:["A. Sama-sama dipakai di kepala","B. Sama-sama alas kaki","C. Sama-sama makanan","D. Sama-sama kendaraan"], ans:1 },
-{ q:"Persamaan televisi dan radio adalah ...", opts:["A. Sama-sama alat elektronik","B. Sama-sama alat tulis","C. Sama-sama hewan","D. Sama-sama pakaian"], ans:0 },
-{ q:"Persamaan kursi dan meja adalah ...", opts:["A. Sama-sama perabot rumah","B. Sama-sama kendaraan","C. Sama-sama alat musik","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan polisi dan tentara adalah ...", opts:["A. Sama-sama atlet","B. Sama-sama menjaga keamanan","C. Sama-sama pedagang","D. Sama-sama petani"], ans:1 },
-{ q:"Persamaan air dan minyak adalah ...", opts:["A. Sama-sama benda cair","B. Sama-sama benda padat","C. Sama-sama alat elektronik","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan ayam dan bebek adalah ...", opts:["A. Sama-sama kendaraan","B. Sama-sama unggas","C. Sama-sama ikan","D. Sama-sama alat musik"], ans:1 },
-{ q:"Persamaan kapal dan kereta adalah ...", opts:["A. Sama-sama alat transportasi","B. Sama-sama alat tulis","C. Sama-sama buah","D. Sama-sama pakaian"], ans:0 },
-{ q:"Persamaan bunga dan pohon adalah ...", opts:["A. Sama-sama hewan","B. Sama-sama tumbuhan","C. Sama-sama kendaraan","D. Sama-sama alat elektronik"], ans:1 },
-{ q:"Persamaan sendok dan garpu adalah ...", opts:["A. Sama-sama alat makan","B. Sama-sama alat olahraga","C. Sama-sama kendaraan","D. Sama-sama alat komunikasi"], ans:0 },
-{ q:"Persamaan komputer dan printer adalah ...", opts:["A. Sama-sama alat elektronik","B. Sama-sama makanan","C. Sama-sama hewan","D. Sama-sama pakaian"], ans:0 },
-{ q:"Persamaan sekolah dan kampus adalah ...", opts:["A. Sama-sama tempat belajar","B. Sama-sama pasar","C. Sama-sama alat tulis","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan apel dan jeruk adalah ...", opts:["A. Sama-sama sayur","B. Sama-sama buah","C. Sama-sama alat elektronik","D. Sama-sama hewan"], ans:1 },
-{ q:"Persamaan mata dan telinga adalah ...", opts:["A. Sama-sama alat transportasi","B. Sama-sama indera tubuh","C. Sama-sama makanan","D. Sama-sama tumbuhan"], ans:1 },
-{ q:"Persamaan sapi dan kambing adalah ...", opts:["A. Sama-sama hewan ternak","B. Sama-sama alat rumah tangga","C. Sama-sama kendaraan","D. Sama-sama buah"], ans:0 },
-{ q:"Persamaan gitar dan piano adalah ...", opts:["A. Sama-sama alat masak","B. Sama-sama alat musik","C. Sama-sama kendaraan","D. Sama-sama tumbuhan"], ans:1 },
-{ q:"Persamaan rumah dan apartemen adalah ...", opts:["A. Sama-sama tempat tinggal","B. Sama-sama alat komunikasi","C. Sama-sama makanan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan gunting dan pisau adalah ...", opts:["A. Sama-sama alat potong","B. Sama-sama alat musik","C. Sama-sama kendaraan","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan kopi dan teh adalah ...", opts:["A. Sama-sama makanan","B. Sama-sama minuman","C. Sama-sama alat elektronik","D. Sama-sama kendaraan"], ans:1 },
-{ q:"Persamaan celana dan baju adalah ...", opts:["A. Sama-sama pakaian","B. Sama-sama alat tulis","C. Sama-sama kendaraan","D. Sama-sama buah"], ans:0 },
-{ q:"Persamaan gunung dan bukit adalah ...", opts:["A. Sama-sama alat rumah tangga","B. Sama-sama bentuk permukaan bumi","C. Sama-sama kendaraan","D. Sama-sama makanan"], ans:1 },
-{ q:"Persamaan jam dan kalender adalah ...", opts:["A. Sama-sama penunjuk waktu","B. Sama-sama alat makan","C. Sama-sama kendaraan","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan roti dan nasi adalah ...", opts:["A. Sama-sama makanan","B. Sama-sama alat tulis","C. Sama-sama kendaraan","D. Sama-sama alat musik"], ans:0 },
-{ q:"Persamaan dokter dan perawat adalah ...", opts:["A. Sama-sama bekerja di bidang kesehatan","B. Sama-sama petani","C. Sama-sama pedagang","D. Sama-sama atlet"], ans:0 },
-{ q:"Persamaan bus dan angkot adalah ...", opts:["A. Sama-sama alat transportasi umum","B. Sama-sama alat tulis","C. Sama-sama tumbuhan","D. Sama-sama makanan"], ans:0 },
-{ q:"Persamaan lemari dan rak adalah ...", opts:["A. Sama-sama tempat penyimpanan","B. Sama-sama kendaraan","C. Sama-sama alat musik","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan emas dan perak adalah ...", opts:["A. Sama-sama logam","B. Sama-sama makanan","C. Sama-sama tumbuhan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan sungai dan laut adalah ...", opts:["A. Sama-sama alat transportasi","B. Sama-sama perairan","C. Sama-sama alat musik","D. Sama-sama makanan"], ans:1 },
-{ q:"Persamaan kamera dan handphone adalah ...", opts:["A. Sama-sama bisa digunakan mengambil gambar","B. Sama-sama makanan","C. Sama-sama tumbuhan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan ayam goreng dan sate adalah ...", opts:["A. Sama-sama minuman","B. Sama-sama makanan","C. Sama-sama alat elektronik","D. Sama-sama kendaraan"], ans:1 },
-{ q:"Persamaan kipas angin dan AC adalah ...", opts:["A. Sama-sama alat pendingin","B. Sama-sama alat tulis","C. Sama-sama makanan","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan dompet dan tas adalah ...", opts:["A. Sama-sama tempat menyimpan barang","B. Sama-sama alat musik","C. Sama-sama makanan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan matematika dan fisika adalah ...", opts:["A. Sama-sama mata pelajaran","B. Sama-sama alat transportasi","C. Sama-sama makanan","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan petani dan nelayan adalah ...", opts:["A. Sama-sama pekerjaan","B. Sama-sama alat elektronik","C. Sama-sama kendaraan","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan sepeda dan becak adalah ...", opts:["A. Sama-sama alat transportasi","B. Sama-sama makanan","C. Sama-sama alat tulis","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan mie dan bakso adalah ...", opts:["A. Sama-sama minuman","B. Sama-sama makanan","C. Sama-sama kendaraan","D. Sama-sama alat musik"], ans:1 },
-{ q:"Persamaan bola dan raket adalah ...", opts:["A. Sama-sama perlengkapan olahraga","B. Sama-sama makanan","C. Sama-sama tumbuhan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan hujan dan angin adalah ...", opts:["A. Sama-sama fenomena alam","B. Sama-sama alat elektronik","C. Sama-sama makanan","D. Sama-sama kendaraan"], ans:0 },
-{ q:"Persamaan pena dan spidol adalah ...", opts:["A. Sama-sama alat tulis","B. Sama-sama alat makan","C. Sama-sama kendaraan","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan toko dan pasar adalah ...", opts:["A. Sama-sama tempat jual beli","B. Sama-sama alat transportasi","C. Sama-sama tumbuhan","D. Sama-sama alat musik"], ans:0 },
-{ q:"Persamaan laptop dan komputer adalah ...", opts:["A. Sama-sama alat elektronik","B. Sama-sama makanan","C. Sama-sama kendaraan","D. Sama-sama hewan"], ans:0 },
-{ q:"Persamaan pensil warna dan krayon adalah ...", opts:["A. Sama-sama alat mewarnai","B. Sama-sama alat transportasi","C. Sama-sama makanan","D. Sama-sama tumbuhan"], ans:0 },
-{ q:"Persamaan bendera dan lambang adalah ...", opts:["A. Sama-sama simbol","B. Sama-sama kendaraan","C. Sama-sama makanan","D. Sama-sama alat musik"], ans:0 },
+const BANK_BAHASA = [
+  {
+    q: "Persamaan pesawat dan kapal laut adalah ...",
+    opts: [
+      "A. Sama-sama menggunakan bahan bakar fosil sebagai satu-satunya energi",
+      "B. Sama-sama dapat beroperasi di wilayah udara dan air sekaligus",
+      "C. Sama-sama merupakan sarana transportasi untuk berpindah tempat",
+      "D. Sama-sama memiliki kapasitas penumpang di bawah 50 orang",
+      "E. Sama-sama dikendalikan oleh satu orang tanpa awak tambahan"
     ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan handphone dan laptop adalah ...",
+    opts: [
+      "A. Sama-sama tidak dapat digunakan tanpa koneksi internet aktif",
+      "B. Sama-sama hanya berfungsi sebagai alat komunikasi suara",
+      "C. Sama-sama memiliki layar sentuh sebagai satu-satunya input",
+      "D. Sama-sama merupakan perangkat elektronik yang membutuhkan daya listrik",
+      "E. Sama-sama memiliki bobot lebih dari 2 kilogram"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan dokter dan guru adalah ...",
+    opts: [
+      "A. Sama-sama bekerja di lingkungan rumah sakit pemerintah",
+      "B. Sama-sama menjalankan profesi yang memerlukan keahlian khusus",
+      "C. Sama-sama wajib mengenakan pakaian seragam berwarna putih",
+      "D. Sama-sama hanya melayani kelompok usia tertentu saja",
+      "E. Sama-sama mendapat penghasilan dari penjualan produk"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan buku dan majalah adalah ...",
+    opts: [
+      "A. Sama-sama diterbitkan setiap hari tanpa henti",
+      "B. Sama-sama hanya memuat konten hiburan ringan",
+      "C. Sama-sama tidak bisa dinikmati dalam versi digital",
+      "D. Sama-sama selalu memiliki jumlah halaman di atas 300",
+      "E. Sama-sama merupakan media cetak yang berfungsi sebagai bahan bacaan"
+    ],
+    ans: 4 // E
+  },
+  {
+    q: "Persamaan mobil dan motor adalah ...",
+    opts: [
+      "A. Sama-sama memiliki empat roda sebagai tumpuan",
+      "B. Sama-sama tidak memerlukan izin mengemudi untuk dikendarai",
+      "C. Sama-sama merupakan alat transportasi darat bermesin",
+      "D. Sama-sama hanya bisa diisi bahan bakar di SPBU tertentu",
+      "E. Sama-sama mampu menampung lebih dari enam penumpang"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan matahari dan lampu adalah ...",
+    opts: [
+      "A. Sama-sama bisa dipadamkan dengan saklar listrik",
+      "B. Sama-sama menghasilkan energi cahaya yang dapat menerangi sekitarnya",
+      "C. Sama-sama membutuhkan bahan bakar minyak untuk beroperasi",
+      "D. Sama-sama mengeluarkan panas yang dapat memasak makanan",
+      "E. Sama-sama hanya aktif selama dua belas jam dalam sehari"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan pensil dan pulpen adalah ...",
+    opts: [
+      "A. Sama-sama menggunakan tinta cair yang mudah luntur",
+      "B. Sama-sama tidak dapat digunakan untuk menggambar ilustrasi",
+      "C. Sama-sama wajib diraut sebelum digunakan setiap saat",
+      "D. Sama-sama termasuk alat tulis yang digunakan untuk mencatat",
+      "E. Sama-sama selalu berwarna hitam tanpa variasi warna lain"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan ikan dan burung adalah ...",
+    opts: [
+      "A. Sama-sama hidup di dalam air sebagai habitat utamanya",
+      "B. Sama-sama memiliki sayap yang digunakan untuk terbang",
+      "C. Sama-sama tergolong dalam kelompok makhluk hidup hewan",
+      "D. Sama-sama menyusui anaknya sejak lahir hingga dewasa",
+      "E. Sama-sama tidak memiliki tulang belakang dalam tubuhnya"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan hujan dan salju adalah ...",
+    opts: [
+      "A. Sama-sama hanya dapat terjadi di daerah beriklim tropis",
+      "B. Sama-sama selalu disertai petir dan kilat saat turun",
+      "C. Sama-sama berasal dari presipitasi yang turun dari atmosfer",
+      "D. Sama-sama berbentuk cair ketika menyentuh permukaan tanah",
+      "E. Sama-sama tidak pernah terjadi di dataran tinggi pegunungan"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan sepatu dan sandal adalah ...",
+    opts: [
+      "A. Sama-sama selalu memiliki tali pengait di bagian belakang",
+      "B. Sama-sama wajib digunakan di dalam ruangan tertutup",
+      "C. Sama-sama terbuat dari bahan kulit asli hewan ternak",
+      "D. Sama-sama berfungsi sebagai alas pelindung bagian kaki",
+      "E. Sama-sama hanya diproduksi dalam ukuran standar orang dewasa"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan televisi dan radio adalah ...",
+    opts: [
+      "A. Sama-sama memerlukan antena parabola untuk menerima sinyal",
+      "B. Sama-sama hanya menyiarkan berita dan informasi pemerintah",
+      "C. Sama-sama merupakan perangkat elektronik penerima siaran media",
+      "D. Sama-sama menampilkan gambar bergerak sebagai konten utamanya",
+      "E. Sama-sama tidak bisa digunakan tanpa sambungan kabel listrik"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan kursi dan meja adalah ...",
+    opts: [
+      "A. Sama-sama hanya diproduksi dari bahan kayu jati pilihan",
+      "B. Sama-sama selalu ditempatkan di luar ruangan sebagai dekorasi",
+      "C. Sama-sama tidak dapat dipindahkan setelah dipasang di lantai",
+      "D. Sama-sama merupakan perabot furnitur penunjang aktivitas di dalam ruangan",
+      "E. Sama-sama memiliki empat kaki sebagai penyangga utamanya"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan polisi dan tentara adalah ...",
+    opts: [
+      "A. Sama-sama bertugas mengatur lalu lintas di jalan raya",
+      "B. Sama-sama merupakan aparat negara yang berperan dalam menjaga keamanan",
+      "C. Sama-sama hanya beroperasi di wilayah perbatasan negara",
+      "D. Sama-sama wajib menjalani pendidikan di sekolah yang sama",
+      "E. Sama-sama tidak diperbolehkan membawa senjata dalam bertugas"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan air dan minyak adalah ...",
+    opts: [
+      "A. Sama-sama dapat larut satu sama lain dengan mudah",
+      "B. Sama-sama memiliki massa jenis yang identik persis",
+      "C. Sama-sama berwujud zat cair pada suhu ruangan normal",
+      "D. Sama-sama dihasilkan dari proses pengeboran di dalam bumi",
+      "E. Sama-sama tidak dapat berubah wujud dalam kondisi apapun"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan ayam dan bebek adalah ...",
+    opts: [
+      "A. Sama-sama mampu terbang jarak jauh melewati lautan",
+      "B. Sama-sama hanya mengkonsumsi biji-bijian sebagai makanannya",
+      "C. Sama-sama memiliki selaput di antara jari-jari kakinya",
+      "D. Sama-sama termasuk kelompok unggas yang bertelur dan berbulu",
+      "E. Sama-sama hidup di lingkungan air laut sebagai habitat alaminya"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan kapal dan kereta adalah ...",
+    opts: [
+      "A. Sama-sama bergerak di atas rel besi yang telah dipasang",
+      "B. Sama-sama dikendalikan dari menara pengawas di ketinggian",
+      "C. Sama-sama berfungsi sebagai sarana transportasi pengangkut penumpang",
+      "D. Sama-sama memiliki roda karet yang bersentuhan langsung dengan tanah",
+      "E. Sama-sama menggunakan layar angin sebagai sumber penggerak utama"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan bunga dan pohon adalah ...",
+    opts: [
+      "A. Sama-sama tidak membutuhkan sinar matahari untuk bertahan hidup",
+      "B. Sama-sama menghasilkan buah yang bisa dikonsumsi manusia",
+      "C. Sama-sama termasuk organisme dalam kelompok kingdom tumbuhan",
+      "D. Sama-sama memiliki akar tunggang yang sangat panjang dan kuat",
+      "E. Sama-sama hanya bisa tumbuh di daerah beriklim dingin"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan sendok dan garpu adalah ...",
+    opts: [
+      "A. Sama-sama hanya terbuat dari bahan plastik daur ulang",
+      "B. Sama-sama selalu digunakan berpasangan dalam satu waktu",
+      "C. Sama-sama merupakan peralatan yang digunakan saat menyantap makanan",
+      "D. Sama-sama berbentuk bulat di bagian ujungnya untuk menampung kuah",
+      "E. Sama-sama tidak bisa digunakan untuk makanan berkuah"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan komputer dan printer adalah ...",
+    opts: [
+      "A. Sama-sama mampu bekerja tanpa sambungan daya listrik apapun",
+      "B. Sama-sama digunakan secara langsung untuk mencetak dokumen",
+      "C. Sama-sama memiliki layar monitor sebagai antarmuka utamanya",
+      "D. Sama-sama termasuk dalam kategori perangkat keras elektronik",
+      "E. Sama-sama selalu terhubung dengan jaringan internet secara otomatis"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan sekolah dan kampus adalah ...",
+    opts: [
+      "A. Sama-sama dikelola langsung oleh pemerintah pusat tanpa pengecualian",
+      "B. Sama-sama merupakan institusi tempat berlangsungnya proses pendidikan",
+      "C. Sama-sama hanya diperuntukkan bagi peserta didik berusia di bawah 17 tahun",
+      "D. Sama-sama tidak memiliki kegiatan ekstrakurikuler di luar jam pelajaran",
+      "E. Sama-sama mewajibkan seluruh siswanya untuk tinggal di asrama"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan apel dan jeruk adalah ...",
+    opts: [
+      "A. Sama-sama hanya dapat tumbuh di dataran rendah beriklim panas",
+      "B. Sama-sama berwarna oranye ketika sudah matang sepenuhnya",
+      "C. Sama-sama tidak mengandung vitamin dan mineral apapun",
+      "D. Sama-sama merupakan jenis tanaman buah yang bisa dikonsumsi",
+      "E. Sama-sama memiliki kulit yang sangat tipis dan mudah dikupas"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan mata dan telinga adalah ...",
+    opts: [
+      "A. Sama-sama berfungsi mendeteksi rangsangan dari lingkungan sekitar",
+      "B. Sama-sama hanya dapat bekerja optimal dalam kondisi gelap",
+      "C. Sama-sama menghasilkan sinyal suara yang dikirim ke otak",
+      "D. Sama-sama terletak di bagian bawah wajah manusia",
+      "E. Sama-sama tidak termasuk dalam sistem saraf pusat manusia"
+    ],
+    ans: 0 // A
+  },
+  {
+    q: "Persamaan sapi dan kambing adalah ...",
+    opts: [
+      "A. Sama-sama termasuk hewan karnivora yang memangsa hewan lain",
+      "B. Sama-sama tidak dapat dimanfaatkan hasil susu maupun dagingnya",
+      "C. Sama-sama merupakan hewan ternak mamalia yang dipelihara manusia",
+      "D. Sama-sama hanya bisa hidup di lingkungan beriklim kutub",
+      "E. Sama-sama tidak berkembang biak secara vivipar"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan gitar dan piano adalah ...",
+    opts: [
+      "A. Sama-sama menghasilkan suara melalui getaran dawai atau senar",
+      "B. Sama-sama hanya dimainkan dalam pertunjukan orkestra klasik",
+      "C. Sama-sama termasuk dalam kelompok instrumen alat musik",
+      "D. Sama-sama dimainkan dengan cara ditiup menggunakan mulut",
+      "E. Sama-sama memiliki 88 tuts sebagai komponen utamanya"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan rumah dan apartemen adalah ...",
+    opts: [
+      "A. Sama-sama selalu memiliki halaman dan taman di bagian depan",
+      "B. Sama-sama hanya dapat dihuni oleh satu keluarga inti saja",
+      "C. Sama-sama tidak memerlukan biaya perawatan secara berkala",
+      "D. Sama-sama berfungsi sebagai hunian tempat manusia berteduh dan tinggal",
+      "E. Sama-sama wajib dilengkapi lift untuk akses antar lantai"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan gunting dan pisau adalah ...",
+    opts: [
+      "A. Sama-sama terbuat dari bahan plastik yang ringan dan fleksibel",
+      "B. Sama-sama hanya digunakan untuk memotong bahan kain dan tekstil",
+      "C. Sama-sama tidak memiliki bagian tajam yang berbahaya sama sekali",
+      "D. Sama-sama selalu digunakan berpasangan oleh dua orang sekaligus",
+      "E. Sama-sama merupakan perkakas dengan bilah tajam untuk memotong benda"
+    ],
+    ans: 4 // E
+  },
+  {
+    q: "Persamaan kopi dan teh adalah ...",
+    opts: [
+      "A. Sama-sama berasal dari jenis biji-bijian tanaman yang sama",
+      "B. Sama-sama merupakan minuman yang diseduh dari hasil tanaman",
+      "C. Sama-sama tidak mengandung kafein dalam kadar apapun",
+      "D. Sama-sama selalu disajikan dalam kondisi sangat dingin bersama es",
+      "E. Sama-sama hanya diproduksi di wilayah Amerika Latin"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan celana dan baju adalah ...",
+    opts: [
+      "A. Sama-sama selalu dikenakan di bagian kepala sebagai pelindung",
+      "B. Sama-sama hanya tersedia dalam satu ukuran standar universal",
+      "C. Sama-sama merupakan busana yang dipakai untuk menutupi tubuh",
+      "D. Sama-sama tidak dapat dicuci menggunakan mesin cuci modern",
+      "E. Sama-sama terbuat dari bahan logam yang tahan lama"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan gunung dan bukit adalah ...",
+    opts: [
+      "A. Sama-sama hanya ditemukan di tengah lautan sebagai pulau vulkanik",
+      "B. Sama-sama tidak dapat ditumbuhi vegetasi jenis apapun",
+      "C. Sama-sama memiliki ketinggian di atas 3.000 meter dari permukaan laut",
+      "D. Sama-sama merupakan bentukan permukaan bumi yang menonjol ke atas",
+      "E. Sama-sama terbentuk akibat aktivitas manusia dalam waktu singkat"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan jam dan kalender adalah ...",
+    opts: [
+      "A. Sama-sama hanya bisa dibaca oleh orang yang mahir matematika",
+      "B. Sama-sama merupakan perangkat penunjuk dan pengukur waktu",
+      "C. Sama-sama menggunakan baterai sebagai satu-satunya sumber energinya",
+      "D. Sama-sama memiliki dua belas angka yang tersusun melingkar",
+      "E. Sama-sama wajib dipasang di setiap ruangan dalam sebuah gedung"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan roti dan nasi adalah ...",
+    opts: [
+      "A. Sama-sama dihasilkan dari fermentasi susu hewani",
+      "B. Sama-sama hanya dikonsumsi sebagai camilan di antara waktu makan",
+      "C. Sama-sama merupakan sumber karbohidrat yang dikonsumsi sebagai makanan pokok",
+      "D. Sama-sama memerlukan waktu penyimpanan lebih dari satu bulan sebelum dimakan",
+      "E. Sama-sama tidak mengandung nutrisi apapun yang dibutuhkan tubuh"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan dokter dan perawat adalah ...",
+    opts: [
+      "A. Sama-sama memiliki kewenangan penuh dalam melakukan tindakan operasi",
+      "B. Sama-sama tidak memerlukan pendidikan formal untuk menjalankan tugasnya",
+      "C. Sama-sama bekerja dalam lingkup pelayanan dan bidang kesehatan masyarakat",
+      "D. Sama-sama bertugas di apotek untuk meracik obat bagi pasien",
+      "E. Sama-sama hanya menangani pasien yang berusia lanjut di atas 60 tahun"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan bus dan angkot adalah ...",
+    opts: [
+      "A. Sama-sama hanya beroperasi di jalur khusus tol berbayar",
+      "B. Sama-sama tidak pernah mengangkut lebih dari sepuluh penumpang",
+      "C. Sama-sama memiliki kapasitas bahan bakar yang sama persis",
+      "D. Sama-sama merupakan angkutan umum yang mengangkut banyak penumpang",
+      "E. Sama-sama dioperasikan secara eksklusif oleh perusahaan milik negara"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan lemari dan rak adalah ...",
+    opts: [
+      "A. Sama-sama harus dipasang menempel di langit-langit ruangan",
+      "B. Sama-sama selalu dilengkapi kunci pengaman berlapis untuk keamanan",
+      "C. Sama-sama merupakan furnitur yang difungsikan sebagai tempat penyimpanan barang",
+      "D. Sama-sama hanya bisa menampung benda-benda berbahan logam",
+      "E. Sama-sama terbuat dari bahan kaca transparan yang mudah pecah"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan emas dan perak adalah ...",
+    opts: [
+      "A. Sama-sama merupakan unsur logam mulia yang memiliki nilai ekonomis tinggi",
+      "B. Sama-sama hanya dapat ditemukan di dasar lautan yang dalam",
+      "C. Sama-sama memiliki warna kuning mengkilap yang identik",
+      "D. Sama-sama tidak dapat dijadikan bahan perhiasan karena terlalu keras",
+      "E. Sama-sama diproduksi melalui reaksi kimia buatan di laboratorium"
+    ],
+    ans: 0 // A
+  },
+  {
+    q: "Persamaan sungai dan laut adalah ...",
+    opts: [
+      "A. Sama-sama memiliki kadar garam yang sangat tinggi",
+      "B. Sama-sama hanya bisa ditemukan di benua Asia dan Afrika",
+      "C. Sama-sama tidak dapat dihuni oleh makhluk hidup apapun",
+      "D. Sama-sama merupakan perairan alami yang menjadi bagian ekosistem bumi",
+      "E. Sama-sama memiliki kedalaman rata-rata lebih dari 1.000 meter"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan kamera dan handphone adalah ...",
+    opts: [
+      "A. Sama-sama tidak mampu merekam video dalam format apapun",
+      "B. Sama-sama hanya berfungsi optimal di lingkungan dengan cahaya terang",
+      "C. Sama-sama memiliki lensa optik yang dapat dilepas dan diganti",
+      "D. Sama-sama dapat digunakan untuk mengabadikan gambar secara digital",
+      "E. Sama-sama memerlukan film seluloid untuk menghasilkan foto"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan ayam goreng dan sate adalah ...",
+    opts: [
+      "A. Sama-sama merupakan sajian kuliner berbahan dasar protein hewani",
+      "B. Sama-sama selalu disajikan dalam kondisi mentah tanpa dimasak",
+      "C. Sama-sama hanya bisa dinikmati di restoran mewah berbintang",
+      "D. Sama-sama tidak mengandung bumbu dan rempah dalam pembuatannya",
+      "E. Sama-sama berasal dari bahan baku ikan laut segar"
+    ],
+    ans: 0 // A
+  },
+  {
+    q: "Persamaan kipas angin dan AC adalah ...",
+    opts: [
+      "A. Sama-sama menghasilkan dingin melalui sistem pendingin freon",
+      "B. Sama-sama merupakan perangkat yang berfungsi memberikan kesejukan udara",
+      "C. Sama-sama tidak membutuhkan energi listrik untuk beroperasi",
+      "D. Sama-sama hanya efektif digunakan di ruangan berukuran di atas 50 m²",
+      "E. Sama-sama memiliki filter udara yang wajib dicuci setiap hari"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan dompet dan tas adalah ...",
+    opts: [
+      "A. Sama-sama selalu terbuat dari kulit buaya asli berkualitas tinggi",
+      "B. Sama-sama tidak dapat dibawa ke luar rumah karena ukurannya besar",
+      "C. Sama-sama merupakan wadah yang digunakan untuk menyimpan dan membawa barang",
+      "D. Sama-sama hanya bisa menampung uang kertas dalam jumlah terbatas",
+      "E. Sama-sama wajib dilengkapi gembok keamanan berlapis di bagian ritsleting"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan matematika dan fisika adalah ...",
+    opts: [
+      "A. Sama-sama tidak memerlukan pemahaman angka dan rumus dalam penerapannya",
+      "B. Sama-sama merupakan disiplin ilmu pengetahuan yang dipelajari secara formal",
+      "C. Sama-sama hanya diajarkan di tingkat perguruan tinggi saja",
+      "D. Sama-sama membahas tentang interaksi sosial antara manusia",
+      "E. Sama-sama tidak memiliki keterkaitan dengan dunia nyata dan teknologi"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan petani dan nelayan adalah ...",
+    opts: [
+      "A. Sama-sama bekerja di lingkungan perkantoran gedung bertingkat",
+      "B. Sama-sama menghasilkan produk manufaktur untuk diekspor ke luar negeri",
+      "C. Sama-sama merupakan profesi yang memanfaatkan sumber daya alam secara langsung",
+      "D. Sama-sama tidak menghasilkan produk yang dapat dikonsumsi manusia",
+      "E. Sama-sama menggunakan mesin industri besar dalam setiap pekerjaannya"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan sepeda dan becak adalah ...",
+    opts: [
+      "A. Sama-sama menggunakan mesin berbahan bakar diesel untuk bergerak",
+      "B. Sama-sama hanya bisa digunakan di jalur khusus sepanjang pantai",
+      "C. Sama-sama merupakan alat transportasi yang digerakkan oleh tenaga manusia",
+      "D. Sama-sama memiliki empat roda dan atap pelindung dari hujan",
+      "E. Sama-sama mampu mencapai kecepatan di atas 100 km per jam"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan mie dan bakso adalah ...",
+    opts: [
+      "A. Sama-sama merupakan kudapan manis yang disajikan sebagai dessert",
+      "B. Sama-sama berasal dari bahan baku kedelai yang difermentasi",
+      "C. Sama-sama tidak bisa dikombinasikan atau disajikan dalam satu mangkuk",
+      "D. Sama-sama termasuk dalam kategori hidangan kuliner yang populer di masyarakat",
+      "E. Sama-sama hanya diproduksi secara massal oleh pabrik multinasional"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan bola dan raket adalah ...",
+    opts: [
+      "A. Sama-sama hanya digunakan dalam olahraga renang kompetitif",
+      "B. Sama-sama termasuk perlengkapan yang digunakan dalam kegiatan olahraga",
+      "C. Sama-sama terbuat dari bahan besi tempa yang sangat berat",
+      "D. Sama-sama berfungsi sebagai pakaian pelindung saat berolahraga",
+      "E. Sama-sama tidak boleh digunakan dalam pertandingan resmi berstandar internasional"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan hujan dan angin adalah ...",
+    opts: [
+      "A. Sama-sama hanya terjadi di wilayah kutub utara dan selatan",
+      "B. Sama-sama merupakan fenomena alam yang terjadi di atmosfer bumi",
+      "C. Sama-sama selalu disertai kilat dan petir setiap kali terjadi",
+      "D. Sama-sama dapat diprediksi secara sempurna tanpa margin kesalahan",
+      "E. Sama-sama tidak berpengaruh terhadap kehidupan makhluk hidup"
+    ],
+    ans: 1 // B
+  },
+  {
+    q: "Persamaan pena dan spidol adalah ...",
+    opts: [
+      "A. Sama-sama menggunakan arang sebagai bahan pewarna utamanya",
+      "B. Sama-sama selalu habis setelah digunakan menulis satu halaman saja",
+      "C. Sama-sama merupakan instrumen tulis yang menggunakan tinta untuk beroperasi",
+      "D. Sama-sama tidak bisa digunakan untuk menulis di atas kertas",
+      "E. Sama-sama wajib diruncingkan terlebih dahulu sebelum digunakan"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan toko dan pasar adalah ...",
+    opts: [
+      "A. Sama-sama hanya buka pada malam hari setelah pukul 18.00",
+      "B. Sama-sama tidak menyediakan barang dagangan dalam bentuk apapun",
+      "C. Sama-sama merupakan tempat yang menjadi pusat transaksi jual beli",
+      "D. Sama-sama dikelola secara eksklusif oleh pemerintah daerah setempat",
+      "E. Sama-sama hanya menjual produk impor dari luar negeri"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan laptop dan komputer adalah ...",
+    opts: [
+      "A. Sama-sama tidak dapat menjalankan program atau aplikasi apapun",
+      "B. Sama-sama harus selalu terhubung ke jaringan kabel agar bisa menyala",
+      "C. Sama-sama merupakan perangkat komputasi elektronik pengolah data digital",
+      "D. Sama-sama memiliki ukuran dan bobot yang identik persis",
+      "E. Sama-sama hanya bisa dioperasikan oleh tenaga ahli IT bersertifikat"
+    ],
+    ans: 2 // C
+  },
+  {
+    q: "Persamaan pensil warna dan krayon adalah ...",
+    opts: [
+      "A. Sama-sama terbuat dari bahan cair yang dituang ke dalam wadah",
+      "B. Sama-sama hanya dapat digunakan di atas kanvas berbahan sutra",
+      "C. Sama-sama tidak menghasilkan warna apapun ketika digunakan",
+      "D. Sama-sama merupakan media mewarnai yang digunakan dalam aktivitas seni",
+      "E. Sama-sama hanya tersedia dalam tiga pilihan warna dasar saja"
+    ],
+    ans: 3 // D
+  },
+  {
+    q: "Persamaan bendera dan lambang adalah ...",
+    opts: [
+      "A. Sama-sama hanya digunakan pada saat upacara pemakaman kenegaraan",
+      "B. Sama-sama tidak memiliki makna atau representasi apapun",
+      "C. Sama-sama merupakan simbol identitas yang merepresentasikan suatu kelompok atau negara",
+      "D. Sama-sama selalu berbentuk persegi empat dengan ukuran yang sama",
+      "E. Sama-sama wajib dicetak menggunakan bahan logam mulia"
+    ],
+    ans: 2 // C
+  },
+];
   "Hitungan": [
     { q:"125 × 8 = ?", opts:["A. 900","B. 1000","C. 1100","D. 950"], ans:1 },
     { q:"SHU koperasi Rp 12.000.000. Jasa modal 30%. Berapa jasa modal?", opts:["A. Rp 3.000.000","B. Rp 3.600.000","C. Rp 4.000.000","D. Rp 2.400.000"], ans:1 },
