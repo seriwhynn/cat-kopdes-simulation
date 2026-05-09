@@ -32,7 +32,6 @@
     color: var(--teks);
   }
 
-  /* HEADER */
   .header {
     background: var(--merah);
     color: white;
@@ -69,15 +68,12 @@
     margin-top: 2px;
   }
 
-  /* TIMER BAR */
   .timer-bar {
     background: #0d47a1;
     padding: 8px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
     z-index: 99;
   }
   .timer-display {
@@ -92,38 +88,27 @@
   .timer-display.warning { color: #ff5722; animation: blink 0.5s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-  .progress-info {
-    text-align: right;
-    color: white;
-  }
+  .progress-info { text-align: right; color: white; }
   .progress-info .count {
     font-family: 'Poppins', sans-serif;
     font-size: clamp(14px, 3vw, 20px);
     font-weight: 700;
   }
-  .progress-info .label-prog {
-    font-size: 11px;
-    opacity: 0.7;
-  }
+  .progress-info .label-prog { font-size: 11px; opacity: 0.7; }
 
-  .progress-track {
-    background: rgba(255,255,255,0.15);
-    height: 6px;
-  }
+  .progress-track { background: rgba(255,255,255,0.15); height: 6px; }
   .progress-fill {
     height: 6px;
     background: linear-gradient(90deg, var(--kuning), #ff9800);
     transition: width 0.4s ease;
   }
 
-  /* MAIN CONTENT */
   .container {
     max-width: 820px;
     margin: 0 auto;
     padding: 16px;
   }
 
-  /* INTRO SCREEN */
   #intro-screen {
     background: white;
     border-radius: 16px;
@@ -182,7 +167,6 @@
   .btn-mulai:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(211,47,47,0.5); }
   .btn-mulai:active { transform: translateY(0); }
 
-  /* SOAL SCREEN */
   #soal-screen { display: none; }
 
   .soal-card {
@@ -254,15 +238,8 @@
     transition: all 0.2s;
   }
 
-  /* BENAR */
-  .pilihan-item.benar {
-    border-color: var(--hijau-muda);
-    background: #e8f5e9;
-  }
-  .pilihan-item.benar .huruf {
-    background: var(--hijau-muda);
-    color: white;
-  }
+  .pilihan-item.benar { border-color: var(--hijau-muda); background: #e8f5e9; }
+  .pilihan-item.benar .huruf { background: var(--hijau-muda); color: white; }
   .pilihan-item.benar::after {
     content: '✓ BENAR';
     margin-left: auto;
@@ -273,15 +250,8 @@
     white-space: nowrap;
   }
 
-  /* SALAH */
-  .pilihan-item.salah {
-    border-color: var(--salah);
-    background: #ffebee;
-  }
-  .pilihan-item.salah .huruf {
-    background: var(--salah);
-    color: white;
-  }
+  .pilihan-item.salah { border-color: var(--salah); background: #ffebee; }
+  .pilihan-item.salah .huruf { background: var(--salah); color: white; }
   .pilihan-item.salah::after {
     content: '✗ SALAH';
     margin-left: auto;
@@ -292,15 +262,8 @@
     white-space: nowrap;
   }
 
-  /* JAWABAN BENAR setelah salah */
-  .pilihan-item.kunci-benar {
-    border-color: var(--hijau-muda);
-    background: #f1f8e9;
-  }
-  .pilihan-item.kunci-benar .huruf {
-    background: var(--hijau-muda);
-    color: white;
-  }
+  .pilihan-item.kunci-benar { border-color: var(--hijau-muda); background: #f1f8e9; }
+  .pilihan-item.kunci-benar .huruf { background: var(--hijau-muda); color: white; }
   .pilihan-item.kunci-benar::after {
     content: '← Jawaban Benar';
     margin-left: auto;
@@ -313,7 +276,6 @@
 
   .pilihan-item.disabled { cursor: default; pointer-events: none; }
 
-  /* NAVIGASI */
   .nav-bar {
     display: flex;
     justify-content: space-between;
@@ -350,7 +312,6 @@
     color: var(--teks);
   }
 
-  /* NOMOR GRID */
   .nomor-grid-wrap {
     background: white;
     border-radius: 16px;
@@ -367,11 +328,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
   }
-  .nomor-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
+  .nomor-grid { display: flex; flex-wrap: wrap; gap: 6px; }
   .nomor-btn {
     width: 34px;
     height: 34px;
@@ -390,7 +347,6 @@
   .nomor-btn.answered-salah { background: #ffebee; border-color: var(--salah); color: var(--salah); }
   .nomor-btn.active { background: var(--biru); border-color: var(--biru); color: white; }
 
-  /* HASIL SCREEN */
   #hasil-screen {
     display: none;
     background: white;
@@ -420,10 +376,7 @@
     gap: 12px;
     margin: 24px 0;
   }
-  .score-item {
-    padding: 16px;
-    border-radius: 12px;
-  }
+  .score-item { padding: 16px; border-radius: 12px; }
   .score-item .num {
     font-family: 'Poppins', sans-serif;
     font-size: clamp(24px, 5vw, 36px);
@@ -459,7 +412,6 @@
   }
   .btn-ulang:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(21,101,192,0.5); }
 
-  /* RESPONSIVE */
   @media(max-width: 480px) {
     .pilihan-item { padding: 9px 10px; }
     .nomor-btn { width: 30px; height: 30px; font-size: 11px; }
@@ -469,14 +421,12 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="label-soal">SOAL KDKMP/KNMP 2025</div>
   <h1>TES POTENSI KOGNITIF</h1>
   <div class="sub">BAHASA — PART 2</div>
 </div>
 
-<!-- TIMER BAR (hanya tampil saat soal) -->
 <div class="timer-bar" id="timer-bar" style="display:none;">
   <div>
     <div style="font-size:11px;color:rgba(255,255,255,0.7);font-weight:600;">⏱ WAKTU TERSISA</div>
@@ -493,7 +443,6 @@
 
 <div class="container">
 
-  <!-- INTRO -->
   <div id="intro-screen">
     <h2>📝 TES BAHASA</h2>
     <p>Tes Potensi Kognitif bidang Bahasa untuk seleksi KDKMP/KNMP.<br>Pilih jawaban yang paling tepat!</p>
@@ -507,26 +456,22 @@
     <button class="btn-mulai" onclick="mulaiTes()">▶ MULAI TES</button>
   </div>
 
-  <!-- SOAL -->
   <div id="soal-screen">
     <div class="nomor-grid-wrap">
       <div class="nomor-grid-title">📋 Navigasi Soal</div>
       <div class="nomor-grid" id="nomor-grid"></div>
     </div>
-
     <div id="soal-container"></div>
-
     <div class="nav-bar">
       <button class="btn-prev" onclick="prevSoal()">← Sebelumnya</button>
       <span class="nomor-current">Soal <span id="nav-current">1</span> dari 50</span>
       <button class="btn-next" onclick="nextSoal()">Berikutnya →</button>
     </div>
     <div style="text-align:center; margin-bottom:20px;">
-      <button class="btn-selesai" onclick="selesaiTes()">✅ SELESAI & LIHAT NILAI</button>
+      <button class="btn-selesai" onclick="selesaiTes()">✅ SELESAI &amp; LIHAT NILAI</button>
     </div>
   </div>
 
-  <!-- HASIL -->
   <div id="hasil-screen">
     <div class="hasil-icon" id="hasil-icon">🎉</div>
     <h2 id="hasil-judul">Tes Selesai!</h2>
@@ -534,18 +479,9 @@
     <div style="font-size:14px;color:#888;margin-bottom:8px;">Nilai (dari 100)</div>
     <div class="predikat" id="predikat-badge"></div>
     <div class="score-detail">
-      <div class="score-item score-benar">
-        <div class="num" id="jml-benar">0</div>
-        <div class="label">✓ BENAR</div>
-      </div>
-      <div class="score-item score-salah">
-        <div class="num" id="jml-salah">0</div>
-        <div class="label">✗ SALAH</div>
-      </div>
-      <div class="score-item score-kosong">
-        <div class="num" id="jml-kosong">0</div>
-        <div class="label">— BELUM</div>
-      </div>
+      <div class="score-item score-benar"><div class="num" id="jml-benar">0</div><div class="label">✓ BENAR</div></div>
+      <div class="score-item score-salah"><div class="num" id="jml-salah">0</div><div class="label">✗ SALAH</div></div>
+      <div class="score-item score-kosong"><div class="num" id="jml-kosong">0</div><div class="label">— BELUM</div></div>
     </div>
     <button class="btn-ulang" onclick="ulangTes()">🔄 ULANGI TES</button>
   </div>
@@ -553,268 +489,593 @@
 </div>
 
 <script>
-const soalData = [
-  // 1-5: Persamaan / Analogi Konsep
+// Soal mentah: setiap soal punya "jawaban_teks" (string jawaban benar) dan array "pilihan_teks" 5 pilihan
+// Posisi jawaban akan diacak saat inisialisasi
+const soalMentah = [
+  // 1-5: Persamaan Konsep (kompleks)
   {
-    q: "Apakah persamaan fenomena hujan dan salju?",
-    pilihan: ["Keduanya memiliki suhu jauh di atas titik didih air","Merupakan bentuk presipitasi (air) yang turun dari awan ke bumi","Keduanya selalu dan hanya terjadi di puncak musim panas","Keduanya berwujud gas karbon yang tidak terlihat","Berasal dari semburan magma di dalam lapisan inti bumi"],
-    jawaban: 1
+    q: "Apakah persamaan mendasar antara fenomena hujan dan salju ditinjau dari sudut pandang meteorologi?",
+    jawaban_teks: "Keduanya merupakan bentuk presipitasi, yaitu peristiwa jatuhnya air dari atmosfer ke permukaan bumi dalam wujud berbeda",
+    pilihan_teks: [
+      "Keduanya merupakan bentuk presipitasi, yaitu peristiwa jatuhnya air dari atmosfer ke permukaan bumi dalam wujud berbeda",
+      "Keduanya terbentuk akibat erupsi vulkanik yang melepas uap air ke troposfer dalam jumlah besar",
+      "Keduanya hanya dapat terjadi apabila suhu permukaan laut melampaui 30 derajat Celsius secara konsisten",
+      "Keduanya merupakan hasil kondensasi gas karbon dioksida yang terperangkap di lapisan stratosfer",
+      "Keduanya terjadi secara eksklusif di belahan bumi selatan akibat perbedaan tekanan magnetik kutub"
+    ]
   },
   {
-    q: "Apakah persamaan antara bakat dan minat?",
-    pilihan: ["Keduanya hanya dimiliki oleh orang yang berpendidikan tinggi","Keduanya merupakan faktor yang memengaruhi prestasi dan karier seseorang","Keduanya bersifat permanen dan tidak bisa berubah sepanjang hidup","Keduanya hanya dipengaruhi oleh faktor genetik","Keduanya tidak ada hubungannya dengan motivasi belajar"],
-    jawaban: 1
+    q: "Apakah persamaan esensial antara bakat dan minat dalam konteks psikologi perkembangan individu?",
+    jawaban_teks: "Keduanya adalah faktor internal yang secara sinergis memengaruhi arah pengembangan diri, motivasi belajar, dan pencapaian prestasi seseorang",
+    pilihan_teks: [
+      "Keduanya bersifat bawaan genetik yang sepenuhnya tidak dapat dimodifikasi oleh lingkungan atau pendidikan formal",
+      "Keduanya adalah faktor internal yang secara sinergis memengaruhi arah pengembangan diri, motivasi belajar, dan pencapaian prestasi seseorang",
+      "Keduanya hanya relevan bagi individu yang memiliki indeks kecerdasan di atas rata-rata populasi umum",
+      "Keduanya tidak memiliki korelasi signifikan dengan performa akademik maupun karier profesional seseorang",
+      "Keduanya terbentuk secara eksklusif melalui paparan lingkungan sosial tanpa pengaruh faktor biologis apapun"
+    ]
   },
   {
-    q: "Manakah persamaan antara membaca dan mendengarkan?",
-    pilihan: ["Keduanya menggunakan indera penglihatan","Keduanya merupakan keterampilan berbahasa yang bersifat reseptif","Keduanya menghasilkan sebuah karya tulis","Keduanya selalu memerlukan alat bantu elektronik","Keduanya adalah keterampilan produktif dalam bahasa"],
-    jawaban: 1
+    q: "Manakah persamaan antara keterampilan membaca dan mendengarkan dalam kajian linguistik terapan?",
+    jawaban_teks: "Keduanya dikategorikan sebagai keterampilan berbahasa reseptif yang melibatkan proses dekoding dan interpretasi pesan dari sumber eksternal",
+    pilihan_teks: [
+      "Keduanya dikategorikan sebagai keterampilan berbahasa reseptif yang melibatkan proses dekoding dan interpretasi pesan dari sumber eksternal",
+      "Keduanya tergolong keterampilan produktif karena menghasilkan respons verbal yang dapat diukur secara kuantitatif",
+      "Keduanya secara eksklusif memerlukan penggunaan teknologi digital sebagai media perantara komunikasi",
+      "Keduanya bergantung sepenuhnya pada kemampuan motorik halus yang dikembangkan sejak usia dini",
+      "Keduanya hanya dapat dikuasai apabila individu terlebih dahulu menguasai keterampilan menulis secara akademik"
+    ]
   },
   {
-    q: "Apakah persamaan antara sinonim dan antonim dalam ilmu bahasa?",
-    pilihan: ["Keduanya membahas persamaan makna kata","Keduanya merupakan cabang kajian semantik (makna kata)","Keduanya hanya berlaku untuk kata benda","Keduanya tidak memiliki hubungan dengan konteks kalimat","Keduanya digunakan hanya dalam puisi"],
-    jawaban: 1
+    q: "Apakah persamaan antara kajian sinonim dan antonim dalam disiplin ilmu semantik leksikal?",
+    jawaban_teks: "Keduanya merupakan sub-kajian semantik yang menelaah relasi makna antar leksem dalam sistem bahasa secara sistematis",
+    pilihan_teks: [
+      "Keduanya secara definitif hanya berlaku untuk kategori kata verba transitif dalam bahasa Indonesia baku",
+      "Keduanya merupakan sub-kajian semantik yang menelaah relasi makna antar leksem dalam sistem bahasa secara sistematis",
+      "Keduanya tidak memiliki hubungan dengan konteks pragmatik maupun situasi tutur dalam wacana nyata",
+      "Keduanya adalah konsep eksklusif bahasa puisi yang tidak berlaku dalam ragam bahasa ilmiah atau formal",
+      "Keduanya hanya ditemukan dalam bahasa-bahasa Indo-Eropa dan tidak memiliki padanan dalam bahasa Austronesia"
+    ]
   },
   {
-    q: "Manakah persamaan antara pantun dan puisi?",
-    pilihan: ["Keduanya tidak memiliki rima","Keduanya adalah bentuk karya sastra yang menggunakan bahasa indah","Keduanya harus terdiri dari empat bait","Keduanya ditulis dalam bahasa asing","Keduanya tidak dapat dibacakan di depan umum"],
-    jawaban: 1
+    q: "Manakah persamaan antara pantun dan puisi lirik ditinjau dari perspektif sastra komparatif?",
+    jawaban_teks: "Keduanya adalah genre karya sastra yang mendayagunakan estetika bahasa, diksi khas, dan irama untuk menyampaikan pesan atau ekspresi batin",
+    pilihan_teks: [
+      "Keduanya secara struktural diwajibkan terdiri dari dua belas baris dengan rima silang yang konsisten",
+      "Keduanya adalah genre karya sastra yang mendayagunakan estetika bahasa, diksi khas, dan irama untuk menyampaikan pesan atau ekspresi batin",
+      "Keduanya merupakan karya sastra lisan yang tidak memiliki tradisi penulisan dalam aksara apapun",
+      "Keduanya berasal dari tradisi sastra Arab klasik yang kemudian diadaptasi ke dalam kesusastraan Melayu",
+      "Keduanya secara konvensi harus mengandung unsur alegori religius sebagai syarat kesempurnaan estetis"
+    ]
   },
-    // 6-50: Persamaan Kata
+  // 6-50: Persamaan kata (kompleks, jawaban diacak)
   {
-    q: "Persamaan mobil dan motor adalah ...",
-    pilihan: ["Sama-sama memiliki sayap","Sama-sama alat transportasi","Sama-sama berjalan di air","Sama-sama ditarik hewan","Sama-sama tidak memakai mesin"],
-    jawaban: 1
-  },
-  {
-    q: "Persamaan buku dan majalah adalah ...",
-    pilihan: ["Sama-sama makanan","Sama-sama benda elektronik","Sama-sama bahan bacaan","Sama-sama kendaraan","Sama-sama digunakan di dapur"],
-    jawaban: 2
-  },
-  {
-    q: "Persamaan ikan dan paus adalah ...",
-    pilihan: ["Sama-sama hidup di air","Sama-sama hidup di darat","Sama-sama serangga","Sama-sama memiliki roda","Sama-sama tumbuhan"],
-    jawaban: 0
-  },
-  {
-    q: "Persamaan dokter dan perawat adalah ...",
-    pilihan: ["Sama-sama bekerja di pasar","Sama-sama tenaga kesehatan","Sama-sama pilot","Sama-sama bekerja di sawah","Sama-sama penjual makanan"],
-    jawaban: 1
+    q: "Apakah persamaan antara mobil dan sepeda motor bila ditinjau dari fungsi utamanya dalam kehidupan modern?",
+    jawaban_teks: "Keduanya merupakan wahana transportasi darat bermesin yang berfungsi memindahkan penumpang dari satu lokasi ke lokasi lain",
+    pilihan_teks: [
+      "Keduanya merupakan wahana transportasi darat bermesin yang berfungsi memindahkan penumpang dari satu lokasi ke lokasi lain",
+      "Keduanya ditenagai secara eksklusif oleh energi surya dan tidak menghasilkan emisi karbon sama sekali",
+      "Keduanya dirancang khusus untuk beroperasi di jalur perairan dangkal dengan kecepatan rendah",
+      "Keduanya wajib dilengkapi rel baja sebagai infrastruktur pendukung agar dapat beroperasi dengan aman",
+      "Keduanya termasuk dalam kategori alat berat konstruksi yang digunakan dalam proyek infrastruktur skala nasional"
+    ]
   },
   {
-    q: "Persamaan pensil dan pulpen adalah ...",
-    pilihan: ["Sama-sama alat tulis","Sama-sama alat makan","Sama-sama kendaraan","Sama-sama alat olahraga","Sama-sama alat musik"],
-    jawaban: 0
+    q: "Apakah persamaan antara buku teks dan majalah ilmiah dari perspektif fungsi komunikatif?",
+    jawaban_teks: "Keduanya merupakan media cetak yang difungsikan sebagai sumber informasi, pengetahuan, dan bahan bacaan bagi khalayak tertentu",
+    pilihan_teks: [
+      "Keduanya berfungsi secara eksklusif sebagai instrumen pengukuran psikometrik dalam seleksi tenaga kerja profesional",
+      "Keduanya adalah perangkat elektronik yang memerlukan koneksi internet untuk dapat diakses oleh pengguna",
+      "Keduanya merupakan media cetak yang difungsikan sebagai sumber informasi, pengetahuan, dan bahan bacaan bagi khalayak tertentu",
+      "Keduanya secara regulasi hanya dapat diterbitkan oleh lembaga pemerintah yang memiliki lisensi khusus",
+      "Keduanya adalah instrumen navigasi yang digunakan dalam penerbangan sipil dan militer internasional"
+    ]
   },
   {
-    q: "Persamaan ayam dan bebek adalah ...",
-    pilihan: ["Sama-sama ikan","Sama-sama hewan ternak","Sama-sama kendaraan","Sama-sama tumbuhan","Sama-sama alat dapur"],
-    jawaban: 1
+    q: "Manakah persamaan mendasar antara ikan dan paus bila ditinjau dari habitat dan ekosistemnya?",
+    jawaban_teks: "Keduanya menjalani kehidupan di lingkungan perairan dan memiliki adaptasi morfologi khusus untuk bergerak dalam medium air",
+    pilihan_teks: [
+      "Keduanya adalah mamalia berdarah panas yang mengembangkan paru-paru sebagai organ pernapasan utama di darat",
+      "Keduanya menjalani kehidupan di lingkungan perairan dan memiliki adaptasi morfologi khusus untuk bergerak dalam medium air",
+      "Keduanya tergolong dalam ordo primata yang mengalami evolusi paralel menuju kehidupan akuatik",
+      "Keduanya merupakan organisme autotrof yang mampu menghasilkan energi melalui proses fotosintesis bawah laut",
+      "Keduanya adalah reptilia yang bertelur di daratan meskipun menghabiskan sebagian besar hidupnya di air"
+    ]
   },
   {
-    q: "Persamaan televisi dan radio adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama makanan","Sama-sama alat tulis","Sama-sama hewan","Sama-sama kendaraan"],
-    jawaban: 0
+    q: "Apakah persamaan antara dokter spesialis dan perawat dalam sistem pelayanan kesehatan modern?",
+    jawaban_teks: "Keduanya adalah tenaga medis profesional yang memiliki kompetensi dan kewenangan dalam memberikan pelayanan kesehatan kepada pasien",
+    pilihan_teks: [
+      "Keduanya memiliki kewenangan identik untuk melakukan tindakan bedah mayor tanpa pengawasan apapun",
+      "Keduanya adalah tenaga medis profesional yang memiliki kompetensi dan kewenangan dalam memberikan pelayanan kesehatan kepada pasien",
+      "Keduanya diwajibkan menyelesaikan pendidikan doktoral sebelum dapat menjalankan praktik klinik apapun",
+      "Keduanya bertugas secara eksklusif di fasilitas kesehatan milik pemerintah dan tidak dapat berpraktik swasta",
+      "Keduanya hanya menangani pasien geriatri dan tidak memiliki kompetensi untuk pasien usia produktif"
+    ]
   },
   {
-    q: "Persamaan mangga dan jeruk adalah ...",
-    pilihan: ["Sama-sama alat musik","Sama-sama sayuran","Sama-sama buah","Sama-sama kendaraan","Sama-sama hewan"],
-    jawaban: 2
+    q: "Manakah persamaan antara pensil dan pulpen ditinjau dari perspektif fungsi dan penggunaannya?",
+    jawaban_teks: "Keduanya adalah instrumen tulis yang digunakan untuk menghasilkan tanda atau simbol di atas permukaan media tulis",
+    pilihan_teks: [
+      "Keduanya adalah instrumen tulis yang digunakan untuk menghasilkan tanda atau simbol di atas permukaan media tulis",
+      "Keduanya memerlukan sambungan listrik dan perangkat lunak khusus untuk dapat dioperasikan dengan efektif",
+      "Keduanya dirancang sebagai instrumen bedah mikro dalam prosedur operasi mata dan saraf",
+      "Keduanya dikelompokkan sebagai senjata tajam yang peredarannya diatur oleh regulasi keamanan nasional",
+      "Keduanya adalah komponen elektronik yang digunakan dalam perakitan sirkuit terpadu skala nano"
+    ]
   },
   {
-    q: "Persamaan guru dan dosen adalah ...",
-    pilihan: ["Sama-sama pengajar","Sama-sama nelayan","Sama-sama petani","Sama-sama pemain bola","Sama-sama montir"],
-    jawaban: 0
+    q: "Apakah persamaan antara ayam kampung dan bebek ditinjau dari klasifikasi biologis dan peranannya?",
+    jawaban_teks: "Keduanya adalah unggas domestik yang dibudidayakan manusia sebagai sumber protein hewani dan komoditas peternakan",
+    pilihan_teks: [
+      "Keduanya adalah predator puncak dalam rantai makanan yang berperan menjaga keseimbangan ekosistem hutan",
+      "Keduanya tergolong dalam famili Felidae yang memiliki kemampuan berburu menggunakan cakar retraktil",
+      "Keduanya adalah unggas domestik yang dibudidayakan manusia sebagai sumber protein hewani dan komoditas peternakan",
+      "Keduanya merupakan organisme akuatik obligat yang tidak dapat bertahan hidup di luar lingkungan perairan",
+      "Keduanya adalah serangga sosial yang membentuk koloni hierarkis dengan sistem kasta yang kompleks"
+    ]
   },
   {
-    q: "Persamaan meja dan kursi adalah ...",
-    pilihan: ["Sama-sama alat mandi","Sama-sama perabot rumah","Sama-sama kendaraan","Sama-sama makanan","Sama-sama hewan"],
-    jawaban: 1
+    q: "Apakah persamaan antara televisi dan radio dalam konteks teknologi komunikasi massa?",
+    jawaban_teks: "Keduanya adalah perangkat elektronik yang berfungsi sebagai media penyiaran untuk mendistribusikan informasi dan hiburan kepada publik",
+    pilihan_teks: [
+      "Keduanya secara teknis memerlukan kabel fiber optik bawah laut sebagai medium transmisi sinyal utama",
+      "Keduanya adalah perangkat elektronik yang berfungsi sebagai media penyiaran untuk mendistribusikan informasi dan hiburan kepada publik",
+      "Keduanya hanya dapat menerima sinyal dari satelit geostasioner yang mengorbit pada ketinggian 500 kilometer",
+      "Keduanya dikategorikan sebagai media cetak dua dimensi yang bergantung pada tinta dan substrat kertas",
+      "Keduanya memerlukan lisensi pengguna akhir yang diperbarui setiap bulan dari otoritas telekomunikasi"
+    ]
   },
   {
-    q: "Persamaan sapi dan kambing adalah ...",
-    pilihan: ["Sama-sama hewan ternak","Sama-sama ikan","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Manakah persamaan antara buah mangga dan jeruk ditinjau dari aspek botani dan nutrisinya?",
+    jawaban_teks: "Keduanya adalah produk hortikultura berupa buah sejati yang kaya vitamin dan menghasilkan rasa manis atau asam alami",
+    pilihan_teks: [
+      "Keduanya adalah umbi-umbian yang tumbuh di bawah permukaan tanah dan dipanen melalui proses penggalian mekanis",
+      "Keduanya tergolong famili Poaceae yang merupakan sumber karbohidrat kompleks bagi populasi di kawasan tropis",
+      "Keduanya adalah produk hortikultura berupa buah sejati yang kaya vitamin dan menghasilkan rasa manis atau asam alami",
+      "Keduanya adalah tanaman parasit yang tidak memiliki klorofil dan bergantung sepenuhnya pada inang untuk nutrisi",
+      "Keduanya merupakan rempah-rempah keras yang berfungsi sebagai bahan pengawet alami dalam industri kuliner"
+    ]
   },
   {
-    q: "Persamaan sepatu dan sandal adalah ...",
-    pilihan: ["Sama-sama alat memasak","Sama-sama penutup kaki","Sama-sama alat tulis","Sama-sama kendaraan","Sama-sama makanan"],
-    jawaban: 1
+    q: "Apakah persamaan antara guru sekolah menengah dan dosen perguruan tinggi dalam sistem pendidikan nasional?",
+    jawaban_teks: "Keduanya adalah pendidik profesional yang memiliki tanggung jawab mentransfer ilmu pengetahuan dan membentuk kompetensi peserta didik",
+    pilihan_teks: [
+      "Keduanya adalah pendidik profesional yang memiliki tanggung jawab mentransfer ilmu pengetahuan dan membentuk kompetensi peserta didik",
+      "Keduanya diwajibkan secara hukum untuk menerbitkan minimal dua karya ilmiah internasional setiap tahun akademik",
+      "Keduanya bekerja di bawah naungan organisasi internasional UNESCO dan digaji secara langsung oleh lembaga tersebut",
+      "Keduanya memiliki wewenang penuh untuk menentukan kebijakan moneter pendidikan di tingkat nasional",
+      "Keduanya hanya bertugas pada jenjang pendidikan vokasi dan tidak terlibat dalam pendidikan akademik umum"
+    ]
   },
   {
-    q: "Persamaan kapal dan perahu adalah ...",
-    pilihan: ["Sama-sama kendaraan air","Sama-sama kendaraan udara","Sama-sama alat makan","Sama-sama tumbuhan","Sama-sama hewan"],
-    jawaban: 0
+    q: "Apakah persamaan antara meja kerja dan kursi ergonomis dalam konteks desain furnitur modern?",
+    jawaban_teks: "Keduanya adalah perabot interior yang dirancang untuk mendukung kenyamanan, produktivitas, dan estetika ruang kerja atau hunian",
+    pilihan_teks: [
+      "Keduanya adalah komponen struktural bangunan yang terbuat dari baja tulangan bertegangan tinggi",
+      "Keduanya adalah perabot interior yang dirancang untuk mendukung kenyamanan, produktivitas, dan estetika ruang kerja atau hunian",
+      "Keduanya dikategorikan sebagai peralatan laboratorium yang harus memenuhi standar sterilisasi internasional",
+      "Keduanya adalah instalasi seni kontemporer yang nilai utamanya bersifat estetis dan non-fungsional",
+      "Keduanya merupakan instrumen navigasi maritim yang digunakan pada kapal bertonase besar"
+    ]
   },
   {
-    q: "Persamaan matahari dan lampu adalah ...",
-    pilihan: ["Sama-sama sumber cahaya","Sama-sama makanan","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama hewan"],
-    jawaban: 0
+    q: "Manakah persamaan antara sapi dan kambing bila ditinjau dari peran ekonominya dalam sektor pertanian?",
+    jawaban_teks: "Keduanya adalah ternak ruminansia yang dibudidayakan untuk menghasilkan produk hewani seperti susu, daging, dan kulit",
+    pilihan_teks: [
+      "Keduanya adalah predator karnivora yang memangsa hewan berukuran lebih kecil di ekosistem savana Afrika",
+      "Keduanya adalah ternak ruminansia yang dibudidayakan untuk menghasilkan produk hewani seperti susu, daging, dan kulit",
+      "Keduanya adalah primata yang hidup berkoloni dan memiliki sistem komunikasi verbal yang sangat kompleks",
+      "Keduanya adalah hewan laut dalam yang hidup di zona abisal pada kedalaman lebih dari 4.000 meter",
+      "Keduanya adalah arthropoda dengan eksoskeleton kitin yang mengalami metamorfosis sempurna dalam siklus hidupnya"
+    ]
   },
   {
-    q: "Persamaan kopi dan teh adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama minuman","Sama-sama kendaraan","Sama-sama hewan","Sama-sama alat olahraga"],
-    jawaban: 1
+    q: "Apakah persamaan antara sepatu formal dan sandal ditinjau dari fungsi pokoknya?",
+    jawaban_teks: "Keduanya berfungsi sebagai alas kaki yang melindungi telapak kaki dari permukaan tanah sekaligus sebagai kelengkapan busana",
+    pilihan_teks: [
+      "Keduanya berfungsi sebagai alas kaki yang melindungi telapak kaki dari permukaan tanah sekaligus sebagai kelengkapan busana",
+      "Keduanya adalah perangkat ortopedi yang hanya direkomendasikan bagi penderita kelainan postur tulang belakang",
+      "Keduanya dikategorikan sebagai alat pelindung diri berat dalam industri konstruksi dan pertambangan skala besar",
+      "Keduanya merupakan instrumen pengukur tekanan plantar yang digunakan dalam biomekanikal klinis rehabilitasi",
+      "Keduanya adalah aksesori perhiasan berbahan logam mulia yang diproduksi secara terbatas untuk kalangan tertentu"
+    ]
   },
   {
-    q: "Persamaan baju dan celana adalah ...",
-    pilihan: ["Sama-sama makanan","Sama-sama pakaian","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama tumbuhan"],
-    jawaban: 1
+    q: "Apakah persamaan antara kapal laut bertonase besar dan perahu tradisional dalam konteks transportasi?",
+    jawaban_teks: "Keduanya adalah moda transportasi berbasis air yang digunakan untuk mengangkut penumpang atau barang melewati jalur perairan",
+    pilihan_teks: [
+      "Keduanya ditenagai secara eksklusif oleh energi nuklir yang dihasilkan dari reaktor fisi yang terpasang di lambungnya",
+      "Keduanya adalah moda transportasi berbasis air yang digunakan untuk mengangkut penumpang atau barang melewati jalur perairan",
+      "Keduanya wajib beroperasi hanya di atas rel baja yang dipasang di dasar laut dengan standar teknis tertentu",
+      "Keduanya adalah wahana antariksa yang dirancang untuk misi eksplorasi permukaan asteroid dan planet kecil",
+      "Keduanya dikategorikan sebagai kendaraan amfibi yang mampu beroperasi di darat maupun di bawah permukaan air"
+    ]
   },
   {
-    q: "Persamaan komputer dan laptop adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama makanan","Sama-sama hewan","Sama-sama tumbuhan","Sama-sama alat olahraga"],
-    jawaban: 0
+    q: "Apakah persamaan antara matahari dan lampu pijar ditinjau dari prinsip fisika yang mendasarinya?",
+    jawaban_teks: "Keduanya berfungsi sebagai sumber radiasi elektromagnetik dalam spektrum cahaya tampak yang menerangi lingkungan sekitarnya",
+    pilihan_teks: [
+      "Keduanya berfungsi sebagai sumber radiasi elektromagnetik dalam spektrum cahaya tampak yang menerangi lingkungan sekitarnya",
+      "Keduanya adalah benda langit bermassa besar yang memiliki gravitasi cukup kuat untuk memengaruhi orbit planet",
+      "Keduanya menghasilkan energi semata-mata melalui proses fisi nuklir yang berlangsung di inti yang sangat padat",
+      "Keduanya adalah instalasi optik yang menggunakan prisma dan cermin cekung untuk memanipulasi arah cahaya",
+      "Keduanya adalah organisme bioluminesens yang menghasilkan cahaya melalui reaksi kimia luciferin-luciferase"
+    ]
   },
   {
-    q: "Persamaan sendok dan garpu adalah ...",
-    pilihan: ["Sama-sama alat makan","Sama-sama kendaraan","Sama-sama hewan","Sama-sama alat tulis","Sama-sama alat musik"],
-    jawaban: 0
+    q: "Apakah persamaan antara kopi dan teh bila ditinjau dari aspek konsumsi dan manfaat fisiologisnya?",
+    jawaban_teks: "Keduanya adalah minuman yang mengandung senyawa bioaktif stimulan dan dikonsumsi luas oleh masyarakat berbagai budaya di seluruh dunia",
+    pilihan_teks: [
+      "Keduanya adalah minuman beralkohol tinggi yang konsumsinya dilarang bagi individu di bawah usia 21 tahun",
+      "Keduanya adalah suplemen multivitamin dalam bentuk cair yang hanya tersedia melalui resep dokter spesialis gizi",
+      "Keduanya adalah minuman yang mengandung senyawa bioaktif stimulan dan dikonsumsi luas oleh masyarakat berbagai budaya di seluruh dunia",
+      "Keduanya adalah larutan elektrolit medis yang digunakan dalam prosedur rehidrasi intravena di rumah sakit",
+      "Keduanya adalah zat aditif industri yang digunakan sebagai pelarut organik dalam proses produksi polimer sintetis"
+    ]
   },
   {
-    q: "Persamaan hujan dan angin adalah ...",
-    pilihan: ["Sama-sama fenomena alam","Sama-sama kendaraan","Sama-sama makanan","Sama-sama tumbuhan","Sama-sama alat tulis"],
-    jawaban: 0
+    q: "Manakah persamaan antara baju kemeja dan celana panjang ditinjau dari fungsi dan kategorinya?",
+    jawaban_teks: "Keduanya merupakan busana atau pakaian yang berfungsi menutup tubuh sekaligus mencerminkan identitas sosial dan budaya pemakainya",
+    pilihan_teks: [
+      "Keduanya adalah pelindung tubuh berbahan komposit aramid yang dirancang untuk menahan fragmentasi proyektil balistik",
+      "Keduanya merupakan busana atau pakaian yang berfungsi menutup tubuh sekaligus mencerminkan identitas sosial dan budaya pemakainya",
+      "Keduanya dikategorikan sebagai perangkat medis yang digunakan dalam prosedur kompresi limfatik dan vaskular",
+      "Keduanya adalah tekstil teknikal berteknologi nano yang digunakan dalam eksplorasi luar angkasa bersuhu ekstrem",
+      "Keduanya adalah jenis kemasan industri berbahan polimer yang digunakan untuk penyimpanan bahan kimia berbahaya"
+    ]
   },
   {
-    q: "Persamaan gitar dan piano adalah ...",
-    pilihan: ["Sama-sama kendaraan","Sama-sama alat musik","Sama-sama makanan","Sama-sama hewan","Sama-sama tumbuhan"],
-    jawaban: 1
+    q: "Apakah persamaan antara komputer desktop dan laptop dalam ekosistem teknologi informasi modern?",
+    jawaban_teks: "Keduanya adalah perangkat komputasi elektronik yang memproses data digital dan menjalankan perangkat lunak untuk mendukung produktivitas pengguna",
+    pilihan_teks: [
+      "Keduanya secara teknis hanya dapat beroperasi bila terhubung secara fisik ke jaringan fiber optik berkecepatan tinggi",
+      "Keduanya adalah perangkat komputasi elektronik yang memproses data digital dan menjalankan perangkat lunak untuk mendukung produktivitas pengguna",
+      "Keduanya dikategorikan sebagai perangkat komunikasi analog yang mengandalkan sinyal frekuensi radio gelombang pendek",
+      "Keduanya adalah sistem kendali industri yang digunakan secara eksklusif dalam fasilitas produksi otomotif terotomasi",
+      "Keduanya adalah instrumen diagnostik medis yang digunakan untuk memindai aktivitas listrik otak dan jantung"
+    ]
   },
   {
-    q: "Persamaan polisi dan tentara adalah ...",
-    pilihan: ["Sama-sama petani","Sama-sama aparat keamanan","Sama-sama pedagang","Sama-sama nelayan","Sama-sama sopir"],
-    jawaban: 1
+    q: "Apakah persamaan antara sendok makan dan garpu ditinjau dari konteks penggunaannya sehari-hari?",
+    jawaban_teks: "Keduanya adalah peralatan makan yang digunakan sebagai alat bantu untuk mengambil, menyendok, atau menusuk makanan saat santap",
+    pilihan_teks: [
+      "Keduanya adalah instrumen bedah presisi yang digunakan dalam prosedur laparoskopi minimal invasif",
+      "Keduanya adalah peralatan makan yang digunakan sebagai alat bantu untuk mengambil, menyendok, atau menusuk makanan saat santap",
+      "Keduanya adalah komponen mekanik transmisi daya pada sistem penggerak kendaraan berat bertenaga diesel",
+      "Keduanya adalah alat pengukur kadar pH larutan dalam analisis kimia kuantitatif di laboratorium",
+      "Keduanya adalah instrumen musik perkusif yang menghasilkan bunyi ritmis melalui getaran material metalik"
+    ]
   },
   {
-    q: "Persamaan apel dan semangka adalah ...",
-    pilihan: ["Sama-sama buah","Sama-sama alat tulis","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama hewan"],
-    jawaban: 0
+    q: "Apakah persamaan antara hujan deras dan angin kencang bila ditinjau dari sudut pandang ilmu fisika atmosfer?",
+    jawaban_teks: "Keduanya merupakan fenomena meteorologis yang dihasilkan oleh perbedaan tekanan dan energi termal di lapisan atmosfer bumi",
+    pilihan_teks: [
+      "Keduanya merupakan fenomena meteorologis yang dihasilkan oleh perbedaan tekanan dan energi termal di lapisan atmosfer bumi",
+      "Keduanya adalah produk reaksi kimia eksotermik yang dihasilkan oleh aktivitas industri petrokimia berskala besar",
+      "Keduanya terbentuk secara eksklusif akibat aktivitas geotermal di zona subduksi lempeng tektonik di kedalaman",
+      "Keduanya adalah gelombang mekanik transversal yang merambat melalui medium padat dengan kecepatan supersonik",
+      "Keduanya merupakan emisi partikel bermuatan dari inti galaksi yang menembus medan magnetik planet berbatu"
+    ]
   },
   {
-    q: "Persamaan kulkas dan kipas angin adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama kendaraan","Sama-sama makanan","Sama-sama alat olahraga","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Apakah persamaan antara gitar akustik dan piano grand ditinjau dari klasifikasi organologi musik?",
+    jawaban_teks: "Keduanya adalah instrumen musik yang menghasilkan nada melalui getaran fisik dan digunakan untuk mengekspresikan komposisi musikal",
+    pilihan_teks: [
+      "Keduanya secara teknis dikategorikan sebagai instrumen perkusi berlaras yang hanya dapat dimainkan oleh musisi terlatih",
+      "Keduanya adalah piranti lunak penghasil suara sintesis yang beroperasi dalam lingkungan komputasi digital real-time",
+      "Keduanya hanya dapat menghasilkan nada apabila dioperasikan bersama amplifier tabung vakum bertegangan tinggi",
+      "Keduanya adalah instrumen musik yang menghasilkan nada melalui getaran fisik dan digunakan untuk mengekspresikan komposisi musikal",
+      "Keduanya adalah komponen akustik arsitektural yang dipasang di studio rekaman untuk mengontrol reverberasi ruangan"
+    ]
   },
   {
-    q: "Persamaan padi dan jagung adalah ...",
-    pilihan: ["Sama-sama hewan","Sama-sama tanaman","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama alat makan"],
-    jawaban: 1
+    q: "Apakah persamaan antara polisi dan tentara dalam sistem pertahanan dan keamanan negara?",
+    jawaban_teks: "Keduanya adalah aparat negara yang bertugas menegakkan hukum, menjaga ketertiban, dan melindungi keselamatan warga serta kedaulatan bangsa",
+    pilihan_teks: [
+      "Keduanya secara konstitusional memiliki kewenangan tunggal untuk menetapkan kebijakan fiskal dan moneter negara",
+      "Keduanya adalah diplomat profesional yang bertugas merepresentasikan kepentingan nasional di forum internasional",
+      "Keduanya adalah aparat negara yang bertugas menegakkan hukum, menjaga ketertiban, dan melindungi keselamatan warga serta kedaulatan bangsa",
+      "Keduanya hanya beroperasi di zona konflik bersenjata dan tidak memiliki peran dalam kondisi damai",
+      "Keduanya adalah ilmuwan forensik yang menganalisis bukti fisik untuk keperluan sistem peradilan pidana"
+    ]
   },
   {
-    q: "Persamaan kereta api dan bus adalah ...",
-    pilihan: ["Sama-sama kendaraan umum","Sama-sama hewan","Sama-sama alat dapur","Sama-sama alat tulis","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Apakah persamaan antara buah apel dan semangka ditinjau dari aspek biologi dan manfaatnya?",
+    jawaban_teks: "Keduanya adalah buah-buahan yang merupakan organ reproduktif tanaman dikotil yang kaya nutrisi dan air untuk konsumsi manusia",
+    pilihan_teks: [
+      "Keduanya adalah buah-buahan yang merupakan organ reproduktif tanaman dikotil yang kaya nutrisi dan air untuk konsumsi manusia",
+      "Keduanya adalah biji-bijian serealia yang diproses menjadi tepung sebagai bahan baku industri roti dan pasta",
+      "Keduanya adalah umbi akar yang mengakumulasi cadangan pati dan dipanen secara mekanis pada musim kering",
+      "Keduanya adalah jamur makroskopik yang tumbuh secara saprofitik pada substrat kayu lapuk di hutan hujan",
+      "Keduanya adalah ganggang makroalga yang dibudidayakan di laut untuk bahan baku industri farmasi dan kosmetik"
+    ]
   },
   {
-    q: "Persamaan dokter gigi dan bidan adalah ...",
-    pilihan: ["Sama-sama tenaga kesehatan","Sama-sama sopir","Sama-sama petani","Sama-sama pedagang","Sama-sama nelayan"],
-    jawaban: 0
+    q: "Apakah persamaan antara kulkas dan kipas angin ditinjau dari kategori teknisnya dalam rumah tangga?",
+    jawaban_teks: "Keduanya adalah peralatan rumah tangga berbasis elektrikal yang mengonsumsi energi listrik untuk menjalankan fungsi masing-masing",
+    pilihan_teks: [
+      "Keduanya beroperasi menggunakan prinsip fermentasi anaerobik sebagai sumber energi utama dalam sistem kerjanya",
+      "Keduanya adalah peralatan rumah tangga berbasis elektrikal yang mengonsumsi energi listrik untuk menjalankan fungsi masing-masing",
+      "Keduanya dikategorikan sebagai perangkat pneumatik bertekanan tinggi yang digunakan dalam sistem industri berat",
+      "Keduanya adalah komponen sistem HVAC komersial yang hanya ditemukan di gedung bertingkat dengan kapasitas 50 lantai ke atas",
+      "Keduanya adalah mesin termodinamika reversibel yang beroperasi berdasarkan siklus Carnot ideal pada efisiensi 100%"
+    ]
   },
   {
-    q: "Persamaan topi dan helm adalah ...",
-    pilihan: ["Sama-sama penutup kepala","Sama-sama alat musik","Sama-sama kendaraan","Sama-sama makanan","Sama-sama hewan"],
-    jawaban: 0
+    q: "Apakah persamaan antara tanaman padi dan tanaman jagung ditinjau dari peranan ekonomi dan biologinya?",
+    jawaban_teks: "Keduanya adalah tanaman pangan serealia yang merupakan sumber karbohidrat pokok dan komoditas pertanian vital bagi ketahanan pangan",
+    pilihan_teks: [
+      "Keduanya adalah tanaman xerofit yang beradaptasi untuk bertahan dalam kondisi kekeringan ekstrem di gurun pasir",
+      "Keduanya adalah tanaman parasit yang mengambil nutrisi dari inang arboreal melalui sistem haustorium khusus",
+      "Keduanya adalah tanaman karnivora yang menggunakan perangkap enzim untuk menangkap dan mencerna serangga",
+      "Keduanya adalah tanaman pangan serealia yang merupakan sumber karbohidrat pokok dan komoditas pertanian vital bagi ketahanan pangan",
+      "Keduanya adalah tanaman epifit tropis yang tidak memiliki akar dan hidup bergantung pada embun udara lembap"
+    ]
   },
   {
-    q: "Persamaan sungai dan danau adalah ...",
-    pilihan: ["Sama-sama alat transportasi","Sama-sama perairan","Sama-sama tumbuhan","Sama-sama alat makan","Sama-sama kendaraan"],
-    jawaban: 1
+    q: "Apakah persamaan antara kereta api dan bus kota ditinjau dari fungsi sosial dan sistemnya?",
+    jawaban_teks: "Keduanya adalah moda transportasi publik massal yang dioperasikan untuk melayani mobilitas warga dalam skala perkotaan atau antarkota",
+    pilihan_teks: [
+      "Keduanya adalah moda transportasi publik massal yang dioperasikan untuk melayani mobilitas warga dalam skala perkotaan atau antarkota",
+      "Keduanya adalah wahana rekreasi tematik yang beroperasi di kawasan hiburan dan taman wisata keluarga",
+      "Keduanya secara teknis tergolong kendaraan amfibi yang dirancang untuk beroperasi di jalur darat maupun perairan",
+      "Keduanya ditenagai semata-mata oleh reaktor hidrogen berbahan bakar sel yang tidak menghasilkan emisi apapun",
+      "Keduanya adalah peralatan berat pertambangan yang digunakan untuk mengangkut mineral bijih dari lokasi galian"
+    ]
   },
   {
-    q: "Persamaan singa dan harimau adalah ...",
-    pilihan: ["Sama-sama hewan buas","Sama-sama alat musik","Sama-sama kendaraan","Sama-sama tumbuhan","Sama-sama makanan"],
-    jawaban: 0
+    q: "Apakah persamaan antara dokter gigi dan bidan dalam sistem layanan kesehatan primer?",
+    jawaban_teks: "Keduanya adalah profesional kesehatan berlisensi yang memberikan pelayanan medis spesifik kepada pasien berdasarkan kompetensi klinisnya",
+    pilihan_teks: [
+      "Keduanya adalah teknisi farmasi yang bertanggung jawab meracik dan mendistribusikan obat-obatan dalam apotek rumah sakit",
+      "Keduanya adalah profesional kesehatan berlisensi yang memberikan pelayanan medis spesifik kepada pasien berdasarkan kompetensi klinisnya",
+      "Keduanya memiliki wewenang untuk melakukan transplantasi organ mayor tanpa kolaborasi dengan tim medis lain",
+      "Keduanya adalah peneliti biomedis yang bekerja di laboratorium riset dan tidak memiliki kontak langsung dengan pasien",
+      "Keduanya adalah administrator kebijakan publik yang merumuskan regulasi dan standar nasional sistem kesehatan"
+    ]
   },
   {
-    q: "Persamaan roti dan nasi adalah ...",
-    pilihan: ["Sama-sama alat tulis","Sama-sama makanan","Sama-sama kendaraan","Sama-sama alat olahraga","Sama-sama tumbuhan"],
-    jawaban: 1
+    q: "Apakah persamaan antara topi dan helm pelindung ditinjau dari fungsi penggunaannya?",
+    jawaban_teks: "Keduanya adalah aksesori yang dikenakan di bagian kepala, masing-masing berfungsi sebagai pelindung atau penanda identitas pemakainya",
+    pilihan_teks: [
+      "Keduanya adalah instrumen optik yang dikenakan di kepala untuk meningkatkan ketajaman penglihatan jarak jauh",
+      "Keduanya adalah perangkat elektronik wearable yang terpasang di kepala untuk merekam gelombang otak pengguna",
+      "Keduanya adalah aksesori yang dikenakan di bagian kepala, masing-masing berfungsi sebagai pelindung atau penanda identitas pemakainya",
+      "Keduanya adalah alat pelindung radiasi ultraviolet yang digunakan secara khusus dalam prosedur radioterapi medis",
+      "Keduanya adalah komponen pakaian tempur anti-peluru yang wajib digunakan dalam operasi militer berklasifikasi tinggi"
+    ]
   },
   {
-    q: "Persamaan jam dan kalender adalah ...",
-    pilihan: ["Sama-sama alat penunjuk waktu","Sama-sama kendaraan","Sama-sama makanan","Sama-sama alat musik","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Apakah persamaan antara sungai dan danau ditinjau dari perspektif hidrologi dan ekologi?",
+    jawaban_teks: "Keduanya adalah badan air tawar alami di daratan yang berfungsi sebagai sumber daya air, habitat biota, dan penopang ekosistem sekitarnya",
+    pilihan_teks: [
+      "Keduanya adalah formasi geologi bawah tanah yang terbentuk akibat erosi batuan gamping oleh air asam selama ribuan tahun",
+      "Keduanya adalah kawah vulkanik yang terisi air hujan dan memiliki kandungan belerang tinggi akibat aktivitas geotermal",
+      "Keduanya adalah badan air tawar alami di daratan yang berfungsi sebagai sumber daya air, habitat biota, dan penopang ekosistem sekitarnya",
+      "Keduanya adalah zona perairan laut dalam yang terbentuk di antara dua lempeng tektonik yang saling menjauh",
+      "Keduanya adalah konstruksi hidrolik buatan manusia yang dibangun untuk keperluan irigasi dan pembangkit listrik"
+    ]
   },
   {
-    q: "Persamaan laut dan pantai adalah ...",
-    pilihan: ["Sama-sama tempat wisata alam","Sama-sama kendaraan","Sama-sama alat elektronik","Sama-sama makanan","Sama-sama alat tulis"],
-    jawaban: 0
+    q: "Apakah persamaan antara singa Afrika dan harimau Sumatera ditinjau dari ekologi dan perannya?",
+    jawaban_teks: "Keduanya adalah predator puncak karnivora dalam ekosistem masing-masing yang menjaga keseimbangan populasi mangsa secara alami",
+    pilihan_teks: [
+      "Keduanya adalah herbivora besar yang hidup dalam kawanan terstruktur di savana Afrika dan hutan hujan tropis",
+      "Keduanya adalah predator puncak karnivora dalam ekosistem masing-masing yang menjaga keseimbangan populasi mangsa secara alami",
+      "Keduanya adalah omnivora oportunistik yang memiliki kemampuan beradaptasi di hampir semua bioma di bumi",
+      "Keduanya adalah spesies yang telah mengalami domestikasi penuh dan dibiakkan secara selektif oleh manusia modern",
+      "Keduanya adalah reptilia bersisik yang bertelur dan tidak memiliki kemampuan regulasi suhu tubuh secara internal"
+    ]
   },
   {
-    q: "Persamaan helm dan sabuk pengaman adalah ...",
-    pilihan: ["Sama-sama alat keselamatan","Sama-sama alat makan","Sama-sama kendaraan","Sama-sama tumbuhan","Sama-sama alat musik"],
-    jawaban: 0
+    q: "Apakah persamaan antara roti gandum dan nasi putih ditinjau dari fungsi gizi dan peranannya dalam pola makan?",
+    jawaban_teks: "Keduanya adalah bahan makanan pokok berbasis karbohidrat yang menjadi sumber energi utama bagi masyarakat di berbagai wilayah dunia",
+    pilihan_teks: [
+      "Keduanya adalah sumber protein lengkap yang mengandung semua asam amino esensial dalam proporsi ideal untuk tubuh manusia",
+      "Keduanya adalah bahan makanan pokok berbasis karbohidrat yang menjadi sumber energi utama bagi masyarakat di berbagai wilayah dunia",
+      "Keduanya adalah suplemen mineral mikro yang dikonsumsi dalam dosis kecil untuk mencegah defisiensi nutrisi tertentu",
+      "Keduanya adalah produk fermentasi anaerob yang mengandung kadar probiotik tinggi untuk kesehatan mikrobioma usus",
+      "Keduanya adalah bahan baku industri biokimia yang digunakan dalam produksi bioetanol generasi kedua secara komersial"
+    ]
   },
   {
-    q: "Persamaan mata dan telinga adalah ...",
-    pilihan: ["Sama-sama alat transportasi","Sama-sama indera tubuh","Sama-sama makanan","Sama-sama tumbuhan","Sama-sama alat tulis"],
-    jawaban: 1
+    q: "Apakah persamaan antara jam tangan dan kalender meja dalam konteks fungsi praktisnya?",
+    jawaban_teks: "Keduanya adalah instrumen penunjuk waktu yang membantu manusia mengorganisasi aktivitas dan manajemen waktu sehari-hari",
+    pilihan_teks: [
+      "Keduanya adalah perangkat navigasi GPS yang digunakan untuk menentukan koordinat geografis secara presisi di lapangan",
+      "Keduanya adalah sistem informasi manajemen yang digunakan untuk merencanakan anggaran proyek multi-tahun",
+      "Keduanya adalah instrumen penunjuk waktu yang membantu manusia mengorganisasi aktivitas dan manajemen waktu sehari-hari",
+      "Keduanya adalah komponen elektronik pengukur frekuensi osilasi kristal kuarsa untuk kalibrasi sinyal radio",
+      "Keduanya adalah perangkat telemetri yang merekam dan mentransmisikan data biologis ke pusat pemantauan jarak jauh"
+    ]
   },
   {
-    q: "Persamaan bola dan raket adalah ...",
-    pilihan: ["Sama-sama perlengkapan olahraga","Sama-sama kendaraan","Sama-sama makanan","Sama-sama alat dapur","Sama-sama hewan"],
-    jawaban: 0
+    q: "Apakah persamaan antara kawasan laut dan kawasan pantai bila ditinjau dari perspektif pariwisata dan ekologi?",
+    jawaban_teks: "Keduanya adalah kawasan alam berbasis pesisir yang memiliki nilai ekologis tinggi sekaligus menjadi destinasi wisata alam yang populer",
+    pilihan_teks: [
+      "Keduanya adalah kawasan alam berbasis pesisir yang memiliki nilai ekologis tinggi sekaligus menjadi destinasi wisata alam yang populer",
+      "Keduanya adalah ekosistem pegunungan tinggi yang terbentuk akibat aktivitas tektonik kolisional antara dua lempeng benua",
+      "Keduanya adalah zona industri strategis yang secara eksklusif digunakan untuk aktivitas eksplorasi minyak bumi lepas pantai",
+      "Keduanya adalah formasi geologi karst yang terbentuk oleh pelarutan batuan karbonat dalam skala geologi jutaan tahun",
+      "Keduanya adalah kawasan hutan boreal yang berfungsi sebagai penyerap karbon utama dan reservoir biodiversitas terestrial"
+    ]
   },
   {
-    q: "Persamaan hujan dan salju adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama bentuk cuaca","Sama-sama kendaraan","Sama-sama makanan","Sama-sama alat tulis"],
-    jawaban: 1
+    q: "Apakah persamaan antara helm sepeda motor dan sabuk pengaman kendaraan bila dikaji dari aspek keselamatan?",
+    jawaban_teks: "Keduanya adalah perlengkapan keselamatan aktif yang wajib digunakan untuk meminimalkan risiko cedera fatal saat berkendara",
+    pilihan_teks: [
+      "Keduanya adalah dekorasi estetis pada kendaraan yang berfungsi semata-mata sebagai elemen identitas visual merek",
+      "Keduanya adalah sistem pengereman elektronik canggih yang diintegrasikan langsung ke dalam platform sasis kendaraan",
+      "Keduanya adalah sensor telematika yang mengumpulkan data perilaku pengemudi untuk keperluan asuransi kendaraan",
+      "Keduanya adalah perlengkapan keselamatan aktif yang wajib digunakan untuk meminimalkan risiko cedera fatal saat berkendara",
+      "Keduanya adalah komponen aerodinamis yang dirancang untuk meningkatkan stabilitas downforce pada kecepatan supersonik"
+    ]
   },
   {
-    q: "Persamaan kamera dan handphone adalah ...",
-    pilihan: ["Sama-sama alat elektronik","Sama-sama hewan","Sama-sama tumbuhan","Sama-sama kendaraan","Sama-sama makanan"],
-    jawaban: 0
+    q: "Apakah persamaan antara indera penglihatan (mata) dan indera pendengaran (telinga) dalam biologi manusia?",
+    jawaban_teks: "Keduanya adalah organ sensoris tubuh manusia yang berperan dalam menerima rangsang dari lingkungan dan mengirimkannya ke otak",
+    pilihan_teks: [
+      "Keduanya adalah kelenjar endokrin yang memproduksi dan menyekresikan hormon peptida ke dalam aliran darah",
+      "Keduanya adalah organ sensoris tubuh manusia yang berperan dalam menerima rangsang dari lingkungan dan mengirimkannya ke otak",
+      "Keduanya adalah struktur imunologi yang memproduksi antibodi monoklonal sebagai respons terhadap infeksi patogen",
+      "Keduanya adalah organ ekskresi yang bertanggung jawab menyaring racun metabolik dari sistem peredaran darah",
+      "Keduanya adalah komponen sistem motorik yang menghasilkan gerakan volunter melalui kontraksi serat otot lurik"
+    ]
   },
   {
-    q: "Persamaan gunting dan pisau adalah ...",
-    pilihan: ["Sama-sama alat potong","Sama-sama kendaraan","Sama-sama alat musik","Sama-sama hewan","Sama-sama makanan"],
-    jawaban: 0
+    q: "Apakah persamaan antara bola sepak dan raket bulu tangkis ditinjau dari konteks penggunaannya?",
+    jawaban_teks: "Keduanya merupakan perlengkapan olahraga yang digunakan sebagai alat utama dalam aktivitas fisik dan kompetisi atletik",
+    pilihan_teks: [
+      "Keduanya merupakan perlengkapan olahraga yang digunakan sebagai alat utama dalam aktivitas fisik dan kompetisi atletik",
+      "Keduanya adalah instrumen diagnostik ortopedi yang digunakan untuk mengukur kekuatan dan fleksibilitas sendi",
+      "Keduanya adalah komponen mesin produksi industri tekstil yang digunakan dalam proses penenunan serat sintetis",
+      "Keduanya adalah perangkat komunikasi taktis yang digunakan oleh tim militer dalam operasi lapangan terkoordinasi",
+      "Keduanya adalah alat pengukur cuaca portabel yang digunakan untuk merekam kelembapan dan tekanan atmosfer"
+    ]
   },
   {
-    q: "Persamaan bunga dan pohon adalah ...",
-    pilihan: ["Sama-sama kendaraan","Sama-sama tumbuhan","Sama-sama alat elektronik","Sama-sama makanan","Sama-sama alat olahraga"],
-    jawaban: 1
+    q: "Apakah persamaan antara hujan rintik dan salju tebal ditinjau dari perspektif ilmu meteorologi modern?",
+    jawaban_teks: "Keduanya adalah variasi presipitasi atmosferik yang terjadi akibat kondensasi uap air di awan dan jatuh ke permukaan bumi",
+    pilihan_teks: [
+      "Keduanya hanya dapat terjadi secara simultan di wilayah yang terletak persis di atas garis ekuator khatulistiwa",
+      "Keduanya adalah variasi presipitasi atmosferik yang terjadi akibat kondensasi uap air di awan dan jatuh ke permukaan bumi",
+      "Keduanya adalah fenomena elektromagnetik yang dipicu oleh badai matahari yang menembus magnetosfer bumi",
+      "Keduanya terbentuk secara eksklusif di troposfer atas pada ketinggian lebih dari 15.000 meter di atas permukaan laut",
+      "Keduanya adalah efek visual optis yang disebabkan oleh pembiasan cahaya melalui partikel debu vulkanik di stratosfer"
+    ]
   },
   {
-    q: "Persamaan bola lampu dan lilin adalah ...",
-    pilihan: ["Sama-sama sumber cahaya","Sama-sama makanan","Sama-sama kendaraan","Sama-sama alat tulis","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Apakah persamaan antara kamera digital dan telepon pintar (smartphone) ditinjau dari karakteristik dasarnya?",
+    jawaban_teks: "Keduanya adalah perangkat elektronik digital yang memanfaatkan sensor dan prosesor untuk mengolah informasi secara komputasional",
+    pilihan_teks: [
+      "Keduanya adalah perangkat elektronik digital yang memanfaatkan sensor dan prosesor untuk mengolah informasi secara komputasional",
+      "Keduanya adalah instrumen optik analog yang bergantung pada film seluloid untuk merekam gambar secara kimiawi",
+      "Keduanya adalah robot industri otonom yang diprogram untuk melakukan inspeksi kualitas di lini produksi pabrik",
+      "Keduanya adalah terminal komputer mainframe yang terhubung ke server pusat melalui jaringan leased-line privat",
+      "Keduanya adalah sistem radar aktif yang memancarkan gelombang mikro untuk mendeteksi dan melacak objek terbang"
+    ]
   },
   {
-    q: "Persamaan pesepeda dan pelari adalah ...",
-    pilihan: ["Sama-sama atlet olahraga","Sama-sama petani","Sama-sama nelayan","Sama-sama pedagang","Sama-sama guru"],
-    jawaban: 0
+    q: "Apakah persamaan antara gunting dan pisau dapur ditinjau dari prinsip kerja dan fungsi utamanya?",
+    jawaban_teks: "Keduanya adalah alat potong berbahan logam yang memanfaatkan prinsip tekanan mekanis pada tepi tajam untuk memisahkan material",
+    pilihan_teks: [
+      "Keduanya adalah alat potong berbahan logam yang memanfaatkan prinsip tekanan mekanis pada tepi tajam untuk memisahkan material",
+      "Keduanya adalah alat pertanian yang digunakan secara khusus untuk proses pemanenan tanaman pangan berskala industri",
+      "Keduanya adalah instrumen bedah laser yang menggunakan foton berenergi tinggi untuk memotong jaringan lunak tubuh",
+      "Keduanya adalah komponen mesin milling CNC yang berputar dengan kecepatan 40.000 RPM untuk membentuk logam keras",
+      "Keduanya adalah sensor tekanan piezoelektrik yang digunakan dalam sistem kendali mesin turbin gas industri"
+    ]
   },
   {
-    q: "Persamaan gunung dan bukit adalah ...",
-    pilihan: ["Sama-sama bentuk permukaan bumi","Sama-sama kendaraan","Sama-sama alat makan","Sama-sama alat musik","Sama-sama hewan"],
-    jawaban: 0
+    q: "Apakah persamaan antara bunga mawar dan pohon jati ditinjau dari klasifikasi ilmiah dan ekologinya?",
+    jawaban_teks: "Keduanya tergolong dalam kingdom Plantae sebagai organisme autotrof yang tumbuh, berkembang biak, dan berperan dalam siklus oksigen",
+    pilihan_teks: [
+      "Keduanya adalah organisme heterotrof yang memperoleh nutrisi dengan cara menyerap senyawa organik dari inang hidup",
+      "Keduanya tergolong dalam kingdom Plantae sebagai organisme autotrof yang tumbuh, berkembang biak, dan berperan dalam siklus oksigen",
+      "Keduanya adalah fungi makroskopik yang membentuk hubungan mikoriza mutualistik dengan akar tanaman hutan tropis",
+      "Keduanya adalah alga merah bersel banyak yang membentuk terumbu karang di perairan dangkal tropis yang jernih",
+      "Keduanya adalah protista uniseluler yang bergerak menggunakan flagela dan bereproduksi secara biner di lingkungan lembap"
+    ]
   },
   {
-    q: "Persamaan cat dan kuas adalah ...",
-    pilihan: ["Sama-sama perlengkapan melukis","Sama-sama kendaraan","Sama-sama makanan","Sama-sama tumbuhan","Sama-sama alat olahraga"],
-    jawaban: 0
+    q: "Apakah persamaan antara bola lampu LED dan lilin malam ditinjau dari fungsi esensialnya dalam kehidupan?",
+    jawaban_teks: "Keduanya berfungsi sebagai sumber penerangan yang menghasilkan cahaya untuk menerangi ruang gelap agar aktivitas manusia dapat berlangsung",
+    pilihan_teks: [
+      "Keduanya adalah reaktor fotokimia yang menguraikan polutan organik di udara menggunakan energi ultraviolet intensitas tinggi",
+      "Keduanya adalah komponen sistem optik teleskop yang memfokuskan cahaya bintang untuk keperluan observasi astronomi",
+      "Keduanya berfungsi sebagai sumber penerangan yang menghasilkan cahaya untuk menerangi ruang gelap agar aktivitas manusia dapat berlangsung",
+      "Keduanya adalah katalis heterogen yang memfasilitasi reaksi oksidasi hidrokarbon dalam sel bahan bakar hidrogen",
+      "Keduanya adalah perangkat pemanas inframerah yang digunakan dalam terapi fisioterapi muskuloskeletal dan rehabilitasi"
+    ]
   },
   {
-    q: "Persamaan bandara dan terminal adalah ...",
-    pilihan: ["Sama-sama tempat transportasi","Sama-sama alat elektronik","Sama-sama makanan","Sama-sama tumbuhan","Sama-sama alat musik"],
-    jawaban: 0
+    q: "Apakah persamaan antara pesepeda profesional dan pelari maraton ditinjau dari aspek profesi dan aktivitasnya?",
+    jawaban_teks: "Keduanya adalah atlet yang menjalani latihan fisik intensif dan berkompetisi secara profesional dalam cabang olahraga ketahanan tubuh",
+    pilihan_teks: [
+      "Keduanya adalah atlet yang menjalani latihan fisik intensif dan berkompetisi secara profesional dalam cabang olahraga ketahanan tubuh",
+      "Keduanya adalah teknisi mekanik yang mengkhususkan diri dalam perawatan dan perbaikan kendaraan bermotor roda dua",
+      "Keduanya adalah analis biomekanik yang menggunakan sensor gerak untuk mengevaluasi efisiensi pola gerak manusia",
+      "Keduanya adalah fisioterapis yang menggunakan latihan aerobik terapeutik untuk merehabilitasi pasien pascaoperasi",
+      "Keduanya adalah instruktur militer yang melatih pasukan khusus dalam teknik mobilitas taktis di medan perang"
+    ]
   },
   {
-    q: "Persamaan meteor dan komet adalah ...",
-    pilihan: ["Sama-sama benda langit","Sama-sama kendaraan","Sama-sama makanan","Sama-sama alat tulis","Sama-sama tumbuhan"],
-    jawaban: 0
+    q: "Apakah persamaan antara gunung berapi dan bukit berbatu ditinjau dari perspektif geomorfologi?",
+    jawaban_teks: "Keduanya adalah bentukan relief daratan yang menonjol di atas permukaan tanah sekitarnya akibat proses geologi jangka panjang",
+    pilihan_teks: [
+      "Keduanya adalah cekungan sedimentasi bawah laut yang terbentuk akibat subduksi lempeng oseanik di zona tunjaman",
+      "Keduanya adalah bentukan relief daratan yang menonjol di atas permukaan tanah sekitarnya akibat proses geologi jangka panjang",
+      "Keduanya adalah dataran aluvial datar yang terbentuk dari endapan sedimen fluvial di tepi muara sungai besar",
+      "Keduanya adalah terumbu karang atol yang terbentuk dari akumulasi rangka kalsium karbonat organisme koral selama milenium",
+      "Keduanya adalah formasi es gletser yang terbentuk dari akumulasi dan kompresi lapisan salju selama era glasial"
+    ]
+  },
+  {
+    q: "Apakah persamaan antara cat minyak dan kuas lukis ditinjau dari konteks seni rupa?",
+    jawaban_teks: "Keduanya adalah perlengkapan seni rupa yang digunakan secara berpasangan dalam proses berkarya untuk menghasilkan lukisan",
+    pilihan_teks: [
+      "Keduanya adalah reagen kimia yang digunakan dalam proses analisis spektrometri massa di laboratorium kimia analitik",
+      "Keduanya adalah komponen mesin cetak offset yang digunakan untuk memproduksi publikasi cetak berskala industri besar",
+      "Keduanya adalah perlengkapan seni rupa yang digunakan secara berpasangan dalam proses berkarya untuk menghasilkan lukisan",
+      "Keduanya adalah material konstruksi komposit yang digunakan untuk melapisi permukaan struktur bangunan dari korosi",
+      "Keduanya adalah bahan baku industri polimer yang diproses melalui ekstrusi untuk menghasilkan serat tekstil sintetis"
+    ]
+  },
+  {
+    q: "Apakah persamaan antara bandara internasional dan terminal bus antarkota ditinjau dari fungsi infrastrukturnya?",
+    jawaban_teks: "Keduanya adalah infrastruktur transportasi publik yang berfungsi sebagai simpul perpindahan penumpang antar moda atau rute perjalanan",
+    pilihan_teks: [
+      "Keduanya adalah pusat distribusi logistik beku yang menangani komoditas perishable bersuhu ultra-rendah antarnegara",
+      "Keduanya adalah infrastruktur transportasi publik yang berfungsi sebagai simpul perpindahan penumpang antar moda atau rute perjalanan",
+      "Keduanya adalah fasilitas penelitian geofisika yang dilengkapi instrumen seismologi dan vulkanologi berstandar internasional",
+      "Keduanya adalah kawasan industri terpadu yang mengintegrasikan produksi, pengemasan, dan distribusi komoditas ekspor",
+      "Keduanya adalah instalasi militer strategis yang berfungsi sebagai pangkalan operasi tempur dan logistik pertahanan"
+    ]
+  },
+  {
+    q: "Apakah persamaan antara meteor dan komet ditinjau dari klasifikasi astronomi modern?",
+    jawaban_teks: "Keduanya merupakan objek antariksa berbahan batuan atau es yang bergerak di tata surya dan dapat diamati dari permukaan bumi",
+    pilihan_teks: [
+      "Keduanya adalah bintang neutron bermassa ultra-padat yang memancarkan pulsa gelombang radio dengan periode tetap",
+      "Keduanya merupakan objek antariksa berbahan batuan atau es yang bergerak di tata surya dan dapat diamati dari permukaan bumi",
+      "Keduanya adalah nebula emisi yang terbentuk dari gas hidrogen yang terionisasi oleh radiasi ultraviolet bintang muda",
+      "Keduanya adalah galaksi katai yang mengorbit galaksi induk melalui interaksi gravitasi jangka panjang di gugus galaksi",
+      "Keduanya adalah lubang hitam supermasif yang terletak di pusat galaksi spiral dan mengonsumsi materi di sekitarnya"
+    ]
   }
-  },
+];
 
+// Fungsi acak posisi jawaban
+function acakSoal(soalMentahArr) {
+  return soalMentahArr.map(soal => {
+    // Shuffle pilihan
+    const indices = [0, 1, 2, 3, 4];
+    // Fisher-Yates shuffle
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    const pilihanBaru = indices.map(i => soal.pilihan_teks[i]);
+    const jawabanBaru = pilihanBaru.indexOf(soal.jawaban_teks);
+    return {
+      q: soal.q,
+      pilihan: pilihanBaru,
+      jawaban: jawabanBaru
+    };
+  });
+}
+
+let soalData = [];
 let currentSoal = 0;
-let jawabanUser = new Array(soalData.length).fill(-1); // -1 = belum
+let jawabanUser = [];
 let timerInterval = null;
-let waktuSisa = 7 * 60; // 7 menit
+let waktuSisa = 7 * 60;
 let tesAktif = false;
 
 function mulaiTes() {
+  soalData = acakSoal(soalMentah);
+  jawabanUser = new Array(soalData.length).fill(-1);
   document.getElementById('intro-screen').style.display = 'none';
   document.getElementById('soal-screen').style.display = 'block';
   document.getElementById('timer-bar').style.display = 'flex';
@@ -827,7 +1088,7 @@ function mulaiTes() {
 }
 
 function startTimer() {
-  timerInterval = setInterval(() => {
+  timerInterval = setInterval(function() {
     waktuSisa--;
     updateTimerDisplay();
     if (waktuSisa <= 0) {
@@ -838,25 +1099,27 @@ function startTimer() {
 }
 
 function updateTimerDisplay() {
-  const menit = Math.floor(waktuSisa / 60);
-  const detik = waktuSisa % 60;
-  const display = document.getElementById('timer-display');
-  display.textContent = `${menit}:${detik.toString().padStart(2,'0')}`;
+  var menit = Math.floor(waktuSisa / 60);
+  var detik = waktuSisa % 60;
+  var display = document.getElementById('timer-display');
+  display.textContent = menit + ':' + (detik < 10 ? '0' : '') + detik;
   if (waktuSisa <= 60) display.classList.add('warning');
   else display.classList.remove('warning');
 }
 
 function buildNomorGrid() {
-  const grid = document.getElementById('nomor-grid');
+  var grid = document.getElementById('nomor-grid');
   grid.innerHTML = '';
-  soalData.forEach((_, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'nomor-btn';
-    btn.textContent = i + 1;
-    btn.id = `nbtn-${i}`;
-    btn.onclick = () => tampilSoal(i);
-    grid.appendChild(btn);
-  });
+  for (var i = 0; i < soalData.length; i++) {
+    (function(idx) {
+      var btn = document.createElement('button');
+      btn.className = 'nomor-btn';
+      btn.textContent = idx + 1;
+      btn.id = 'nbtn-' + idx;
+      btn.onclick = function() { tampilSoal(idx); };
+      grid.appendChild(btn);
+    })(i);
+  }
 }
 
 function tampilSoal(idx) {
@@ -864,22 +1127,23 @@ function tampilSoal(idx) {
   document.getElementById('nav-current').textContent = idx + 1;
   document.getElementById('prog-now').textContent = idx + 1;
 
-  // Update progress bar
-  const pct = ((idx + 1) / soalData.length) * 100;
+  var pct = ((idx + 1) / soalData.length) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
 
-  // Update nomor grid active
-  document.querySelectorAll('.nomor-btn').forEach((b, i) => {
-    b.classList.toggle('active', i === idx);
-  });
+  var nomorBtns = document.querySelectorAll('.nomor-btn');
+  for (var k = 0; k < nomorBtns.length; k++) {
+    nomorBtns[k].classList.toggle('active', k === idx);
+  }
 
-  const soal = soalData[idx];
-  const container = document.getElementById('soal-container');
-  const sudahDijawab = jawabanUser[idx] !== -1;
+  var soal = soalData[idx];
+  var container = document.getElementById('soal-container');
+  var sudahDijawab = jawabanUser[idx] !== -1;
 
-  let pilihanHTML = soal.pilihan.map((p, pi) => {
-    const huruf = ['A','B','C','D','E'][pi];
-    let cls = 'pilihan-item';
+  var pilihanHTML = '';
+  var hurufList = ['A','B','C','D','E'];
+  for (var pi = 0; pi < soal.pilihan.length; pi++) {
+    var huruf = hurufList[pi];
+    var cls = 'pilihan-item';
     if (sudahDijawab) {
       cls += ' disabled';
       if (pi === jawabanUser[idx]) {
@@ -888,33 +1152,32 @@ function tampilSoal(idx) {
         cls += ' kunci-benar';
       }
     }
-    return `<li class="${cls}" onclick="pilihJawaban(${idx}, ${pi})">
-      <span class="huruf">${huruf}</span>
-      <span>${p}</span>
-    </li>`;
-  }).join('');
+    pilihanHTML += '<li class="' + cls + '" onclick="pilihJawaban(' + idx + ',' + pi + ')">' +
+      '<span class="huruf">' + huruf + '</span>' +
+      '<span>' + soal.pilihan[pi] + '</span>' +
+      '</li>';
+  }
 
-  container.innerHTML = `
-    <div class="soal-card">
-      <div class="soal-header">
-        <div class="soal-nomor">${idx + 1}</div>
-        <div class="soal-teks">${soal.q}</div>
-      </div>
-      <ul class="pilihan-list">${pilihanHTML}</ul>
-    </div>`;
+  container.innerHTML = '<div class="soal-card">' +
+    '<div class="soal-header">' +
+    '<div class="soal-nomor">' + (idx + 1) + '</div>' +
+    '<div class="soal-teks">' + soal.q + '</div>' +
+    '</div>' +
+    '<ul class="pilihan-list">' + pilihanHTML + '</ul>' +
+    '</div>';
 }
 
 function pilihJawaban(soalIdx, pilihanIdx) {
-  if (jawabanUser[soalIdx] !== -1) return; // sudah dijawab
+  if (jawabanUser[soalIdx] !== -1) return;
   jawabanUser[soalIdx] = pilihanIdx;
 
-  // Update nomor grid
-  const benar = pilihanIdx === soalData[soalIdx].jawaban;
-  const btn = document.getElementById(`nbtn-${soalIdx}`);
-  btn.classList.remove('answered-benar','answered-salah');
-  btn.classList.add(benar ? 'answered-benar' : 'answered-salah');
+  var benar = pilihanIdx === soalData[soalIdx].jawaban;
+  var btn = document.getElementById('nbtn-' + soalIdx);
+  if (btn) {
+    btn.classList.remove('answered-benar', 'answered-salah');
+    btn.classList.add(benar ? 'answered-benar' : 'answered-salah');
+  }
 
-  // Refresh tampilan soal
   tampilSoal(soalIdx);
 }
 
@@ -935,21 +1198,21 @@ function selesaiTes() {
   document.getElementById('timer-bar').style.display = 'none';
   document.getElementById('progress-track').style.display = 'none';
 
-  let benar = 0, salah = 0, kosong = 0;
-  soalData.forEach((soal, i) => {
+  var benar = 0, salah = 0, kosong = 0;
+  for (var i = 0; i < soalData.length; i++) {
     if (jawabanUser[i] === -1) kosong++;
-    else if (jawabanUser[i] === soal.jawaban) benar++;
+    else if (jawabanUser[i] === soalData[i].jawaban) benar++;
     else salah++;
-  });
+  }
 
-  const nilai = Math.round((benar / soalData.length) * 100);
+  var nilai = Math.round((benar / soalData.length) * 100);
 
   document.getElementById('jml-benar').textContent = benar;
   document.getElementById('jml-salah').textContent = salah;
   document.getElementById('jml-kosong').textContent = kosong;
   document.getElementById('score-big').textContent = nilai;
 
-  let predikat = '', warna = '', icon = '';
+  var predikat, warna, icon;
   if (nilai >= 85) { predikat='SANGAT BAIK 🏆'; warna='background:#e8f5e9;color:#1b5e20'; icon='🏆'; }
   else if (nilai >= 70) { predikat='BAIK 👍'; warna='background:#e3f2fd;color:#0d47a1'; icon='👍'; }
   else if (nilai >= 55) { predikat='CUKUP 📚'; warna='background:#fff8e1;color:#f57f17'; icon='📚'; }
@@ -962,14 +1225,14 @@ function selesaiTes() {
   document.getElementById('score-big').style.color = nilai >= 70 ? '#1565c0' : nilai >= 55 ? '#f57f17' : '#c62828';
 
   document.getElementById('hasil-screen').style.display = 'block';
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function ulangTes() {
-  jawabanUser = new Array(soalData.length).fill(-1);
+  clearInterval(timerInterval);
   waktuSisa = 7 * 60;
   currentSoal = 0;
-  clearInterval(timerInterval);
+  tesAktif = false;
   document.getElementById('timer-display').textContent = '7:00';
   document.getElementById('timer-display').classList.remove('warning');
   document.getElementById('hasil-screen').style.display = 'none';
