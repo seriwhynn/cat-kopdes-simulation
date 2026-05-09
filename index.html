@@ -366,511 +366,264 @@ if(pass !== "KOPDES20K"){
 </script>
 <script>
 const SUBTESTS = [
-  {
-    id:1, name:"Bahasa", total:50, time:420,
-    soal:[
-    
-"q": "Persamaan koperasi dan bank adalah ...",
-      "c": [
-        "Sama-sama dikelola pemerintah pusat",
-        "Sama-sama lembaga keuangan",
-        "Sama-sama hanya melayani petani",
-        "Sama-sama milik swasta asing"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan kompas dan peta adalah ...",
-      "c": [
-        "Sama-sama alat penunjuk arah",
-        "Sama-sama digunakan untuk berkomunikasi",
-        "Sama-sama hanya dipakai pelaut",
-        "Sama-sama dibuat dari logam"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan jaket dan jas hujan adalah ...",
-      "c": [
-        "Sama-sama terbuat dari kulit hewan",
-        "Sama-sama dipakai di dalam ruangan",
-        "Sama-sama pelindung tubuh dari cuaca",
-        "Sama-sama dikenakan di kepala"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan cermin dan kaca jendela adalah ...",
-      "c": [
-        "Sama-sama berfungsi memantulkan panas",
-        "Sama-sama hanya ada di kamar mandi",
-        "Sama-sama digunakan untuk memasak",
-        "Sama-sama terbuat dari kaca"
-      ],
-      "j": 3
-    },
-    {
-      "q": "Persamaan kamera dan teropong adalah ...",
-      "c": [
-        "Sama-sama menggunakan baterai",
-        "Sama-sama alat optik",
-        "Sama-sama hanya dipakai ilmuwan",
-        "Sama-sama menghasilkan suara"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan apel dan tomat adalah ...",
-      "c": [
-        "Sama-sama hanya tumbuh di daerah tropis",
-        "Sama-sama mengandung karbohidrat tinggi",
-        "Sama-sama buah berbiji",
-        "Sama-sama berwarna kuning saat matang"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan sarung tangan dan kaus kaki adalah ...",
-      "c": [
-        "Sama-sama dipakai di kepala",
-        "Sama-sama terbuat dari plastik",
-        "Sama-sama digunakan saat tidur",
-        "Sama-sama pelindung anggota tubuh"
-      ],
-      "j": 3
-    },
-    {
-      "q": "Persamaan perpustakaan dan toko buku adalah ...",
-      "c": [
-        "Sama-sama tempat berkaitan dengan buku",
-        "Sama-sama menyediakan buku secara gratis",
-        "Sama-sama hanya dikunjungi pelajar",
-        "Sama-sama milik pemerintah"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan kapal dan feri adalah ...",
-      "c": [
-        "Sama-sama digunakan di sungai saja",
-        "Sama-sama alat transportasi air",
-        "Sama-sama menggunakan tenaga angin",
-        "Sama-sama mampu menyelam"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan dokter gigi dan perawat adalah ...",
-      "c": [
-        "Sama-sama bekerja di laboratorium",
-        "Sama-sama lulusan fakultas kedokteran",
-        "Sama-sama tenaga kesehatan",
-        "Sama-sama melakukan operasi besar"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan kulkas dan freezer adalah ...",
-      "c": [
-        "Sama-sama menghasilkan panas",
-        "Sama-sama alat pendingin",
-        "Sama-sama hanya untuk menyimpan minuman",
-        "Sama-sama menggunakan gas alam"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan sepatu bola dan sepatu basket adalah ...",
-      "c": [
-        "Sama-sama digunakan di lapangan berumput",
-        "Sama-sama memiliki sol sangat tipis",
-        "Sama-sama perlengkapan olahraga",
-        "Sama-sama hanya dipakai profesional"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan koran dan majalah adalah ...",
-      "c": [
-        "Sama-sama terbit setiap hari",
-        "Sama-sama memuat berita olahraga saja",
-        "Sama-sama media cetak",
-        "Sama-sama diterbitkan secara digital saja"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan pensil dan spidol adalah ...",
-      "c": [
-        "Sama-sama bisa dihapus dengan mudah",
-        "Sama-sama alat menulis",
-        "Sama-sama terbuat dari kayu",
-        "Sama-sama mengandung tinta cair"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan hujan es dan salju adalah ...",
-      "c": [
-        "Sama-sama hanya terjadi di kutub",
-        "Sama-sama berbahaya bagi tanaman",
-        "Sama-sama terjadi setiap musim dingin",
-        "Sama-sama fenomena cuaca"
-      ],
-      "j": 3
-    },
-    {
-      "q": "Persamaan radio dan podcast adalah ...",
-      "c": [
-        "Sama-sama memerlukan koneksi internet",
-        "Sama-sama hanya bisa diakses berbayar",
-        "Sama-sama media audio",
-        "Sama-sama menampilkan gambar bergerak"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan petir dan listrik adalah ...",
-      "c": [
-        "Sama-sama berbahaya bagi elektronik saja",
-        "Sama-sama menghasilkan energi listrik",
-        "Sama-sama dapat disimpan di baterai",
-        "Sama-sama berasal dari tenaga surya"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan sandal dan sepatu adalah ...",
-      "c": [
-        "Sama-sama memiliki hak tinggi",
-        "Sama-sama terbuat dari kulit asli",
-        "Sama-sama alas kaki",
-        "Sama-sama hanya digunakan di dalam ruangan"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan internet dan televisi adalah ...",
-      "c": [
-        "Sama-sama memerlukan jaringan kabel",
-        "Sama-sama hanya tersedia di kota besar",
-        "Sama-sama media informasi",
-        "Sama-sama menayangkan iklan berbayar saja"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan gitar listrik dan keyboard adalah ...",
-      "c": [
-        "Sama-sama alat musik modern",
-        "Sama-sama memiliki 88 tuts",
-        "Sama-sama menggunakan pick/plektrum",
-        "Sama-sama hanya dimainkan di studio"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan termometer dan timbangan adalah ...",
-      "c": [
-        "Sama-sama digunakan di rumah sakit saja",
-        "Sama-sama memerlukan kalibrasi tahunan",
-        "Sama-sama menggunakan satuan kilogram",
-        "Sama-sama alat ukur"
-      ],
-      "j": 3
-    },
-    {
-      "q": "Persamaan oven dan microwave adalah ...",
-      "c": [
-        "Sama-sama menggunakan api langsung",
-        "Sama-sama alat memasak",
-        "Sama-sama hanya untuk memanggang roti",
-        "Sama-sama menggunakan gelombang radio"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan mangga dan pepaya adalah ...",
-      "c": [
-        "Sama-sama berbuah sepanjang tahun",
-        "Sama-sama buah tropis",
-        "Sama-sama memiliki biji keras di tengah",
-        "Sama-sama berwarna merah saat matang"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan printer dan scanner adalah ...",
-      "c": [
-        "Sama-sama mencetak dokumen di kertas",
-        "Sama-sama memerlukan kartrid tinta",
-        "Sama-sama perangkat komputer",
-        "Sama-sama menyimpan data secara otomatis"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan jalan tol dan rel kereta adalah ...",
-      "c": [
-        "Sama-sama jalur transportasi",
-        "Sama-sama hanya untuk kendaraan berat",
-        "Sama-sama dikelola swasta sepenuhnya",
-        "Sama-sama melewati terowongan bawah tanah"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan helm dan sabuk pengaman adalah ...",
-      "c": [
-        "Sama-sama wajib dipakai saat berolahraga",
-        "Sama-sama terbuat dari bahan serat karbon",
-        "Sama-sama alat keselamatan",
-        "Sama-sama digunakan oleh penerbang"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan restoran dan kantin adalah ...",
-      "c": [
-        "Sama-sama menyediakan makanan gratis",
-        "Sama-sama tempat makan",
-        "Sama-sama dikelola oleh chef profesional",
-        "Sama-sama buka selama 24 jam"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan bola tenis dan bola golf adalah ...",
-      "c": [
-        "Sama-sama memiliki ukuran yang sama",
-        "Sama-sama digunakan di lapangan rumput",
-        "Sama-sama perlengkapan olahraga",
-        "Sama-sama terbuat dari karet keras"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan kalender dan jam adalah ...",
-      "c": [
-        "Sama-sama penunjuk waktu",
-        "Sama-sama memerlukan baterai",
-        "Sama-sama hanya ada dalam format digital",
-        "Sama-sama menunjukkan musim"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan burung hantu dan kelelawar adalah ...",
-      "c": [
-        "Sama-sama dapat terbang di siang hari",
-        "Sama-sama memakan serangga kecil saja",
-        "Sama-sama hewan nokturnal",
-        "Sama-sama mamalia bersayap"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan mesin cuci dan vacuum cleaner adalah ...",
-      "c": [
-        "Sama-sama memerlukan air untuk bekerja",
-        "Sama-sama alat rumah tangga",
-        "Sama-sama hanya digunakan seminggu sekali",
-        "Sama-sama menggunakan motor listrik besar"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan lampu dan lilin adalah ...",
-      "c": [
-        "Sama-sama memerlukan bahan bakar minyak",
-        "Sama-sama menghasilkan panas tinggi",
-        "Sama-sama sumber cahaya",
-        "Sama-sama digunakan saat pemadaman listrik"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan gunung dan danau adalah ...",
-      "c": [
-        "Sama-sama hanya ditemukan di pulau besar",
-        "Sama-sama terbentuk dari letusan vulkanik",
-        "Sama-sama kenampakan alam",
-        "Sama-sama mengandung air tawar"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan pesepeda dan pelari adalah ...",
-      "c": [
-        "Sama-sama berkompetisi di lintasan tartan",
-        "Sama-sama atlet olahraga",
-        "Sama-sama memerlukan sepatu khusus",
-        "Sama-sama berlatih di dalam ruangan"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan nasi goreng dan mie goreng adalah ...",
-      "c": [
-        "Sama-sama berasal dari resep Tionghoa",
-        "Sama-sama menggunakan kecap manis",
-        "Sama-sama makanan olahan",
-        "Sama-sama membutuhkan waktu lama memasak"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan AC dan kipas angin adalah ...",
-      "c": [
-        "Sama-sama alat penyejuk udara",
-        "Sama-sama menurunkan suhu ruangan secara drastis",
-        "Sama-sama menggunakan freon sebagai pendingin",
-        "Sama-sama menghasilkan udara kering"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan paus dan lumba-lumba adalah ...",
-      "c": [
-        "Sama-sama bernapas menggunakan insang",
-        "Sama-sama mamalia laut",
-        "Sama-sama ikan berukuran besar",
-        "Sama-sama hidup di perairan dangkal"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan pena dan kapur tulis adalah ...",
-      "c": [
-        "Sama-sama menggunakan tinta cair",
-        "Sama-sama menghasilkan tulisan permanen",
-        "Sama-sama alat untuk menulis",
-        "Sama-sama terbuat dari mineral"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan jembatan dan terowongan adalah ...",
-      "c": [
-        "Sama-sama selalu melewati sungai",
-        "Sama-sama terbuat dari beton bertulang",
-        "Sama-sama sarana transportasi",
-        "Sama-sama dibangun di bawah tanah"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan roti dan biskuit adalah ...",
-      "c": [
-        "Sama-sama selalu mengandung ragi",
-        "Sama-sama makanan berbahan tepung",
-        "Sama-sama dipanggang di oven besar",
-        "Sama-sama memiliki kadar gula tinggi"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan angin dan ombak adalah ...",
-      "c": [
-        "Sama-sama fenomena alam",
-        "Sama-sama hanya terjadi di lautan",
-        "Sama-sama disebabkan oleh rotasi bumi",
-        "Sama-sama berbahaya bagi kapal nelayan"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan dosen dan guru adalah ...",
-      "c": [
-        "Sama-sama mengajar di tingkat sekolah dasar",
-        "Sama-sama memiliki gelar doktor",
-        "Sama-sama profesi pengajar",
-        "Sama-sama bekerja hanya di lembaga negeri"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan keyboard piano dan organ adalah ...",
-      "c": [
-        "Sama-sama menggunakan tiupan udara",
-        "Sama-sama alat musik",
-        "Sama-sama memiliki 61 tuts saja",
-        "Sama-sama hanya dimainkan di gereja"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan bensin dan solar adalah ...",
-      "c": [
-        "Sama-sama bahan bakar",
-        "Sama-sama digunakan pada mesin diesel",
-        "Sama-sama berasal dari kelapa sawit",
-        "Sama-sama menghasilkan emisi yang sama"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan stadion dan gedung olahraga adalah ...",
-      "c": [
-        "Sama-sama hanya digunakan untuk pertandingan sepak bola",
-        "Sama-sama tempat kegiatan olahraga",
-        "Sama-sama selalu memiliki kolam renang",
-        "Sama-sama dikelola oleh KONI"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan kamera CCTV dan alarm adalah ...",
-      "c": [
-        "Sama-sama mengirimkan notifikasi ke ponsel",
-        "Sama-sama memerlukan koneksi internet",
-        "Sama-sama perangkat keamanan",
-        "Sama-sama hanya dipasang di bank"
-      ],
-      "j": 2
-    },
-    {
-      "q": "Persamaan kelapa dan aren adalah ...",
-      "c": [
-        "Sama-sama menghasilkan minyak goreng langsung",
-        "Sama-sama jenis palma",
-        "Sama-sama tumbuh di daerah pegunungan",
-        "Sama-sama memiliki buah berwarna merah"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan gunting dan cutter adalah ...",
-      "c": [
-        "Sama-sama alat pemotong",
-        "Sama-sama menggunakan bilah yang bisa diganti",
-        "Sama-sama digunakan dalam dunia medis",
-        "Sama-sama memerlukan tenaga listrik"
-      ],
-      "j": 0
-    },
-    {
-      "q": "Persamaan toko dan pasar adalah ...",
-      "c": [
-        "Sama-sama buka hanya pada hari tertentu",
-        "Sama-sama tempat jual beli",
-        "Sama-sama selalu menjual kebutuhan pokok",
-        "Sama-sama dikelola oleh pemerintah daerah"
-      ],
-      "j": 1
-    },
-    {
-      "q": "Persamaan rak buku dan lemari pakaian adalah ...",
-      "c": [
-        "Sama-sama selalu terbuat dari kayu jati",
-        "Sama-sama ditempatkan di kamar tidur",
-        "Sama-sama perabot penyimpanan",
-        "Sama-sama memiliki pintu kaca"
-      ],
-      "j": 2
-    }
-  ]
-  },
+ {
+    "id": 1,
+    "name": "Bahasa",
+    "total": 50,
+    "time": 420,
+    "soal": [
+        {
+            "q": "Persamaan koperasi dan bank adalah ...",
+            "c": ["Sama-sama dikelola pemerintah pusat", "Sama-sama lembaga keuangan", "Sama-sama hanya melayani petani", "Sama-sama milik swasta asing"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan kompas dan peta adalah ...",
+            "c": ["Sama-sama alat penunjuk arah", "Sama-sama digunakan untuk berkomunikasi", "Sama-sama hanya dipakai pelaut", "Sama-sama dibuat dari logam"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan jaket dan jas hujan adalah ...",
+            "c": ["Sama-sama terbuat dari kulit hewan", "Sama-sama dipakai di dalam ruangan", "Sama-sama pelindung tubuh dari cuaca", "Sama-sama dikenakan di kepala"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan cermin dan kaca jendela adalah ...",
+            "c": ["Sama-sama berfungsi memantulkan panas", "Sama-sama hanya ada di kamar mandi", "Sama-sama digunakan untuk memasak", "Sama-sama terbuat dari kaca"],
+            "j": 3
+        },
+        {
+            "q": "Persamaan kamera dan teropong adalah ...",
+            "c": ["Sama-sama menggunakan baterai", "Sama-sama alat optik", "Sama-sama hanya dipakai ilmuwan", "Sama-sama menghasilkan suara"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan apel dan tomat adalah ...",
+            "c": ["Sama-sama hanya tumbuh di daerah tropis", "Sama-sama mengandung karbohidrat tinggi", "Sama-sama buah berbiji", "Sama-sama berwarna kuning saat matang"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan sarung tangan dan kaus kaki adalah ...",
+            "c": ["Sama-sama dipakai di kepala", "Sama-sama terbuat dari plastik", "Sama-sama digunakan saat tidur", "Sama-sama pelindung anggota tubuh"],
+            "j": 3
+        },
+        {
+            "q": "Persamaan perpustakaan dan toko buku adalah ...",
+            "c": ["Sama-sama tempat berkaitan dengan buku", "Sama-sama menyediakan buku secara gratis", "Sama-sama hanya dikunjungi pelajar", "Sama-sama milik pemerintah"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan kapal dan feri adalah ...",
+            "c": ["Sama-sama digunakan di sungai saja", "Sama-sama alat transportasi air", "Sama-sama menggunakan tenaga angin", "Sama-sama mampu menyelam"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan dokter gigi dan perawat adalah ...",
+            "c": ["Sama-sama bekerja di laboratorium", "Sama-sama lulusan fakultas kedokteran", "Sama-sama tenaga kesehatan", "Sama-sama melakukan operasi besar"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan kulkas dan freezer adalah ...",
+            "c": ["Sama-sama menghasilkan panas", "Sama-sama alat pendingin", "Sama-sama hanya untuk menyimpan minuman", "Sama-sama menggunakan gas alam"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan sepatu bola dan sepatu basket adalah ...",
+            "c": ["Sama-sama digunakan di lapangan berumput", "Sama-sama memiliki sol sangat tipis", "Sama-sama perlengkapan olahraga", "Sama-sama hanya dipakai profesional"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan koran dan majalah adalah ...",
+            "c": ["Sama-sama terbit setiap hari", "Sama-sama memuat berita olahraga saja", "Sama-sama media cetak", "Sama-sama diterbitkan secara digital saja"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan pensil dan spidol adalah ...",
+            "c": ["Sama-sama bisa dihapus dengan mudah", "Sama-sama alat menulis", "Sama-sama terbuat dari kayu", "Sama-sama mengandung tinta cair"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan hujan es dan salju adalah ...",
+            "c": ["Sama-sama hanya terjadi di kutub", "Sama-sama berbahaya bagi tanaman", "Sama-sama terjadi setiap musim dingin", "Sama-sama fenomena cuaca"],
+            "j": 3
+        },
+        {
+            "q": "Persamaan radio dan podcast adalah ...",
+            "c": ["Sama-sama memerlukan koneksi internet", "Sama-sama hanya bisa diakses berbayar", "Sama-sama media audio", "Sama-sama menampilkan gambar bergerak"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan petir dan listrik adalah ...",
+            "c": ["Sama-sama berbahaya bagi elektronik saja", "Sama-sama menghasilkan energi listrik", "Sama-sama dapat disimpan di baterai", "Sama-sama berasal dari tenaga surya"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan sandal dan sepatu adalah ...",
+            "c": ["Sama-sama memiliki hak tinggi", "Sama-sama terbuat dari kulit asli", "Sama-sama alas kaki", "Sama-sama hanya digunakan di dalam ruangan"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan internet dan televisi adalah ...",
+            "c": ["Sama-sama memerlukan jaringan kabel", "Sama-sama hanya tersedia di kota besar", "Sama-sama media informasi", "Sama-sama menayangkan iklan berbayar saja"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan gitar listrik dan keyboard adalah ...",
+            "c": ["Sama-sama alat musik modern", "Sama-sama memiliki 88 tuts", "Sama-sama menggunakan pick/plektrum", "Sama-sama hanya dimainkan di studio"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan termometer dan timbangan adalah ...",
+            "c": ["Sama-sama digunakan di rumah sakit saja", "Sama-sama memerlukan kalibrasi tahunan", "Sama-sama menggunakan satuan kilogram", "Sama-sama alat ukur"],
+            "j": 3
+        },
+        {
+            "q": "Persamaan oven dan microwave adalah ...",
+            "c": ["Sama-sama menggunakan api langsung", "Sama-sama alat memasak", "Sama-sama hanya untuk memanggang roti", "Sama-sama menggunakan gelombang radio"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan mangga dan pepaya adalah ...",
+            "c": ["Sama-sama berbuah sepanjang tahun", "Sama-sama buah tropis", "Sama-sama memiliki biji keras di tengah", "Sama-sama berwarna merah saat matang"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan printer dan scanner adalah ...",
+            "c": ["Sama-sama mencetak dokumen di kertas", "Sama-sama memerlukan kartrid tinta", "Sama-sama perangkat komputer", "Sama-sama menyimpan data secara otomatis"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan jalan tol dan rel kereta adalah ...",
+            "c": ["Sama-sama jalur transportasi", "Sama-sama hanya untuk kendaraan berat", "Sama-sama dikelola swasta sepenuhnya", "Sama-sama melewati terowongan bawah tanah"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan helm dan sabuk pengaman adalah ...",
+            "c": ["Sama-sama wajib dipakai saat berolahraga", "Sama-sama terbuat dari bahan serat karbon", "Sama-sama alat keselamatan", "Sama-sama digunakan oleh penerbang"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan restoran dan kantin adalah ...",
+            "c": ["Sama-sama menyediakan makanan gratis", "Sama-sama tempat makan", "Sama-sama dikelola oleh chef profesional", "Sama-sama buka selama 24 jam"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan bola tenis dan bola golf adalah ...",
+            "c": ["Sama-sama memiliki ukuran yang sama", "Sama-sama digunakan di lapangan rumput", "Sama-sama perlengkapan olahraga", "Sama-sama terbuat dari karet keras"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan kalender dan jam adalah ...",
+            "c": ["Sama-sama penunjuk waktu", "Sama-sama memerlukan baterai", "Sama-sama hanya ada dalam format digital", "Sama-sama menunjukkan musim"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan burung hantu dan kelelawar adalah ...",
+            "c": ["Sama-sama dapat terbang di siang hari", "Sama-sama memakan serangga kecil saja", "Sama-sama hewan nokturnal", "Sama-sama mamalia bersayap"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan mesin cuci dan vacuum cleaner adalah ...",
+            "c": ["Sama-sama memerlukan air untuk bekerja", "Sama-sama alat rumah tangga", "Sama-sama hanya digunakan seminggu sekali", "Sama-sama menggunakan motor listrik besar"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan lampu dan lilin adalah ...",
+            "c": ["Sama-sama memerlukan bahan bakar minyak", "Sama-sama menghasilkan panas tinggi", "Sama-sama sumber cahaya", "Sama-sama digunakan saat pemadaman listrik"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan gunung dan danau adalah ...",
+            "c": ["Sama-sama hanya ditemukan di pulau besar", "Sama-sama terbentuk dari letusan vulkanik", "Sama-sama kenampakan alam", "Sama-sama mengandung air tawar"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan pesepeda dan pelari adalah ...",
+            "c": ["Sama-sama berkompetisi di lintasan tartan", "Sama-sama atlet olahraga", "Sama-sama memerlukan sepatu khusus", "Sama-sama berlatih di dalam ruangan"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan nasi goreng dan mie goreng adalah ...",
+            "c": ["Sama-sama berasal dari resep Tionghoa", "Sama-sama menggunakan kecap manis", "Sama-sama makanan olahan", "Sama-sama membutuhkan waktu lama memasak"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan AC dan kipas angin adalah ...",
+            "c": ["Sama-sama alat penyejuk udara", "Sama-sama menurunkan suhu ruangan secara drastis", "Sama-sama menggunakan freon sebagai pendingin", "Sama-sama menghasilkan udara kering"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan paus dan lumba-lumba adalah ...",
+            "c": ["Sama-sama bernapas menggunakan insang", "Sama-sama mamalia laut", "Sama-sama ikan berukuran besar", "Sama-sama hidup di perairan dangkal"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan pena dan kapur tulis adalah ...",
+            "c": ["Sama-sama menggunakan tinta cair", "Sama-sama menghasilkan tulisan permanen", "Sama-sama alat untuk menulis", "Sama-sama terbuat dari mineral"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan jembatan dan terowongan adalah ...",
+            "c": ["Sama-sama selalu melewati sungai", "Sama-sama terbuat dari beton bertulang", "Sama-sama sarana transportasi", "Sama-sama dibangun di bawah tanah"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan roti dan biskuit adalah ...",
+            "c": ["Sama-sama selalu mengandung ragi", "Sama-sama makanan berbahan tepung", "Sama-sama dipanggang di oven besar", "Sama-sama memiliki kadar gula tinggi"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan angin dan ombak adalah ...",
+            "c": ["Sama-sama fenomena alam", "Sama-sama hanya terjadi di lautan", "Sama-sama disebabkan oleh rotasi bumi", "Sama-sama berbahaya bagi kapal nelayan"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan dosen dan guru adalah ...",
+            "c": ["Sama-sama mengajar di tingkat sekolah dasar", "Sama-sama memiliki gelar doktor", "Sama-sama profesi pengajar", "Sama-sama bekerja hanya di lembaga negeri"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan keyboard piano dan organ adalah ...",
+            "c": ["Sama-sama menggunakan tiupan udara", "Sama-sama alat musik", "Sama-sama memiliki 61 tuts saja", "Sama-sama hanya dimainkan di gereja"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan bensin dan solar adalah ...",
+            "c": ["Sama-sama bahan bakar", "Sama-sama digunakan pada mesin diesel", "Sama-sama berasal dari kelapa sawit", "Sama-sama menghasilkan emisi yang sama"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan stadion dan gedung olahraga adalah ...",
+            "c": ["Sama-sama hanya digunakan untuk pertandingan sepak bola", "Sama-sama tempat kegiatan olahraga", "Sama-sama selalu memiliki kolam renang", "Sama-sama dikelola oleh KONI"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan kamera CCTV dan alarm adalah ...",
+            "c": ["Sama-sama mengirimkan notifikasi ke ponsel", "Sama-sama memerlukan koneksi internet", "Sama-sama perangkat keamanan", "Sama-sama hanya dipasang di bank"],
+            "j": 2
+        },
+        {
+            "q": "Persamaan kelapa dan aren adalah ...",
+            "c": ["Sama-sama menghasilkan minyak goreng langsung", "Sama-sama jenis palma", "Sama-sama tumbuh di daerah pegunungan", "Sama-sama memiliki buah berwarna merah"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan gunting dan cutter adalah ...",
+            "c": ["Sama-sama alat pemotong", "Sama-sama menggunakan bilah yang bisa diganti", "Sama-sama digunakan dalam dunia medis", "Sama-sama memerlukan tenaga listrik"],
+            "j": 0
+        },
+        {
+            "q": "Persamaan toko dan pasar adalah ...",
+            "c": ["Sama-sama buka hanya pada hari tertentu", "Sama-sama tempat jual beli", "Sama-sama selalu menjual kebutuhan pokok", "Sama-sama dikelola oleh pemerintah daerah"],
+            "j": 1
+        },
+        {
+            "q": "Persamaan rak buku dan lemari pakaian adalah ...",
+            "c": ["Sama-sama selalu terbuat dari kayu jati", "Sama-sama ditempatkan di kamar tidur", "Sama-sama perabot penyimpanan", "Sama-sama memiliki pintu kaca"],
+            "j": 2
+        }
+    ]
+}
   {
     id:2, name:"Hitungan", total:31, time:420,
     soal:[
